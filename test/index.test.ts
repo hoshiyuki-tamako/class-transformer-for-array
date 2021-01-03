@@ -25,7 +25,7 @@ class Product {
 
   @ArrayMember(1)
   @Type(_ => Color)
-  public color: Color | null = null;
+  public color?: Color;
 
   @ArrayMember(2)
   @Transform((v) => +v.toFixed())
