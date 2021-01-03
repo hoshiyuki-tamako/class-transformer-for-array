@@ -1,10 +1,10 @@
 import { plainToClass } from 'class-transformer';
 import { transformAndValidate } from 'class-transformer-validator';
+import { ClassType } from 'class-transformer-validator';
 import { defaultMetadataStorage } from 'class-transformer/storage';
-import { ClassType } from 'class-transformer-validator/index';
 
-import { storage } from './decorators/ArrayMember';
 import { ClassConstructor } from './interfaces/class-constructor.type';
+import { storage } from './storage';
 
 export * from './decorators/ArrayMember';
 

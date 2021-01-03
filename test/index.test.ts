@@ -13,6 +13,7 @@ import {
 } from '../src';
 
 chai.use(chaiAsPromised);
+
 class Color {
   @ArrayMember(0)
   public name: string = '';

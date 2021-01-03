@@ -1,17 +1,6 @@
 import 'reflect-metadata';
+import { PropertyInfo, storage } from '../storage';
 
-export class PropertyInfo {
-  public key = '';
-  public type = '';
-
-  public constructor(key: string, type: string) {
-    this.key = key;
-    this.type = type;
-  }
-}
-
-export type IndexMapProperty = Map<number, PropertyInfo>;
-export const storage = new Map<unknown, IndexMapProperty>();
 export function ArrayMember(index: number) {
   return (target: { constructor: unknown }, propertyKey: string): void => {
     // eslint-disable-next-line @typescript-eslint/ban-types
