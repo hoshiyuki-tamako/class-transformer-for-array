@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { TypeError } from 'common-errors';
 
 import { PropertyInfo, storage } from '../storage';
 
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 export function ArrayMember(index: number): (target: {
   constructor: unknown;
 }, propertyKey: string) => void {

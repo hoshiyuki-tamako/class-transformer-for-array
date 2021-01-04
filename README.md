@@ -93,6 +93,8 @@ import {
   UnknownTypeError
 } from 'class-transformer-for-array';
 
+import { TypeError } from 'common-errors';
+
 try {
   const single = [1, ['blue'], 2.2, '2'];
   const object1 = plainArrayToClass(Product, single);
@@ -107,6 +109,16 @@ try {
   }
   // if child class type not register
   if (e instanceof UnknownTypeError) {
+
+  }
+}
+
+try {
+  const result = classToPlainArray(new Product());
+} catch (e) {
+  // all above exception plus below
+  // if type error, make sure to `npm i common-errors` to catch below exception
+  if (e instanceof TypeError) {
 
   }
 }

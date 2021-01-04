@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { SkipIndex, SkipIndexChild } from './classes/SkipIndex';
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 import { ClassType } from 'class-transformer/ClassTransformer';
+import { TypeError } from 'common-errors';
 
 import { classToPlainArray, UnknownClassError } from '../src';
 import { KeyNotInObject } from './classes/KeyNotInObject';
@@ -9,6 +10,7 @@ import { ParentType } from './classes/MissingChildType';
 import { Color, Product } from './classes/Product';
 import { UnknownClass } from './classes/Unknown';
 
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ClassToPlainArrayTest {
@@ -93,5 +95,39 @@ class ClassToPlainArrayTest {
     expect(result.constructor).equals(Array);
     expect(result).length(1);
     expect(result).property('0', null);
+  }
+
+  @test()
+  public undefinedArray() {
+    const expected = new Product().setColor();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (expected as any).sizes = null;
+    const result = classToPlainArray(expected) as unknown[];
+    expect(result).property('4').is.null;
+  }
+
+  @test()
+  public arrayIsNotArray() {
+    const expected = new Product().setColor();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (expected as any).sizes = 1;
+    expect(() => classToPlainArray(expected)).throw(TypeError)
+  }
+
+  @test()
+  public skipIndex() {
+    const data = new SkipIndex();
+    data.child = new SkipIndexChild();
+    data.childArray = [new SkipIndexChild(), new SkipIndexChild()];
+    const result = classToPlainArray(data) as [];
+    expect(result.constructor).equals(Array);
+    expect(result).property('0', data.id);
+    expect(result).property('2', data.name);
+    expect(result).property('4').property('0', data.child.id);
+    expect(result).property('4').property('2', data.child.name);
+    expect(result).property('6').property('0').property('0', data.childArray[0].id);
+    expect(result).property('6').property('0').property('2', data.childArray[0].name);
+    expect(result).property('6').property('1').property('0', data.childArray[1].id);
+    expect(result).property('6').property('1').property('2', data.childArray[1].name);
   }
 }

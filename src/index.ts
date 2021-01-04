@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { classToPlain, ClassTransformOptions, plainToClass } from 'class-transformer';
 import { ClassType, transformAndValidate, TransformValidationOptions } from 'class-transformer-validator';
 import { defaultMetadataStorage } from 'class-transformer/storage';
+import { TypeError } from 'common-errors';
 
 import { UnknownClassError, UnknownTypeError } from './exceptions';
 import { ClassConstructor } from './interfaces/class-constructor.type';
@@ -20,12 +22,20 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
   for (const [i, o] of array.entries()) {
     const property = map.get(i);
     if (property) {
-      const subTarget = defaultMetadataStorage.findTypeMetadata(target, property.key)?.typeFunction();
+      const typeMeta = defaultMetadataStorage.findTypeMetadata(target, property.key);
+      const subTarget = typeMeta?.typeFunction();
       if (storage.has(subTarget)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        obj[property.key] = Array.isArray(o) ? plainMapValues(subTarget as any, o) : o;
+        if (Array.isArray(o)) {
+          if (typeMeta?.reflectedType === Array) {
+            obj[property.key] = o.map((p) => plainMapValues(subTarget as any, p));
+          } else {
+            obj[property.key] = plainMapValues(subTarget as any, o);
+          }
+        } else {
+          obj[property.key] = o;
+        }
       } else if (Array.isArray(o) && o.length) {
-        throw new UnknownTypeError(`Cannot found type ${subTarget?.name} for ${target.name}.${property.key}. Make sure to use @Type for class property`);
+        throw new UnknownTypeError(`Cannot found type ${subTarget?.name} for ${target.name}.${property.key} Make sure to use @Type for class property`);
       } else {
         obj[property.key] = o;
       }
@@ -51,12 +61,23 @@ function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, un
   const arr = [] as unknown[];
   for (const [i, property] of map.entries()) {
     if (property.key in object) {
-      const subTarget = defaultMetadataStorage.findTypeMetadata(target, property.key)?.typeFunction();
-      if (storage.has(subTarget)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        arr.push(classMapValue(subTarget as any, object[property.key] as Record<string, unknown>));
+      const typeMeta = defaultMetadataStorage.findTypeMetadata(target, property.key);
+      const subTarget = typeMeta?.typeFunction();
+      if (typeMeta?.reflectedType === Array) {
+        if (object[property.key] == null) {
+          arr[i] = object[property.key];
+        } else {
+          if (!Array.isArray(object[property.key])) {
+            throw new TypeError(`property ${target.name}.${property.key} is not an array: ${object[property.key]}`);
+          }
+          arr[i] = (object[property.key] as Record<string, unknown>[]).map((p) => classMapValue(subTarget as any, p))
+        }
       } else {
-        arr[i] = object[property.key];
+        if (storage.has(subTarget)) {
+          arr[i] = classMapValue(subTarget as any, object[property.key] as Record<string, unknown>);
+        } else {
+          arr[i] = object[property.key];
+        }
       }
     } else {
       arr[i] = undefined;
@@ -65,12 +86,12 @@ function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, un
   return arr;
 }
 
-export function classToPlainArray<T>(object: T, options?: ClassTransformOptions): unknown[] | null;
-export function classToPlainArray<T>(object: T[], options?: ClassTransformOptions): unknown[][] | null;
+export function classToPlainArray<T>(object: T, options?: ClassTransformOptions): unknown[];
+export function classToPlainArray<T>(object: T[], options?: ClassTransformOptions): unknown[][];
 export function classToPlainArray<T>(
     object: T | T[],
     options?: ClassTransformOptions
-  ): unknown[] | unknown[][] | null {
+  ): unknown[] | unknown[][] {
     if (Array.isArray(object) && !object.length) {
       return [];
     }

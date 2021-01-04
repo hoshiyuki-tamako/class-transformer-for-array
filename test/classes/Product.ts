@@ -10,6 +10,11 @@ export class Color {
   public name: string = '';
 }
 
+export class Size {
+  @ArrayMember(0)
+  public size: number = 0;
+}
+
 export class Product {
   @ArrayMember(0)
   public id: number = 0;
@@ -25,6 +30,10 @@ export class Product {
   @ArrayMember(3)
   @IsString()
   public displayPrice: string = '0';
+
+  @ArrayMember(4)
+  @Type(() => Size)
+  public sizes?: Size[] = [];
 
   public setId(id: number): this {
     this.id = id;
