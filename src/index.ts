@@ -25,7 +25,7 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         obj[property.key] = Array.isArray(o) ? plainMapValues(subTarget as any, o) : o;
       } else if (Array.isArray(o) && o.length) {
-        throw new UnknownTypeError(`Cannot found type ${property.type}/${subTarget?.name} for ${target.name}.${property.key}. Make sure to use @Type for class property`);
+        throw new UnknownTypeError(`Cannot found type ${subTarget?.name} for ${target.name}.${property.key}. Make sure to use @Type for class property`);
       } else {
         obj[property.key] = o;
       }
