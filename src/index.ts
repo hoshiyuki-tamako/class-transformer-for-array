@@ -4,7 +4,7 @@ import { ClassType, transformAndValidate, TransformValidationOptions } from 'cla
 import { defaultMetadataStorage } from 'class-transformer/storage';
 import { TypeError } from 'common-errors';
 
-import { UnknownClassError, UnknownTypeError } from './exceptions';
+import { UnknownClassError } from './exceptions';
 import { ClassConstructor } from './interfaces/class-constructor.type';
 import { storage } from './storage';
 
@@ -34,8 +34,6 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
         } else {
           obj[property.key] = o;
         }
-      } else if (Array.isArray(o) && o.length) {
-        throw new UnknownTypeError(`Cannot found type ${subTarget?.name} for ${target.name}.${property.key} Make sure to use @Type for class property`);
       } else {
         obj[property.key] = o;
       }
@@ -63,21 +61,21 @@ function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, un
     if (property.key in object) {
       const typeMeta = defaultMetadataStorage.findTypeMetadata(target, property.key);
       const subTarget = typeMeta?.typeFunction();
-      if (typeMeta?.reflectedType === Array) {
-        if (object[property.key] == null) {
-          arr[i] = object[property.key];
-        } else {
-          if (!Array.isArray(object[property.key])) {
-            throw new TypeError(`property ${target.name}.${property.key} is not an array: ${object[property.key]}`);
+      if (storage.has(subTarget)) {
+        if (typeMeta?.reflectedType === Array) {
+          if (object[property.key] == null) {
+            arr[i] = object[property.key];
+          } else {
+            if (!Array.isArray(object[property.key])) {
+              throw new TypeError(`property ${target.name}.${property.key} is not an array: ${object[property.key]}`);
+            }
+            arr[i] = (object[property.key] as Record<string, unknown>[]).map((p) => classMapValue(subTarget as any, p))
           }
-          arr[i] = (object[property.key] as Record<string, unknown>[]).map((p) => classMapValue(subTarget as any, p))
+        } else {
+          arr[i] = classMapValue(subTarget as any, object[property.key] as Record<string, unknown>);
         }
       } else {
-        if (storage.has(subTarget)) {
-          arr[i] = classMapValue(subTarget as any, object[property.key] as Record<string, unknown>);
-        } else {
-          arr[i] = object[property.key];
-        }
+        arr[i] = object[property.key];
       }
     } else {
       arr[i] = undefined;

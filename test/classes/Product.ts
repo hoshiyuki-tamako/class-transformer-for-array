@@ -35,6 +35,9 @@ export class Product {
   @Type(() => Size)
   public sizes?: Size[] = [];
 
+  @ArrayMember(5)
+  public values: number[] = [];
+
   public setId(id: number): this {
     this.id = id;
     return this;

@@ -1,8 +1,9 @@
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 
-import { plainArrayToClass, UnknownTypeError } from '../src';
+import { plainArrayToClass } from '../src';
 import { UnknownClassError } from './../src/exceptions/UnknownClassError';
+import { OutOfIndex } from './classes/OutOFIndex';
 import { Color, Product } from './classes/Product';
 import { SkipIndex, SkipIndexChild } from './classes/SkipIndex';
 import { UnknownClass, UnknownTypeParent } from './classes/Unknown';
@@ -12,7 +13,7 @@ import { UnknownClass, UnknownTypeParent } from './classes/Unknown';
 class PlainArrayToClassTest {
   @test()
   public normal() {
-    const expected = [1, ['blue'], 2.2, '2', [[1], [2]]] as unknown[][][];
+    const expected = [1, ['blue'], 2.2, '2', [[1], [2]], [1, 2]] as unknown[][][];
     const result = plainArrayToClass(Product, expected);
     // basic
     expect(result.constructor).equals(Product);
@@ -27,8 +28,14 @@ class PlainArrayToClassTest {
     // test array
     expect(result.sizes).not.null;
     expect(result.sizes?.constructor).equal(Array);
+    expect(result.sizes).length(2);
     expect(result.sizes).property('0').property('size', expected[4][0][0]);
     expect(result.sizes).property('1').property('size', expected[4][1][0]);
+
+    expect(result.values).not.null;
+    expect(result.values).length(2);
+    expect(result.values).property('0').equal(expected[5][0]);
+    expect(result.values).property('1').equal(expected[5][1]);
   }
 
   @test()
@@ -93,18 +100,11 @@ class PlainArrayToClassTest {
 
   @test()
   public outOfIndex() {
-    const expected = [1, ['blue'], 2.2, '0', [], 'out-of-index'] as unknown[][];
-    const result = plainArrayToClass(Product, expected);
+    const expected = [1, 'out-of-index'] as unknown[];
+    const result = plainArrayToClass(OutOfIndex, expected);
     // basic
-    expect(result.constructor).equals(Product);
+    expect(result.constructor).equals(OutOfIndex);
     expect(result).property('id', expected[0]);
-    // nested
-    expect(result).property('color').not.null;
-    expect(result.color?.constructor).equals(Color);
-    expect(result).property('color').property('name', expected[1][0]);
-    // test class-transform
-    expect(result).property('price', +(+expected[2]).toFixed());
-    expect(result).property('displayPrice', new Product().displayPrice);
   }
 
   @test()
@@ -141,10 +141,5 @@ class PlainArrayToClassTest {
   @test()
   public unknownTypeWithoutValue() {
     expect(() => plainArrayToClass(UnknownTypeParent, [[]])).not.throw();
-  }
-
-  @test()
-  public unknownType() {
-    expect(() => plainArrayToClass(UnknownTypeParent, [[1]])).throw(UnknownTypeError);
   }
 }
