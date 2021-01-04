@@ -2,12 +2,13 @@ import { classToPlain, ClassTransformOptions, plainToClass } from 'class-transfo
 import { ClassType, transformAndValidate, TransformValidationOptions } from 'class-transformer-validator';
 import { defaultMetadataStorage } from 'class-transformer/storage';
 
-import { UnknownClassError } from './exceptions/UnknownClassError';
-import { UnknownTypeError } from './exceptions/UnknownTypeError';
+import { UnknownClassError, UnknownTypeError } from './exceptions';
 import { ClassConstructor } from './interfaces/class-constructor.type';
 import { storage } from './storage';
 
 export * from './decorators/ArrayMember';
+export * from './storage';
+export * from './exceptions';
 
 const nonClassTypes = [String.name, Number.name, Boolean.name, RegExp.name];
 
