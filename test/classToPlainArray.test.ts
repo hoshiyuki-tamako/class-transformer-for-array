@@ -1,4 +1,3 @@
-import { SkipIndex, SkipIndexChild } from './classes/SkipIndex';
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 import { ClassType } from 'class-transformer/ClassTransformer';
@@ -8,6 +7,7 @@ import { classToPlainArray, UnknownClassError } from '../src';
 import { KeyNotInObject } from './classes/KeyNotInObject';
 import { ParentType } from './classes/MissingChildType';
 import { Color, Product } from './classes/Product';
+import { SkipIndex, SkipIndexChild } from './classes/SkipIndex';
 import { UnknownClass } from './classes/Unknown';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */

@@ -159,3 +159,28 @@ try {
   }
 }
 ```
+
+### Without transform
+
+```ts
+import 'reflect-metadata';
+
+import { plainMapValue, classMapValue } from 'class-transformer-for-array';
+
+class Blog {
+  @ArrayMember(0)
+  public id = 0;
+
+  @ArrayMember(1)
+  public title = '';
+
+  @ArrayMember(2)
+  public content = '';
+}
+
+// Object { id = 12, title = "the title", content = "abc content" }
+const blog = plainMapValue(Blog, [12, 'the title', 'abc content']);
+
+// [12, 'the title', 'abc content']
+const raw = classMapValue(Blog, blog);
+```

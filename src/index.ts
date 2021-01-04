@@ -13,7 +13,7 @@ export * from './storage';
 export * from './exceptions';
 export * from './types';
 
-function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
+export function plainMapValue<T>(target: ClassConstructor<T>, array: unknown[]): { [property: string] : unknown } {
   const map = storage.get(target);
   if (!map) {
     throw new UnknownClassError(`Cannot found class of ${target.name}`);
@@ -28,9 +28,9 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
       if (storage.has(subTarget)) {
         if (Array.isArray(o)) {
           if (typeMeta?.reflectedType === Array || property.options?.isArray) {
-            obj[property.key] = o.map((p) => plainMapValues(subTarget as any, p));
+            obj[property.key] = o.map((p) => plainMapValue(subTarget as any, p));
           } else {
-            obj[property.key] = plainMapValues(subTarget as any, o);
+            obj[property.key] = plainMapValue(subTarget as any, o);
           }
         } else {
           obj[property.key] = o;
@@ -44,14 +44,14 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
 }
 
 export function plainArrayToClass<T>(target: ClassConstructor<T>, array: unknown[], options?: ClassTransformOptions): T {
-  return plainToClass(target, plainMapValues(target, array), options);
+  return plainToClass(target, plainMapValue(target, array), options);
 }
 
 export function plainArrayToClasses<T>(target: ClassConstructor<T>, array: unknown[][], options?: ClassTransformOptions): T[] {
-  return plainToClass(target, array.map((arr) => plainMapValues(target, arr)), options);
+  return plainToClass(target, array.map((arr) => plainMapValue(target, arr)), options);
 }
 
-function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, unknown>) {
+export function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, unknown>): unknown[] {
   const map = storage.get(target);
   if (!map) {
     throw new UnknownClassError(`Cannot found class of ${target.name}`);
@@ -108,10 +108,10 @@ export function classToPlainArray<T>(
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[], options?: TransformValidationOptions): Promise<T> {
-  return transformAndValidate(target, plainMapValues(target, array), options) as unknown as Promise<T>;
+  return transformAndValidate(target, plainMapValue(target, array), options);
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function arrayTransformAndValidates<T extends object>(target: ClassType<T>, array: unknown[][], options?: TransformValidationOptions): Promise<T[]> {
-  return transformAndValidate(target, array.map((arr) => plainMapValues(target, arr)), options) as unknown as Promise<T[]>;
+  return transformAndValidate(target, array.map((arr) => plainMapValue(target, arr)), options);
 }
