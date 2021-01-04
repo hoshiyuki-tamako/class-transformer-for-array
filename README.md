@@ -2,6 +2,18 @@
 
 transform rows of data by index to class object
 
+## Install
+
+```bash
+npm i class-transformer-for-array class-transformer-validator class-transformer class-validator
+```
+
+or
+
+```bash
+npm i class-transformer-for-array
+```
+
 ## Example
 
 ```ts
