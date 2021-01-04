@@ -2,12 +2,16 @@
   "name": "class-transformer-for-array",
   "version": "1.0.0",
   "description": "class transform for array",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoshiyuki-tamako/class-transformer-for-array.git"
+  },
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/ts-mocha test/**/*test.ts",
-    "prepublish": "./node_modules/.bin/tsc",
-    "lint": "./node_modules/.bin/eslint"
+    "prepare": "./node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "author": "hoshiyuki-tamako",
   "license": "MIT",

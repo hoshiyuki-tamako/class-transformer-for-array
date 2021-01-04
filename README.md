@@ -1,13 +1,18 @@
 # class-transformer-for-array
- transform rows of data by index to class object
+
+transform rows of data by index to class object
 
 ## Example
 
 ```ts
+import { Transform, Type } from 'class-transformer';
+import { IsString } from 'class-validator';
+
 import {
   ArrayMember,
   arrayTransformAndValidate,
   arrayTransformAndValidates,
+  classToPlainArray,
   plainArrayToClass,
   plainArrayToClasses,
 } from 'class-transformer-for-array';
@@ -22,11 +27,11 @@ class Product {
   public id: number = 0;
 
   @ArrayMember(1)
-  @Type(_ => Color)
+  @Type(() => Color)
   public color?: Color;
 
   @ArrayMember(2)
-  @Transform((v) => +v.toFixed())
+  @Transform((v) => +v?.toFixed())
   public price: number = 0;
 
   @ArrayMember(3)
@@ -34,16 +39,60 @@ class Product {
   public displayPrice: string = '0';
 }
 
-// single object
-const single = [1, ['blue'], 2.2, '2.2'];
-plainArrayToClass(Product, single);
-await arrayTransformAndValidate(Product, single);
+{
+  // single object
+  const single = [1, ['blue'], 2.2, '2'];
+  const object1 = plainArrayToClass(Product, single);
+  const object2 = await arrayTransformAndValidate(Product, single);
+  
+  // [1, ['blue'], 2, '2']
+  classToPlainArray(object1);
+}
 
-// multiple object
-const multiple = [
-  [1, ['blue'], 2.2],
-  [2, ['yellow'], 2.2],
-] as unknown[][][];
-plainArrayToClasses(Product, multiple);
-await arrayTransformAndValidates(Product, multiple);
+
+{
+  // multiple object
+  const multiple = [
+    [1, ['blue'], 2.2, '2'],
+    [2, ['yellow'], 2.2, '2'],
+  ];
+  const object1 = plainArrayToClasses(Product, multiple);
+  const object2 = await arrayTransformAndValidates(Product, multiple);
+  
+  /*
+  [
+    [1, ['blue'], 2, '2'],
+    [2, ['yellow'], 2, '2'],
+  ]
+  */
+  classToPlainArray(object1);
+}
+```
+
+### Error Handling
+
+```ts
+import {
+  ClassTransformerForArrayError,
+  UnknownClassError,
+  UnknownTypeError
+} from 'class-transformer-for-array';
+
+try {
+  const single = [1, ['blue'], 2.2, '2'];
+  const object1 = plainArrayToClass(Product, single);
+} catch (e) {
+  // catch all error
+  if (e instanceof ClassTransformerForArrayError) {
+
+  }
+  // if parent class not register
+  if (e instanceof UnknownClassError) {
+
+  }
+  // if child class type not register
+  if (e instanceof UnknownTypeError) {
+
+  }
+}
 ```
