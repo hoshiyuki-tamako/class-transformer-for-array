@@ -5,7 +5,7 @@ transform rows of data by index to class object
 ## Install
 
 ```bash
-npm i class-transformer-for-array class-transformer-validator class-transformer class-validator
+npm i class-transformer-for-array class-transformer-validator class-transformer class-validator reflect-metadata
 ```
 
 or
@@ -17,6 +17,9 @@ npm i class-transformer-for-array
 ## Example
 
 ```ts
+// make sure to import reflect-metadata
+import 'reflect-metadata';
+
 import { Transform, Type } from 'class-transformer';
 import { IsString } from 'class-validator';
 

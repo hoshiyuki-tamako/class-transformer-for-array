@@ -1,10 +1,8 @@
 export class PropertyInfo {
   public key = '';
-  public type = '';
 
-  public constructor(key: string, type: string) {
+  public constructor(key: string) {
     this.key = key;
-    this.type = type;
   }
 }
 

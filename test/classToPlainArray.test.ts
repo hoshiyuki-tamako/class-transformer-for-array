@@ -91,6 +91,7 @@ class ClassToPlainArrayTest {
   public missingChildType() {
     const result = classToPlainArray(new ParentType()) as [];
     expect(result.constructor).equals(Array);
-    expect(result).length(0);
+    expect(result).length(1);
+    expect(result).property('0', null);
   }
 }

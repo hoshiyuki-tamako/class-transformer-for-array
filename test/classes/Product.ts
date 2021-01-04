@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { Transform, Type } from 'class-transformer';
 import { IsString } from 'class-validator';
 

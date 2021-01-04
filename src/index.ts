@@ -10,8 +10,6 @@ export * from './decorators/ArrayMember';
 export * from './storage';
 export * from './exceptions';
 
-const nonClassTypes = [String.name, Number.name, Boolean.name, RegExp.name];
-
 function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
   const map = storage.get(target);
   if (!map) {
@@ -22,14 +20,12 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
   for (const [i, o] of array.entries()) {
     const property = map.get(i);
     if (property) {
-      if (!nonClassTypes.includes(property.type)) {
-        const subTarget = defaultMetadataStorage.findTypeMetadata(target, property.key)?.typeFunction();
-        if (storage.has(subTarget)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          obj[property.key] = Array.isArray(o) ? plainMapValues(subTarget as any, o) : o;
-        } else if (Array.isArray(o) && o.length) {
-          throw new UnknownTypeError(`Cannot found type ${property.type}/${subTarget?.name} for ${target.name}.${property.key}. Make sure to use @Type for class property`);
-        }
+      const subTarget = defaultMetadataStorage.findTypeMetadata(target, property.key)?.typeFunction();
+      if (storage.has(subTarget)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        obj[property.key] = Array.isArray(o) ? plainMapValues(subTarget as any, o) : o;
+      } else if (Array.isArray(o) && o.length) {
+        throw new UnknownTypeError(`Cannot found type ${property.type}/${subTarget?.name} for ${target.name}.${property.key}. Make sure to use @Type for class property`);
       } else {
         obj[property.key] = o;
       }
@@ -53,20 +49,17 @@ function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, un
   }
 
   const arr = [] as unknown[];
-  for (const [i, o] of map.entries()) {
-    const property = map.get(i);
-    if (property && o.key in object) {
-      if (!nonClassTypes.includes(property.type)) {
-        const subTarget = defaultMetadataStorage.findTypeMetadata(target, property.key)?.typeFunction();
-        if (storage.has(subTarget)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          arr.push(classMapValue(subTarget as any, object[property.key] as Record<string, unknown>));
-        }
+  for (const [i, property] of map.entries()) {
+    if (property.key in object) {
+      const subTarget = defaultMetadataStorage.findTypeMetadata(target, property.key)?.typeFunction();
+      if (storage.has(subTarget)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        arr.push(classMapValue(subTarget as any, object[property.key] as Record<string, unknown>));
       } else {
-        arr.push(object[o.key]);
+        arr[i] = object[property.key];
       }
     } else {
-      arr.push(undefined);
+      arr[i] = undefined;
     }
   }
   return arr;
