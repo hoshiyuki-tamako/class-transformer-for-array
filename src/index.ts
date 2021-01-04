@@ -27,7 +27,7 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
         if (storage.has(subTarget)) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           obj[property.key] = Array.isArray(o) ? plainMapValues(subTarget as any, o) : o;
-        } else {
+        } else if (Array.isArray(o) && o.length) {
           throw new UnknownTypeError(`Cannot found type ${property.type}/${subTarget?.name} for ${target.name}.${property.key}. Make sure to use @Type for class property`);
         }
       } else {
@@ -49,7 +49,7 @@ export function plainArrayToClasses<T>(target: ClassConstructor<T>, array: unkno
 function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, unknown>) {
   const map = storage.get(target);
   if (!map) {
-    throw new UnknownTypeError();
+    throw new UnknownClassError(`Cannot found class of ${target.name}`);
   }
 
   const arr = [] as unknown[];
@@ -65,6 +65,8 @@ function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, un
       } else {
         arr.push(object[o.key]);
       }
+    } else {
+      arr.push(undefined);
     }
   }
   return arr;
@@ -80,14 +82,10 @@ export function classToPlainArray<T>(
       return [];
     }
 
+    const record = classToPlain(object, options);
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const c = Array.isArray(object) ? (object[0] as any).constructor : (object as any).constructor as any;
-    const map = storage.get(c);
-    if (!map) {
-      throw new UnknownClassError(`Cannot found class of ${c.name}`);
-    }
-
-    const record = classToPlain(object, options);
     if (Array.isArray(object)) {
       return (record as Record<string, unknown>[]).map((o) => classMapValue(c, o))
     } else {
@@ -97,7 +95,7 @@ export function classToPlainArray<T>(
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[], options?: TransformValidationOptions): Promise<T> {
-  return transformAndValidate(target, plainMapValues(target, array) ?? {}, options) as unknown as Promise<T>;
+  return transformAndValidate(target, plainMapValues(target, array), options) as unknown as Promise<T>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

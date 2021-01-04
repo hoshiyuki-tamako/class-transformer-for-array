@@ -8,7 +8,7 @@ import { Color, Product } from './classes/Product';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class PlainArrayToClassesTest {
   @test()
-  public plainArrayToClasses() {
+  public normal() {
     const expected = [
       [1, ['blue'], 2.2],
       [2, ['yellow'], 2.2],

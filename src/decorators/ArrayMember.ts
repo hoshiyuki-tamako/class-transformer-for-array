@@ -1,4 +1,7 @@
 import 'reflect-metadata';
+
+import { TypeError } from 'common-errors';
+
 import { PropertyInfo, storage } from '../storage';
 
 export function ArrayMember(index: number): (target: {
@@ -15,9 +18,7 @@ export function ArrayMember(index: number): (target: {
       storage.set(target.constructor, new Map());
     }
     const map = storage.get(target.constructor);
-    if (map) {
-      map.set(index, new PropertyInfo(propertyKey, metadata.name));
-      storage.set(target.constructor, new Map([...map.entries()].sort((a, b) => a[0] - b[0])));
-    }
+    map!.set(index, new PropertyInfo(propertyKey, metadata.name));
+    storage.set(target.constructor, new Map([...map!.entries()].sort((a, b) => a[0] - b[0])));
   };
 }

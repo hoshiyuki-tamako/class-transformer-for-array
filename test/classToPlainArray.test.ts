@@ -3,14 +3,17 @@ import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 import { ClassType } from 'class-transformer/ClassTransformer';
 
-import { classToPlainArray } from '../src';
+import { classToPlainArray, UnknownClassError } from '../src';
+import { KeyNotInObject } from './classes/KeyNotInObject';
+import { ParentType } from './classes/MissingChildType';
 import { Color, Product } from './classes/Product';
+import { UnknownClass } from './classes/Unknown';
 
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ClassToPlainArrayTest {
   @test()
-  public async classToPlainArray() {
+  public async normal() {
     const expected = new Product().setColor();
     const result = classToPlainArray(expected) as unknown[];
     // basic
@@ -26,7 +29,7 @@ class ClassToPlainArrayTest {
   }
 
   @test()
-  public async classToPlainArrayArray() {
+  public async array() {
     const array = [
       new Product().setColor(),
       new Product().setId(1).setColor().setPrice(1).setDisplayPrice('1'),
@@ -60,5 +63,34 @@ class ClassToPlainArrayTest {
       expect(result).property('2', expected.price);
       expect(result).property('3', expected.displayPrice);
     }
+  }
+
+  @test()
+  public emptyArray() {
+    const result = classToPlainArray([]) as [];
+    expect(result.constructor).equals(Array);
+    expect(result).length(0);
+  }
+
+  @test()
+  public unknownClass() {
+    expect(() => classToPlainArray(new UnknownClass())).throw(UnknownClassError);
+  }
+
+  @test()
+  public keyNotInObject() {
+    const obj = new KeyNotInObject();
+    delete obj.deleteThis;
+    const result = classToPlainArray(obj) as [];
+    expect(result.constructor).equals(Array);
+    expect(result).length(1);
+    expect(result).property('0', undefined);
+  }
+
+  @test()
+  public missingChildType() {
+    const result = classToPlainArray(new ParentType()) as [];
+    expect(result.constructor).equals(Array);
+    expect(result).length(0);
   }
 }

@@ -8,7 +8,7 @@ import { Color, Product } from './classes/Product';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ArrayTransformAndValidatesTest {
   @test()
-  public async arrayTransformAndValidates() {
+  public async normal() {
     const expected = [
       [1, ['blue'], 2.2, '2'],
       [2, ['yellow'], 2.2, '2'],
@@ -43,7 +43,7 @@ class ArrayTransformAndValidatesTest {
   }
 
   @test()
-  public async arrayTransformAndValidatesFail() {
+  public async fail() {
     const expected = [
       [1, ['blue'], 2.2, 0],
       [2, ['yellow'], 2.2, 0],
