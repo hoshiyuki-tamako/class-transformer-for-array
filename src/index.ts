@@ -11,6 +11,7 @@ import { storage } from './storage';
 export * from './decorators/ArrayMember';
 export * from './storage';
 export * from './exceptions';
+export * from './types';
 
 function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
   const map = storage.get(target);
@@ -26,7 +27,7 @@ function plainMapValues<T>(target: ClassConstructor<T>, array: unknown[]) {
       const subTarget = typeMeta?.typeFunction();
       if (storage.has(subTarget)) {
         if (Array.isArray(o)) {
-          if (typeMeta?.reflectedType === Array) {
+          if (typeMeta?.reflectedType === Array || property.options?.isArray) {
             obj[property.key] = o.map((p) => plainMapValues(subTarget as any, p));
           } else {
             obj[property.key] = plainMapValues(subTarget as any, o);
@@ -62,7 +63,7 @@ function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, un
       const typeMeta = defaultMetadataStorage.findTypeMetadata(target, property.key);
       const subTarget = typeMeta?.typeFunction();
       if (storage.has(subTarget)) {
-        if (typeMeta?.reflectedType === Array) {
+        if (typeMeta?.reflectedType === Array || property.options?.isArray) {
           if (object[property.key] == null) {
             arr[i] = object[property.key];
           } else {

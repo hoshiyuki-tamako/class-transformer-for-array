@@ -1,8 +1,12 @@
+import { ArrayMemberOptions } from './types';
+
 export class PropertyInfo {
   public key = '';
+  public options?: ArrayMemberOptions;
 
-  public constructor(key: string) {
+  public constructor(key: string, options?: ArrayMemberOptions) {
     this.key = key;
+    this.options = options;
   }
 }
 

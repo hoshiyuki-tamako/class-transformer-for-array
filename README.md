@@ -85,7 +85,8 @@ class Product {
   @IsString()
   public displayPrice: string = '0';
 
-  @ArrayMember(4)
+  // in some case reflect-metadata may not able to get array, set isArray: true to be sure it will always transform to array
+  @ArrayMember(4, { isArray: true })
   @Type(() => Size)
   public sizes?: Size[] = [];
 

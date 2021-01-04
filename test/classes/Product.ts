@@ -31,7 +31,7 @@ export class Product {
   @IsString()
   public displayPrice: string = '0';
 
-  @ArrayMember(4)
+  @ArrayMember(4, { isArray: true })
   @Type(() => Size)
   public sizes?: Size[] = [];
 
