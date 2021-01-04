@@ -9,7 +9,7 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {
-    "test": "./node_modules/.bin/nyc ./node_modules/.bin/ts-mocha test/**/*test.ts",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/ts-mocha test/**/**/*test.ts",
     "build": "./node_modules/.bin/tsc",
     "lint": "./node_modules/.bin/eslint .",
     "prepublishOnly": "npm run build"
