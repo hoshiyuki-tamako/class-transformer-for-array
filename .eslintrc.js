@@ -16,10 +16,5 @@ module.exports = {
     ],
     "rules": {
       "@typescript-eslint/no-inferrable-types": "off"
-    },
-    "overrides": [
-      {
-        "files": ["*.ts"]
-      }
-    ]
+    }
 };
