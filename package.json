@@ -1,6 +1,6 @@
 {
   "name": "class-transformer-for-array",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "class transform for array",
   "repository": {
     "type": "git",
@@ -10,8 +10,9 @@
   "types": "src/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/ts-mocha test/**/*test.ts",
-    "prepublishOnly ": "./node_modules/.bin/tsc",
-    "lint": "./node_modules/.bin/eslint ."
+    "build": "./node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/eslint .",
+    "prepublishOnly": "npm run build"
   },
   "author": "hoshiyuki-tamako",
   "license": "MIT",

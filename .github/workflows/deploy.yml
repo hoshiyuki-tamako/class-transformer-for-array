@@ -20,10 +20,11 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-  
+
       - run: npm i
       - run: npm run lint
       - run: npm test
+      - run: npm run build
 
       - uses: JS-DevTools/npm-publish@v1
         with:
