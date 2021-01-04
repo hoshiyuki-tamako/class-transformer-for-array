@@ -5,7 +5,7 @@ export function ArrayMember(index: number): (target: {
   constructor: unknown;
 }, propertyKey: string) => void {
   if (typeof(index) !== 'number') {
-    throw new Error('index must be number');
+    throw new TypeError('index must be number');
   }
 
   return (target: { constructor: unknown }, propertyKey: string): void => {
