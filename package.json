@@ -10,7 +10,7 @@
   "types": "src/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/ts-mocha test/**/*test.ts",
-    "prepare": "./node_modules/.bin/tsc",
+    "prepublishOnly ": "./node_modules/.bin/tsc",
     "lint": "./node_modules/.bin/eslint ."
   },
   "author": "hoshiyuki-tamako",
