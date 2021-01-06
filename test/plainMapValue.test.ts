@@ -4,10 +4,9 @@ import { expect } from 'chai';
 import { Type } from 'class-transformer';
 
 import { ArrayMember, plainMapValue, UnknownClassError } from '../src';
-import { Product } from './classes/Product';
-import { SkipIndex } from './classes/SkipIndex';
+import { Product, productValidate } from './classes/Product';
+import { SkipIndex, skipIndexValidate } from './classes/SkipIndex';
 import { factory } from './factories';
-import { productValidate, skipIndexValidate } from './factories/validate';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 class UnknownClass {}

@@ -1,11 +1,16 @@
 {
   "name": "class-transformer-for-array",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "class transform for array",
   "repository": {
     "type": "git",
     "url": "https://github.com/hoshiyuki-tamako/class-transformer-for-array.git"
   },
+  "homepage": "https://github.com/hoshiyuki-tamako/class-transformer-for-array#readme",
+  "keywords": [
+    "array",
+    "transform"
+  ],
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {

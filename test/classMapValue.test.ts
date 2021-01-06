@@ -1,9 +1,8 @@
 import { suite, test } from '@testdeck/mocha';
 
 import { classMapValue } from '../src';
-import { Product } from './classes/Product';
+import { Product, productArrayValidate } from './classes/Product';
 import { factory } from './factories';
-import { productArrayValidate } from './factories/validate';
 
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

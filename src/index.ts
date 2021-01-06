@@ -15,13 +15,13 @@ export * from './exceptions';
 export * from './types';
 
 export function plainMapValue<T>(target: ClassConstructor<T>, array: unknown[] | unknown[][]): Record<string, unknown> {
+  if (!Array.isArray(array)) {
+    throw new TypeError(`input array is not an array: ${array}`);
+  }
+
   const map = storage.getPropertyIndexMap(target);
   if (!map) {
     throw new UnknownClassError(`Cannot found class of ${target.name}`);
-  }
-
-  if (!Array.isArray(array)) {
-    throw new TypeError(`input array is not an array: ${array}`);
   }
 
   const obj = {} as Record<string, unknown>;
@@ -29,7 +29,7 @@ export function plainMapValue<T>(target: ClassConstructor<T>, array: unknown[] |
     const property = map.get(i);
     if (property) {
       const typeMeta = defaultMetadataStorage.findTypeMetadata(target, property.key);
-      const subTarget = typeMeta?.typeFunction() as never;
+      const subTarget = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
       if (storage.has(subTarget)) {
         if (Array.isArray(o)) {
           if (typeMeta?.reflectedType === Array || property.options?.isArray) {

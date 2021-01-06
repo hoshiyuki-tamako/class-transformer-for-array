@@ -2,10 +2,11 @@ import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 
 import { plainArrayToClass } from '../src';
+import { Override, OverrideValidate } from './classes/Override';
 import { PassClassTransformOption } from './classes/PassClassTransformOption';
-import { Product } from './classes/Product';
+import { PersonalBlog, personalBlogValidate } from './classes/PersonalBlog';
+import { Product, productValidate } from './classes/Product';
 import { factory } from './factories';
-import { productValidate } from './factories/validate';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
@@ -52,5 +53,19 @@ class PlainArrayToClassTest {
     expect(result).property('constructor', PassClassTransformOption);
     expect(result).property('id', 0);
     expect(result).property('title', expected.title);
+  }
+
+  @test()
+  public extendsClass() {
+    const expected = factory.make(PersonalBlog).one();
+    personalBlogValidate(expected, plainArrayToClass(PersonalBlog, [expected.id, expected.title, expected.author]));
+  }
+
+  @test()
+  public overrideClass() {
+    const expected = factory.make(Override).one();
+    OverrideValidate(Object.assign(new Override(), {
+      weight: expected.weight,
+    }), plainArrayToClass(Override, [expected.weight]));
   }
 }

@@ -4,9 +4,8 @@ import { expect } from 'chai';
 
 import { arrayTransformAndValidate } from '../src';
 import { PassClassTransformOption } from './classes/PassClassTransformOption';
-import { Product } from './classes/Product';
+import { Product, productValidate } from './classes/Product';
 import { factory } from './factories';
-import { productValidate } from './factories/validate';
 
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

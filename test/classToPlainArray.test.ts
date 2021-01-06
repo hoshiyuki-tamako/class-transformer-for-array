@@ -4,10 +4,9 @@ import { TypeError } from 'common-errors';
 
 import { ArrayMember, classToPlainArray, UnknownClassError } from '../src';
 import { PassClassTransformOption } from './classes/PassClassTransformOption';
-import { Product } from './classes/Product';
-import { SkipIndex } from './classes/SkipIndex';
+import { Product, productArrayValidate } from './classes/Product';
+import { SkipIndex, skipIndexArrayValidate } from './classes/SkipIndex';
 import { factory } from './factories';
-import { productArrayValidate, skipIndexArrayValidate } from './factories/validate';
 
 class KeyNotInObject {
   @ArrayMember(0)
