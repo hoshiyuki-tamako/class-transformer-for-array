@@ -237,6 +237,8 @@ class Product {
 ### Extends
 
 ```ts
+import 'reflect-metadata';
+
 import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
 
 class IdBase {
@@ -265,6 +267,8 @@ console.log(result, arr);
 ### Override
 
 ```ts
+import 'reflect-metadata';
+
 import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
 
 class Blog {

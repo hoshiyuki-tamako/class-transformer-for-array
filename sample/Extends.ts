@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { ArrayMember, classToPlainArray, plainArrayToClass } from '../src';
 
 class IdBase {
