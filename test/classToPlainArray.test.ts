@@ -1,69 +1,46 @@
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
-import { ClassType } from 'class-transformer/ClassTransformer';
 import { TypeError } from 'common-errors';
 
-import { classToPlainArray, UnknownClassError } from '../src';
-import { KeyNotInObject } from './classes/KeyNotInObject';
-import { ParentType } from './classes/MissingChildType';
-import { Color, Product } from './classes/Product';
-import { SkipIndex, SkipIndexChild } from './classes/SkipIndex';
-import { UnknownClass } from './classes/Unknown';
+import { ArrayMember, classToPlainArray, UnknownClassError } from '../src';
+import { Product } from './classes/Product';
+import { SkipIndex } from './classes/SkipIndex';
+import { factory } from './factories';
+import { productArrayValidate, skipIndexArrayValidate } from './factories/validate';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+class KeyNotInObject {
+  @ArrayMember(0)
+  public deleteThis?: boolean = true;
+}
+
+class UnknownClass {}
+
+class ChildType {}
+
+class ParentType {
+  @ArrayMember(0)
+  public child: ChildType | null = null;
+}
+
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ClassToPlainArrayTest {
   @test()
   public async normal() {
-    const expected = new Product().setColor();
-    const result = classToPlainArray(expected) as unknown[];
-    // basic
-    expect(result.constructor).equals(Array);
-    expect(result).property('0', expected.id);
-    // nested
-    expect(result).property('1').not.null;
-    expect((result[1] as ClassType<Color>)?.constructor).equals(Array);
-    expect(result).property('1').property('0', expected.color!.name);
-    // other values
-    expect(result).property('2', expected.price);
-    expect(result).property('3', expected.displayPrice);
+    const expected = factory.make(Product).one();
+    const result = classToPlainArray(Object.assign(new Product(), expected, { displayPrice: +expected.displayPrice }));
+    productArrayValidate(expected, result);
   }
 
   @test()
   public async array() {
-    const array = [
-      new Product().setColor(),
-      new Product().setId(1).setColor().setPrice(1).setDisplayPrice('1'),
-    ];
-    const results = classToPlainArray(array) as unknown[][];
-    {
-      const expected = array[0];
-      const result = results[0];
-      // basic
-      expect(result.constructor).equals(Array);
-      expect(result).property('0', expected.id);
-      // nested
-      expect(result).property('1').not.null;
-      expect((result[1] as ClassType<Color>)?.constructor).equals(Array);
-      expect(result).property('1').property('0', expected.color!.name);
-      // other values
-      expect(result).property('2', expected.price);
-      expect(result).property('3', expected.displayPrice);
-    }
-    {
-      const expected = array[1];
-      const result = results[1];
-      // basic
-      expect(result.constructor).equals(Array);
-      expect(result).property('0', expected.id);
-      // nested
-      expect(result).property('1').not.null;
-      expect((result[1] as ClassType<Color>)?.constructor).equals(Array);
-      expect(result).property('1').property('0', expected.color!.name);
-      // other values
-      expect(result).property('2', expected.price);
-      expect(result).property('3', expected.displayPrice);
+    const testData = factory.make(Product).many(2);
+    const results = classToPlainArray(testData) as unknown[][];
+    expect(results).property('constructor', Array);
+    expect(results).length(testData.length);
+    for (const [i, expected] of testData.entries()) {
+      expect(results).property(i.toString());
+      productArrayValidate(expected, results[i]);
     }
   }
 
@@ -86,7 +63,7 @@ class ClassToPlainArrayTest {
     const result = classToPlainArray(obj) as [];
     expect(result.constructor).equals(Array);
     expect(result).length(1);
-    expect(result).property('0', undefined);
+    expect(result).property('0').is.undefined;
   }
 
   @test()
@@ -94,40 +71,25 @@ class ClassToPlainArrayTest {
     const result = classToPlainArray(new ParentType()) as [];
     expect(result.constructor).equals(Array);
     expect(result).length(1);
-    expect(result).property('0', null);
+    expect(result).property('0').is.null;
   }
 
   @test()
   public undefinedArray() {
-    const expected = new Product().setColor();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (expected as any).sizes = null;
-    const result = classToPlainArray(expected) as unknown[];
+    const expected = factory.make(Product).one();
+    const result = classToPlainArray(Object.assign(expected, { sizes: null })) as unknown[];
     expect(result).property('4').is.null;
   }
 
   @test()
   public arrayIsNotArray() {
-    const expected = new Product().setColor();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (expected as any).sizes = 1;
-    expect(() => classToPlainArray(expected)).throw(TypeError)
+    const expected = factory.make(Product).one();
+    expect(() => classToPlainArray(Object.assign(expected, { sizes: 1 }))).throw(TypeError)
   }
 
   @test()
   public skipIndex() {
-    const data = new SkipIndex();
-    data.child = new SkipIndexChild();
-    data.childArray = [new SkipIndexChild(), new SkipIndexChild()];
-    const result = classToPlainArray(data) as [];
-    expect(result.constructor).equals(Array);
-    expect(result).property('0', data.id);
-    expect(result).property('2', data.name);
-    expect(result).property('4').property('0', data.child.id);
-    expect(result).property('4').property('2', data.child.name);
-    expect(result).property('6').property('0').property('0', data.childArray[0].id);
-    expect(result).property('6').property('0').property('2', data.childArray[0].name);
-    expect(result).property('6').property('1').property('0', data.childArray[1].id);
-    expect(result).property('6').property('1').property('2', data.childArray[1].name);
+    const expected = factory.make(SkipIndex).one();
+    skipIndexArrayValidate(expected, classToPlainArray(expected));
   }
 }

@@ -1,23 +1,18 @@
 import { TypeError } from 'common-errors';
 
-import { ArrayMemberOptions } from '../types';
 import { PropertyInfo, storage } from '../storage';
+import { ArrayMemberOptions } from '../types';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-export function ArrayMember(index: number, options?: ArrayMemberOptions): (target: {
+export type Constructable = {
   constructor: unknown;
-}, propertyKey: string) => void {
+}
+
+export function ArrayMember(index: number, options?: ArrayMemberOptions): (target: unknown, propertyKey: string) => void {
   if (typeof(index) !== 'number') {
     throw new TypeError('index must be number');
   }
 
-  return (target: { constructor: unknown }, propertyKey: string): void => {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    if (!storage.has(target.constructor)) {
-      storage.set(target.constructor, new Map());
-    }
-    const map = storage.get(target.constructor);
-    map!.set(index, new PropertyInfo(propertyKey, options));
-    storage.set(target.constructor, new Map([...map!.entries()].sort((a, b) => a[0] - b[0])));
+  return (target: unknown, propertyKey: string) => {
+    storage.add((target as { constructor: never }).constructor, index, new PropertyInfo(propertyKey, options));
   };
 }

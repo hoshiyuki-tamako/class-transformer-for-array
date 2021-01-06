@@ -1,60 +1,55 @@
 import 'reflect-metadata';
 
+import { Fixture } from 'class-fixtures-factory';
 import { Transform, Type } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { IsNumber, ValidateNested, IsString } from 'class-validator';
+import faker from 'faker';
 
 import { ArrayMember } from '../../src';
 
 export class Color {
   @ArrayMember(0)
+  @Fixture(() => faker.commerce.color())
   public name: string = '';
 }
 
 export class Size {
   @ArrayMember(0)
+  @Fixture(() => faker.random.number())
   public size: number = 0;
 }
 
 export class Product {
   @ArrayMember(0)
+  @IsNumber()
+  @Fixture(() => faker.random.number())
   public id: number = 0;
 
   @ArrayMember(1)
-  @Type(() => Color)
-  public color?: Color;
-
-  @ArrayMember(2)
-  @Transform((v) => +v?.toFixed())
+  @IsNumber()
+  @Fixture(() => faker.random.number())
   public price: number = 0;
 
-  @ArrayMember(3)
+  @ArrayMember(2)
   @IsString()
+  @Transform((v) => v?.toString())
+  @Fixture(() => faker.random.number().toString())
   public displayPrice: string = '0';
 
+  @ArrayMember(3)
+  @ValidateNested()
+  @Type(() => Color)
+  @Fixture({ type: () => Color })
+  public color?: Color;
+
   @ArrayMember(4, { isArray: true })
+  @ValidateNested({ each: true })
   @Type(() => Size)
-  public sizes?: Size[] = [];
+  @Fixture({ type: () => [Size] })
+  public sizes: Size[] = [];
 
   @ArrayMember(5)
+  @IsNumber(undefined, { each: true })
+  @Fixture({ type: () => [Number] })
   public values: number[] = [];
-
-  public setId(id: number): this {
-    this.id = id;
-    return this;
-  }
-
-  public setColor(color: Color = new Color()): this {
-    this.color = color;
-    return this;
-  }
-
-  public setPrice(price: number): this {
-    this.price = price;
-    return this;
-  }
-
-  public setDisplayPrice(displayPrice: string): this {
-    this.displayPrice = displayPrice;
-    return this;
-  }
 }

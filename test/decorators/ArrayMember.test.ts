@@ -3,21 +3,39 @@ import { expect } from 'chai';
 import { TypeError } from 'common-errors';
 
 import { ArrayMember } from '../../src';
+import { ArrayMemberExistsError } from '../../src/exceptions/ArrayMemberExistsError';
+
+class TestClass {
+  public test1 = '';
+  public test2 = '';
+}
+
+class TestDuplicatedClass {
+  public test1 = '';
+  public test2 = '';
+}
+
 
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ArrayMemberTest {
   @test()
-  public arrayMember() {
-    expect(() => ArrayMember(0)).not.throw();
-    expect(() => ArrayMember(0)).not.throw();
-    ArrayMember(1);
+  public normal() {
+    expect(() => ArrayMember(0)(Object.create(TestClass.prototype), 'test1')).not.throw();
+    expect(() => ArrayMember(1)(Object.create(TestClass.prototype), 'test2')).not.throw();
   }
 
   @test()
-  public arrayMemberThrow() {
-    expect(() => ArrayMember(0)).not.throw();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect(() => ArrayMember('0' as any)).throw(TypeError);
+  public typeError() {
+    expect(() => ArrayMember('' as never)).throw(TypeError);
+    expect(() => ArrayMember(true as never)).throw(TypeError);
+    expect(() => ArrayMember({} as never)).throw(TypeError);
+  }
+
+  @test()
+  public duplicateIndex() {
+    const func = ArrayMember(0);
+    expect(() => func(Object.create(TestDuplicatedClass.prototype), 'test1')).not.throw();
+    expect(() => func(Object.create(TestDuplicatedClass.prototype), 'test2')).throw(ArrayMemberExistsError);
   }
 }

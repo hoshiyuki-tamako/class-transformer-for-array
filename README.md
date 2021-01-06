@@ -14,14 +14,18 @@ or
 npm i class-transformer-for-array
 ```
 
-## Example
+## Usage
+
+see `./sample/*.ts` for the script
+
+see unit test for more example
 
 ### Simple
 
 ```ts
 import 'reflect-metadata';
 
-import { plainArrayToClass, classToPlainArray } from 'class-transformer-for-array';
+import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
 
 class Blog {
   @ArrayMember(0)
@@ -29,143 +33,184 @@ class Blog {
 
   @ArrayMember(1)
   public title = '';
-
-  @ArrayMember(2)
-  public content = '';
 }
 
-
-// Blog { id = 12, title = "the title", content = "abc content" }
-const blog = plainArrayToClass(Blog, [12, 'the title', 'abc content']);
-// [12, 'the title', 'abc content']
+// Blog { id: 12, title: "the title" }
+const blog = plainArrayToClass(Blog, [12, 'the title']);
+// [12, 'the title']
 const arr = classToPlainArray(blog);
+
+console.log(blog, arr);
 ```
 
-### Complex
+### Array
 
 ```ts
-// make sure to import reflect-metadata
 import 'reflect-metadata';
 
-import { Transform, Type } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
 
-import {
-  ArrayMember,
-  arrayTransformAndValidate,
-  arrayTransformAndValidates,
-  classToPlainArray,
-  plainArrayToClass,
-  plainArrayToClasses,
-} from 'class-transformer-for-array';
-
-class Color {
+class Blog {
   @ArrayMember(0)
-  public name: string = '';
+  public id = 0;
+
+  @ArrayMember(1)
+  public title = '';
 }
 
-class Size {
+// [Blog { id: 1, title: 'the title' }, Blog { id: 2, title: 'the title' }, Blog { id: 3, title: 'the title' }]
+const blog = plainArrayToClass(Blog, [
+  [1, 'the title'],
+  [2, 'the title'],
+  [3, 'the title'],
+], { isArray: true });
+// [[1,'the title'],[2,'the title'],[3,'the title']]
+const arr = classToPlainArray(blog);
+
+console.log(blog, arr);
+```
+
+### Nested
+
+```ts
+import 'reflect-metadata';
+
+import { Type } from 'class-transformer';
+
+import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
+
+class Attachment {
   @ArrayMember(0)
-  public size: number = 0;
+  public id = 0;
+
+  @ArrayMember(1)
+  public name = 'default';
 }
+
+class Blog {
+  @ArrayMember(0)
+  @Type(() => Attachment)
+  public attachment?: Attachment;
+}
+
+// Blog { attachment: Attachment { id: 1, name: "test.png" } }
+const blog = plainArrayToClass(Blog, [[1, 'test.png']]);
+// [[1, 'test.png']]
+const arr = classToPlainArray(blog);
+
+// Blog { attachment: Attachment { id: null, name: 'default' } }
+const a = plainArrayToClass(Blog, [[null]]);
+
+// Blog { attachment: Attachment { id: 1, name: null } }
+const b = plainArrayToClass(Blog, [[1,null]]);
+
+// Blog { attachment: null }
+const c = plainArrayToClass(Blog, [null]);
+
+// Blog {}
+const d = plainArrayToClass(Blog, []);
+
+console.log(blog, arr, a, b, c, d);
+```
+
+### Nested Array
+
+```ts
+import 'reflect-metadata';
+
+import { Type } from 'class-transformer';
+
+import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
+
+class Attachment {
+  @ArrayMember(0)
+  public id = 0;
+
+  @ArrayMember(1)
+  public name = 'default';
+}
+
+class Blog {
+  @ArrayMember(0, { isArray: true })
+  @Type(() => Attachment)
+  public attachment: Attachment[] = [];
+}
+
+// Blog { attachment: [Attachment { id: 1, name: "test1.png" }, Attachment { id: 2, name: "test2.png" }] }
+const blog = plainArrayToClass(Blog, [
+  [
+    [1, 'test1.png'],
+    [2, 'test2.png'],
+  ],
+]);
+// [[[1,'test1.png'],[2,'test2.png']]]
+const arr = classToPlainArray(blog);
+
+// Blog { attachment: null }
+const a = plainArrayToClass(Blog, [null]);
+
+console.log(blog, arr, a);
+```
+
+### Class Transform
+
+```ts
+import 'reflect-metadata';
+
+import { Transform } from 'class-transformer';
+
+import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
 
 class Product {
   @ArrayMember(0)
-  public id: number = 0;
-
-  @ArrayMember(1)
-  @Type(() => Color)
-  public color?: Color;
-
-  @ArrayMember(2)
-  @Transform((v) => +v?.toFixed())
-  public price: number = 0;
-
-  @ArrayMember(3)
-  @IsString()
-  public displayPrice: string = '0';
-
-  // in some case reflect-metadata may not able to get array, set isArray: true to be sure it will always transform to array
-  @ArrayMember(4, { isArray: true })
-  @Type(() => Size)
-  public sizes?: Size[] = [];
-
-  @ArrayMember(5)
-  public values: number[] = [];
+  @Transform((v) => v?.toString(), { toClassOnly: true })
+  @Transform((v) => +v, { toPlainOnly: true })
+  public displayPrice = '0';
 }
 
-{
-  // single object
-  const single = [1, ['blue'], 2.2, '2', [[1], [2]], [1, 2]];
-  // {"id":1,"price":2,"displayPrice":"2","sizes":[{"size":1},{"size":2}],"color":{"name":"blue"},"values":[1,2]}
-  const object1 = plainArrayToClass(Product, single);
-  const object2 = await arrayTransformAndValidate(Product, single);
-  
-  // [1, ['blue'], 2.2, '2', [[1], [2]], [1, 2]]
-  classToPlainArray(object1);
-}
+// Product { displayPrice: '99.99' }
+const obj = plainArrayToClass(Product, [99.99]);
+// [99.99]
+const arr = classToPlainArray(obj);
 
-
-{
-  // multiple object
-  const multiple = [
-    [1, ['blue'], 2.2, '2'],
-    [2, ['yellow'], 2.2, '2'],
-  ];
-  const object1 = plainArrayToClasses(Product, multiple);
-  const object2 = await arrayTransformAndValidates(Product, multiple);
-  
-  /*
-  [
-    [1, ['blue'], 2, '2'],
-    [2, ['yellow'], 2, '2'],
-  ]
-  */
-  classToPlainArray(object1);
-}
+console.log(obj, arr);
 ```
 
-### Error Handling
-
-```ts
-import {
-  ClassTransformerForArrayError,
-  UnknownClassError,
-} from 'class-transformer-for-array';
-
-import { TypeError } from 'common-errors';
-
-try {
-  const single = [1, ['blue'], 2.2, '2'];
-  const object1 = plainArrayToClass(Product, single);
-} catch (e) {
-  // catch all error
-  if (e instanceof ClassTransformerForArrayError) {
-
-  }
-  // if class not register
-  if (e instanceof UnknownClassError) {
-
-  }
-}
-
-try {
-  const result = classToPlainArray(new Product());
-} catch (e) {
-  // all above exception plus below
-  // if type error, make sure to `npm i common-errors` to catch below exception
-  if (e instanceof TypeError) {
-
-  }
-}
-```
-
-### Without transform
+### Class Validate
 
 ```ts
 import 'reflect-metadata';
 
-import { plainMapValue, classMapValue } from 'class-transformer-for-array';
+import { IsString } from 'class-validator';
+
+import { ArrayMember, arrayTransformAndValidate, classToPlainArray } from 'class-transformer-for-array';
+
+class Product {
+  @ArrayMember(0)
+  @IsString()
+  public displayPrice = '0';
+}
+
+
+(async () => {
+  // Product { displayPrice: '99.99' }
+  const obj = await arrayTransformAndValidate(Product, ['99.99']);
+  // ['99.99']
+  const arr = classToPlainArray(obj);
+
+  console.log(obj, arr);
+
+  // throw
+  await arrayTransformAndValidate(Product, [99.99]).catch(console.error);
+})();
+```
+
+### Map Data Without Transform
+
+```ts
+import 'reflect-metadata';
+
+import { ArrayMember, classMapValue, plainMapValue } from 'class-transformer-for-array';
 
 class Blog {
   @ArrayMember(0)
@@ -173,14 +218,12 @@ class Blog {
 
   @ArrayMember(1)
   public title = '';
-
-  @ArrayMember(2)
-  public content = '';
 }
 
-// Object { id = 12, title = "the title", content = "abc content" }
-const blog = plainMapValue(Blog, [12, 'the title', 'abc content']);
+// { id: 12, title: 'the title' }
+const blog = plainMapValue(Blog, [12, 'the title']);
+// [12, 'the title']
+const arr = classMapValue(Blog, blog);
 
-// [12, 'the title', 'abc content']
-const raw = classMapValue(Blog, blog);
+console.log(blog, arr);
 ```
