@@ -81,7 +81,7 @@ class PlainMapValueTest {
   }
 
   @test()
-  public async inputIsNotArray() {
+  public inputIsNotArray() {
     expect(() => plainMapValue(Product, null as never)).throw(TypeError);
     expect(() => plainMapValue(Product, 1 as never)).throw(TypeError);
   }

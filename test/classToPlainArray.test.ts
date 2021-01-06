@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { TypeError } from 'common-errors';
 
 import { ArrayMember, classToPlainArray, UnknownClassError } from '../src';
+import { PassClassTransformOption } from './classes/PassClassTransformOption';
 import { Product } from './classes/Product';
 import { SkipIndex } from './classes/SkipIndex';
 import { factory } from './factories';
@@ -26,14 +27,14 @@ class ParentType {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ClassToPlainArrayTest {
   @test()
-  public async normal() {
+  public normal() {
     const expected = factory.make(Product).one();
     const result = classToPlainArray(Object.assign(new Product(), expected, { displayPrice: +expected.displayPrice }));
     productArrayValidate(expected, result);
   }
 
   @test()
-  public async array() {
+  public array() {
     const testData = factory.make(Product).many(2);
     const results = classToPlainArray(testData) as unknown[][];
     expect(results).property('constructor', Array);
@@ -91,5 +92,15 @@ class ClassToPlainArrayTest {
   public skipIndex() {
     const expected = factory.make(SkipIndex).one();
     skipIndexArrayValidate(expected, classToPlainArray(expected));
+  }
+
+  @test()
+  public classTransformOption() {
+    const expected = factory.make(PassClassTransformOption).one();
+    const result = classToPlainArray(expected, { strategy: 'excludeAll' });
+    expect(result).property('constructor', Array);
+    expect(result).length(2);
+    expect(result).property('0').is.undefined;
+    expect(result).property('1', expected.title);
   }
 }

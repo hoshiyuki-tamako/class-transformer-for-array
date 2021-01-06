@@ -9,7 +9,7 @@ import { productArrayValidate } from './factories/validate';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ClassMapValueTest {
   @test()
-  public async normal() {
+  public normal() {
     const expected = factory.make(Product).one();
     productArrayValidate(expected, classMapValue(Product, {...expected}));
   }

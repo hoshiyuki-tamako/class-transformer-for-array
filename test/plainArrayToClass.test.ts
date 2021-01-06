@@ -1,7 +1,8 @@
-import { expect } from 'chai';
 import { suite, test } from '@testdeck/mocha';
+import { expect } from 'chai';
 
 import { plainArrayToClass } from '../src';
+import { PassClassTransformOption } from './classes/PassClassTransformOption';
 import { Product } from './classes/Product';
 import { factory } from './factories';
 import { productValidate } from './factories/validate';
@@ -13,7 +14,7 @@ import { productValidate } from './factories/validate';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class PlainArrayToClassTest {
   @test()
-  public async normal() {
+  public normal() {
     const expected = factory.make(Product).one();
     productValidate(expected, plainArrayToClass(Product, [
       expected.id,
@@ -26,7 +27,7 @@ class PlainArrayToClassTest {
   }
 
   @test()
-  public async array() {
+  public array() {
     const testData = factory.make(Product).many(2);
     const results = plainArrayToClass(Product, testData.map((expected) => [
       expected.id,
@@ -42,5 +43,14 @@ class PlainArrayToClassTest {
       expect(results).property(i.toString());
       productValidate(expected, results[i]);
     }
+  }
+
+  @test()
+  public classTransformOption() {
+    const expected = factory.make(PassClassTransformOption).one();
+    const result = plainArrayToClass(PassClassTransformOption, [expected.id, expected.title], { strategy: 'excludeAll' });
+    expect(result).property('constructor', PassClassTransformOption);
+    expect(result).property('id', 0);
+    expect(result).property('title', expected.title);
   }
 }

@@ -7,10 +7,9 @@ import { TypeError } from 'common-errors';
 import { UnknownClassError } from './exceptions';
 import { ClassConstructor } from './interfaces/class-constructor.type';
 import { storage } from './storage';
-import { TransformValidationForArrayOptions } from './types';
-import { ClassTransformForArrayOptions } from './types';
+import { ClassTransformForArrayOptions, TransformValidationForArrayOptions } from './types';
 
-export * from './decorators/ArrayMember';
+export * from './decorators';
 export * from './storage';
 export * from './exceptions';
 export * from './types';

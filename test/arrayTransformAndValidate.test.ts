@@ -3,6 +3,7 @@ import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 
 import { arrayTransformAndValidate } from '../src';
+import { PassClassTransformOption } from './classes/PassClassTransformOption';
 import { Product } from './classes/Product';
 import { factory } from './factories';
 import { productValidate } from './factories/validate';
@@ -26,6 +27,17 @@ class ArrayTransformAndValidateTest {
       expect(results).property(i.toString());
       productValidate(expected, results[i]);
     }
+  }
+
+  @test()
+  public async transformOption() {
+    const expected = factory.make(PassClassTransformOption).one();
+    const result = await arrayTransformAndValidate(PassClassTransformOption, [expected.id, expected.title], {
+      transformer: { strategy: 'excludeAll' },
+    });
+    expect(result).property('constructor', PassClassTransformOption);
+    expect(result).property('id', 0);
+    expect(result).property('title', expected.title);
   }
 
   @test()
