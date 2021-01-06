@@ -2,7 +2,6 @@
 import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from '../src';
 import { TypeError } from '../src/common-errors';
 
-// const { TypeError } = commonErrors;
 try {
   // class not registered
   plainMapValue(Object, [12, 'the title']);

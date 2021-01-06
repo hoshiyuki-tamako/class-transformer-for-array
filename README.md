@@ -319,7 +319,6 @@ console.log(blog, arr);
 import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from 'class-transformer-for-array';
 import { TypeError } from 'class-transformer-for-array/common-errors';
 
-// const { TypeError } = commonErrors;
 try {
   // class not registered
   plainMapValue(Object, [12, 'the title']);
