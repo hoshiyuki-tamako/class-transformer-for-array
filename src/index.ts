@@ -112,7 +112,8 @@ export function classToPlainArray<T>(
     if (Array.isArray(object)) {
       return (record as Record<string, unknown>[]).map((o) => classMapValue(c, o))
     } else {
-      return classMapValue(c, record);
+      // TODO temp fix due to class transformer 0.3.2 does not expose storage api
+      return classMapValue(c, record as never);
     }
   }
 
