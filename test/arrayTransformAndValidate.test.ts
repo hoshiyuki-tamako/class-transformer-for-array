@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 
 import { arrayTransformAndValidate } from '../src';
+import { UnknownClassError } from './../src/exceptions/UnknownClassError';
+import { arrayMemberStorage, CustomStorageClass, customStorageValidate } from './classes/CustomStorageClass';
 import { PassClassTransformOption } from './classes/PassClassTransformOption';
 import { Product, productValidate } from './classes/Product';
 import { factory } from './factories';
 
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ArrayTransformAndValidateTest {
@@ -51,6 +53,18 @@ class ArrayTransformAndValidateTest {
       expected.values,
     ];
     await expect(arrayTransformAndValidate(Product, input)).rejected;
+  }
+
+  @test()
+  public async customStorage() {
+    const expected = factory.make(CustomStorageClass).one();
+    customStorageValidate(expected, await arrayTransformAndValidate(CustomStorageClass, [expected.id], { arrayMemberStorage }));
+  }
+
+  @test()
+  public async customStorageFail() {
+    const expected = factory.make(CustomStorageClass).one();
+    await expect(arrayTransformAndValidate(CustomStorageClass, [expected.id])).rejectedWith(UnknownClassError);
   }
 
   private mapClassToArray(expected: Product) {

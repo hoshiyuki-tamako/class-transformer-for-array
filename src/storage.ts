@@ -15,7 +15,7 @@ export class PropertyInfo {
 export type PropertyIndexMap = Map<number, PropertyInfo>;
 export type ConstructorMap = Map<Function, PropertyIndexMap>;
 
-export class Storage {
+export class ArrayMemberStorage {
   public map = new Map() as ConstructorMap;
 
   public add(constructor: Function, index: number, info: PropertyInfo): this {
@@ -47,4 +47,4 @@ export class Storage {
   }
 }
 
-export const storage = new Storage();
+export const defaultArrayMemberStorage = new ArrayMemberStorage();

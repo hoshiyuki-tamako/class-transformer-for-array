@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { TypeError } from 'common-errors';
 
 import { ArrayMember, classToPlainArray, UnknownClassError } from '../src';
+import { arrayMemberStorage, customStorageArrayValidate, CustomStorageClass } from './classes/CustomStorageClass';
 import { PassClassTransformOption } from './classes/PassClassTransformOption';
 import { Product, productArrayValidate } from './classes/Product';
 import { SkipIndex, skipIndexArrayValidate } from './classes/SkipIndex';
@@ -101,5 +102,17 @@ class ClassToPlainArrayTest {
     expect(result).length(2);
     expect(result).property('0').is.undefined;
     expect(result).property('1', expected.title);
+  }
+
+  @test()
+  public customStorage() {
+    const expected = factory.make(CustomStorageClass).one();
+    customStorageArrayValidate(expected, classToPlainArray(expected, { arrayMemberStorage }));
+  }
+
+  @test()
+  public customStorageFail() {
+    const expected = factory.make(CustomStorageClass).one();
+    expect(() => classToPlainArray(expected)).throw(UnknownClassError);
   }
 }

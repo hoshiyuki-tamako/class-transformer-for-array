@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { TypeError } from 'common-errors';
 
-import { PropertyInfo, storage } from '../storage';
+import { defaultArrayMemberStorage, PropertyInfo } from '../storage';
 import { ArrayMemberOptions } from '../types';
 
 export type Constructable = {
@@ -13,6 +14,7 @@ export function ArrayMember(index: number, options?: ArrayMemberOptions): (targe
   }
 
   return (target: unknown, propertyKey: string) => {
+    const storage = options?.arrayMemberStorage || defaultArrayMemberStorage
     storage.add((target as { constructor: never }).constructor, index, new PropertyInfo(propertyKey, options));
   };
 }

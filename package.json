@@ -1,6 +1,6 @@
 {
   "name": "class-transformer-for-array",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "class transform for array",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "class-fixtures-factory": "^1.5.1",
     "class-transformer": "0.2.3",
     "class-transformer-validator": "^0.9.1",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.13.1",
     "eslint": "^7.17.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",

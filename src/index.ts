@@ -1,24 +1,30 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { classToPlain, ClassTransformOptions, plainToClass } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 import { ClassType, transformAndValidate } from 'class-transformer-validator';
 import { defaultMetadataStorage } from 'class-transformer/storage';
 import { TypeError } from 'common-errors';
 
 import { UnknownClassError } from './exceptions';
 import { ClassConstructor } from './interfaces/class-constructor.type';
-import { storage } from './storage';
-import { ClassTransformForArrayOptions, TransformValidationForArrayOptions } from './types';
+import { defaultArrayMemberStorage } from './storage';
+import {
+  ArrayStorageOptions,
+  ClassToPlainArrayOptions,
+  ClassTransformForArrayOptions,
+  TransformValidationForArrayOptions,
+} from './types';
 
 export * from './decorators';
 export * from './storage';
 export * from './exceptions';
 export * from './types';
 
-export function plainMapValue<T>(target: ClassConstructor<T>, array: unknown[] | unknown[][]): Record<string, unknown> {
+export function plainMapValue<T>(target: ClassConstructor<T>, array: unknown[] | unknown[][], options?: ArrayStorageOptions): Record<string, unknown> {
   if (!Array.isArray(array)) {
-    throw new TypeError(`input array is not an array: ${array}`);
+    throw new TypeError(`input is not an array: ${array}`);
   }
 
+  const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
   const map = storage.getPropertyIndexMap(target);
   if (!map) {
     throw new UnknownClassError(`Cannot found class of ${target.name}`);
@@ -54,13 +60,14 @@ export function plainArrayToClass<T>(target: ClassConstructor<T>, array: unknown
   return plainToClass(
     target,
     options?.isArray
-      ? (array as unknown[][]).map((arr) => plainMapValue(target, arr))
-      : plainMapValue(target, array),
+      ? (array as unknown[][]).map((arr) => plainMapValue(target, arr, options))
+      : plainMapValue(target, array, options),
     options,
   );
 }
 
-export function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, unknown>): unknown[] {
+export function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, unknown>, options?: ArrayStorageOptions): unknown[] {
+  const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
   const map = storage.getPropertyIndexMap(target);
   if (!map) {
     throw new UnknownClassError(`Cannot found class of ${target.name}`);
@@ -70,7 +77,7 @@ export function classMapValue<T>(target: ClassConstructor<T>, object: Record<str
   for (const [i, property] of map.entries()) {
     if (property.key in object) {
       const typeMeta = defaultMetadataStorage.findTypeMetadata(target, property.key);
-      const subTarget = typeMeta?.typeFunction() ?? typeMeta?.reflectedType;
+      const subTarget = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
       if (storage.has(subTarget)) {
         if (typeMeta?.reflectedType === Array || property.options?.isArray) {
           if (object[property.key] == null) {
@@ -79,10 +86,10 @@ export function classMapValue<T>(target: ClassConstructor<T>, object: Record<str
             if (!Array.isArray(object[property.key])) {
               throw new TypeError(`property ${target.name}.${property.key} is not an array: ${object[property.key]}`);
             }
-            arr[i] = (object[property.key] as Record<string, unknown>[]).map((p) => classMapValue(subTarget as never, p))
+            arr[i] = (object[property.key] as Record<string, unknown>[]).map((p) => classMapValue(subTarget, p))
           }
         } else {
-          arr[i] = classMapValue(subTarget as never, object[property.key] as Record<string, unknown>);
+          arr[i] = classMapValue(subTarget, object[property.key] as Record<string, unknown>);
         }
       } else {
         arr[i] = object[property.key];
@@ -94,11 +101,11 @@ export function classMapValue<T>(target: ClassConstructor<T>, object: Record<str
   return arr;
 }
 
-export function classToPlainArray<T>(object: T, options?: ClassTransformOptions): unknown[];
-export function classToPlainArray<T>(object: T[], options?: ClassTransformOptions): unknown[][];
+export function classToPlainArray<T>(object: T, options?: ClassToPlainArrayOptions): unknown[];
+export function classToPlainArray<T>(object: T[], options?: ClassToPlainArrayOptions): unknown[][];
 export function classToPlainArray<T>(
     object: T | T[],
-    options?: ClassTransformOptions
+    options?: ClassToPlainArrayOptions
   ): unknown[] | unknown[][] {
     if (Array.isArray(object) && !object.length) {
       return [];
@@ -110,21 +117,20 @@ export function classToPlainArray<T>(
       ? (object[0] as unknown as ClassType<Object>).constructor as never
       : (object as unknown as ClassType<Object>).constructor as never;
     if (Array.isArray(object)) {
-      return (record as Record<string, unknown>[]).map((o) => classMapValue(c, o))
+      return (record as Record<string, unknown>[]).map((o) => classMapValue(c, o, options))
     } else {
-      // TODO temp fix due to class transformer 0.3.2 does not expose storage api
-      return classMapValue(c, record as never);
+      return classMapValue(c, record as never, options);
     }
   }
 
-export function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
-export function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
-export function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[] | unknown[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
+export async function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
+export async function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
+export async function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[] | unknown[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
   return transformAndValidate(
     target,
     options?.isArray
-      ? (array as unknown[][]).map((arr) => plainMapValue(target, arr))
-      : plainMapValue(target, array),
+      ? (array as unknown[][]).map((arr) => plainMapValue(target, arr, options))
+      : plainMapValue(target, array, options),
     options,
   );
 }

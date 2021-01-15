@@ -12,7 +12,7 @@ export class Override extends IdBase {
   public weight = 0;
 }
 
-export function OverrideValidate(expected: Override, result?: Override | null, options = defaultValidateOptions): void {
+export function overrideValidate(expected: Override, result?: Override | null, options = defaultValidateOptions): void {
   expect(result).not.null;
   if (options.constructor) {
     expect(result).property('constructor', Override);

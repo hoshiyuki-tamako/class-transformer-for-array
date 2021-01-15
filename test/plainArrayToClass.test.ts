@@ -2,14 +2,15 @@ import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 
 import { plainArrayToClass } from '../src';
-import { Override, OverrideValidate } from './classes/Override';
+import { UnknownClassError } from './../src/exceptions/UnknownClassError';
+import { arrayMemberStorage, CustomStorageClass, customStorageValidate } from './classes/CustomStorageClass';
+import { Override, overrideValidate } from './classes/Override';
 import { PassClassTransformOption } from './classes/PassClassTransformOption';
 import { PersonalBlog, personalBlogValidate } from './classes/PersonalBlog';
 import { Product, productValidate } from './classes/Product';
 import { factory } from './factories';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 
 @suite()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -64,8 +65,20 @@ class PlainArrayToClassTest {
   @test()
   public overrideClass() {
     const expected = factory.make(Override).one();
-    OverrideValidate(Object.assign(new Override(), {
+    overrideValidate(Object.assign(new Override(), {
       weight: expected.weight,
     }), plainArrayToClass(Override, [expected.weight]));
+  }
+
+  @test()
+  public customStorage() {
+    const expected = factory.make(CustomStorageClass).one();
+    customStorageValidate(expected, plainArrayToClass(CustomStorageClass, [expected.id], { arrayMemberStorage }));
+  }
+
+  @test()
+  public customStorageFail() {
+    const expected = factory.make(CustomStorageClass).one();
+    expect(() => plainArrayToClass(CustomStorageClass, [expected.id])).throw(UnknownClassError);
   }
 }

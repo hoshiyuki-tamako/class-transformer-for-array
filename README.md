@@ -343,3 +343,68 @@ try {
   }
 }
 ```
+
+### Custom Storage
+
+```ts
+import { IsNumber } from 'class-validator';
+
+import { ArrayMember, ArrayMemberStorage, arrayTransformAndValidate, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
+
+// create a storage
+const myStorage = new ArrayMemberStorage();
+
+class CustomClass {
+  @ArrayMember(0, { arrayMemberStorage: myStorage })
+  @IsNumber()
+  public id = 0;
+}
+
+// CustomClass { id: 1 }
+const result = plainArrayToClass(CustomClass, [1], { arrayMemberStorage: myStorage });
+
+// [1]
+const arr = classToPlainArray(result, { arrayMemberStorage: myStorage });
+
+// throw UnknownClassError
+try {
+  plainArrayToClass(CustomClass, [123]);
+} catch (e) {
+  console.error(e.message);
+}
+
+console.log(result, arr);
+
+(async() => {
+  // CustomClass { id: 1 }
+  const r = await arrayTransformAndValidate(CustomClass, [123], { arrayMemberStorage: myStorage });
+  console.log(r);
+})();
+```
+
+### Default Storage
+
+```ts
+import { ArrayMember, defaultArrayMemberStorage } from '../src';
+
+class Ship {
+  @ArrayMember(0)
+  public id = '';
+
+  @ArrayMember(1)
+  public name = '';
+}
+
+// true
+const has = defaultArrayMemberStorage.has(Ship);
+
+// Map<number, PropertyInfo>
+const propertyIndexMap = defaultArrayMemberStorage.getPropertyIndexMap(Ship);
+if (propertyIndexMap) {
+  // PropertyInfo { key: 'id', options: undefined }
+  const a = propertyIndexMap.get(0);
+  // PropertyInfo { key: 'name', options: undefined }
+  const b = propertyIndexMap.get(1);
+  console.log(has, a, b);
+}
+```
