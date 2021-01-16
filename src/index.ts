@@ -1,18 +1,20 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import { classToPlain, plainToClass } from 'class-transformer';
-import { ClassType, transformAndValidate } from 'class-transformer-validator';
-import { defaultMetadataStorage } from 'class-transformer/storage';
+import { ClassConstructor, classToPlain, plainToClass } from 'class-transformer';
+import { transformAndValidate } from 'class-transformer-validator';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { defaultMetadataStorage } from 'class-transformer/cjs/storage';
 import { TypeError } from 'common-errors';
 
 import { UnknownClassError } from './exceptions';
-import { ClassConstructor } from './interfaces/class-constructor.type';
-import { defaultArrayMemberStorage } from './storage';
+import { arrayMemberClassStorage, defaultArrayMemberStorage } from './storage';
 import {
   ArrayStorageOptions,
   ClassToPlainArrayOptions,
   ClassTransformForArrayOptions,
   TransformValidationForArrayOptions,
 } from './types';
+
+/* eslint-disable @typescript-eslint/ban-types */
 
 export * from './decorators';
 export * from './storage';
@@ -25,6 +27,14 @@ export function plainMapValue<T>(target: ClassConstructor<T>, array: unknown[] |
   }
 
   const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
+
+  if (storage === defaultArrayMemberStorage) {
+    const storages = arrayMemberClassStorage.get(target);
+    if (storages?.length && !storages.includes(defaultArrayMemberStorage)) {
+      throw new UnknownClassError(`Cannot found class of ${target.name}. please make sure @ArrayMemberClass is correct`);
+    }
+  }
+
   const map = storage.getPropertyIndexMap(target);
   if (!map) {
     throw new UnknownClassError(`Cannot found class of ${target.name}`);
@@ -39,9 +49,9 @@ export function plainMapValue<T>(target: ClassConstructor<T>, array: unknown[] |
       if (storage.has(subTarget)) {
         if (Array.isArray(o)) {
           if (typeMeta?.reflectedType === Array || property.options?.isArray) {
-            obj[property.key] = (o as unknown[][]).map((p) => plainMapValue(subTarget, p));
+            obj[property.key] = (o as unknown[][]).map((p) => plainMapValue(subTarget, p, options));
           } else {
-            obj[property.key] = plainMapValue(subTarget, o);
+            obj[property.key] = plainMapValue(subTarget, o, options);
           }
         } else {
           obj[property.key] = o;
@@ -68,6 +78,14 @@ export function plainArrayToClass<T>(target: ClassConstructor<T>, array: unknown
 
 export function classMapValue<T>(target: ClassConstructor<T>, object: Record<string, unknown>, options?: ArrayStorageOptions): unknown[] {
   const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
+
+  if (storage === defaultArrayMemberStorage) {
+    const storages = arrayMemberClassStorage.get(target);
+    if (storages?.length && !storages.includes(defaultArrayMemberStorage)) {
+      throw new UnknownClassError(`Cannot found class of ${target.name}. please make sure @ArrayMemberClass is correct`);
+    }
+  }
+
   const map = storage.getPropertyIndexMap(target);
   if (!map) {
     throw new UnknownClassError(`Cannot found class of ${target.name}`);
@@ -86,10 +104,10 @@ export function classMapValue<T>(target: ClassConstructor<T>, object: Record<str
             if (!Array.isArray(object[property.key])) {
               throw new TypeError(`property ${target.name}.${property.key} is not an array: ${object[property.key]}`);
             }
-            arr[i] = (object[property.key] as Record<string, unknown>[]).map((p) => classMapValue(subTarget, p))
+            arr[i] = (object[property.key] as Record<string, unknown>[]).map((p) => classMapValue(subTarget, p, options))
           }
         } else {
-          arr[i] = classMapValue(subTarget, object[property.key] as Record<string, unknown>);
+          arr[i] = classMapValue(subTarget, object[property.key] as Record<string, unknown>, options);
         }
       } else {
         arr[i] = object[property.key];
@@ -114,18 +132,18 @@ export function classToPlainArray<T>(
     const record = classToPlain(object, options);
 
     const c = Array.isArray(object)
-      ? (object[0] as unknown as ClassType<Object>).constructor as never
-      : (object as unknown as ClassType<Object>).constructor as never;
+      ? (object[0] as unknown as ClassConstructor<Object>).constructor as never
+      : (object as unknown as ClassConstructor<Object>).constructor as never;
     if (Array.isArray(object)) {
       return (record as Record<string, unknown>[]).map((o) => classMapValue(c, o, options))
     } else {
-      return classMapValue(c, record as never, options);
+      return classMapValue(c, record, options);
     }
   }
 
-export async function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
-export async function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
-export async function arrayTransformAndValidate<T extends object>(target: ClassType<T>, array: unknown[] | unknown[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
+export async function arrayTransformAndValidate<T extends object>(target: ClassConstructor<T>, array: unknown[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
+export async function arrayTransformAndValidate<T extends object>(target: ClassConstructor<T>, array: unknown[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
+export async function arrayTransformAndValidate<T extends object>(target: ClassConstructor<T>, array: unknown[] | unknown[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
   return transformAndValidate(
     target,
     options?.isArray

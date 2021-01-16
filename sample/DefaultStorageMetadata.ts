@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { ArrayMember, defaultArrayMemberStorage } from '../src';
 
 class Ship {

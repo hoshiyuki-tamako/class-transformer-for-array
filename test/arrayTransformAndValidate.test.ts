@@ -58,13 +58,13 @@ class ArrayTransformAndValidateTest {
   @test()
   public async customStorage() {
     const expected = factory.make(CustomStorageClass).one();
-    customStorageValidate(expected, await arrayTransformAndValidate(CustomStorageClass, [expected.id], { arrayMemberStorage }));
+    customStorageValidate(expected, await arrayTransformAndValidate(CustomStorageClass, [expected.id, [expected.child!.id]], { arrayMemberStorage }));
   }
 
   @test()
   public async customStorageFail() {
     const expected = factory.make(CustomStorageClass).one();
-    await expect(arrayTransformAndValidate(CustomStorageClass, [expected.id])).rejectedWith(UnknownClassError);
+    await expect(arrayTransformAndValidate(CustomStorageClass, [expected.id, [expected.child!.id]])).rejectedWith(UnknownClassError);
   }
 
   private mapClassToArray(expected: Product) {

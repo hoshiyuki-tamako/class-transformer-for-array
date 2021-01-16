@@ -1,23 +1,12 @@
 import 'reflect-metadata';
 
-import { IsNumber } from 'class-validator';
-
-import {
-  ArrayMember,
-  ArrayMemberClass,
-  ArrayMemberStorage,
-  arrayTransformAndValidate,
-  classToPlainArray,
-  plainArrayToClass,
-} from '../src';
+import { ArrayMember, ArrayMemberStorage, classToPlainArray, plainArrayToClass } from '../src';
 
 // create a storage
 const myStorage = new ArrayMemberStorage();
 
-@ArrayMemberClass(myStorage)
 class CustomClass {
-  @ArrayMember(0)
-  @IsNumber()
+  @ArrayMember(0, { arrayMemberStorage: myStorage })
   public id = 0;
 }
 
@@ -35,9 +24,3 @@ try {
 }
 
 console.log(result, arr);
-
-(async() => {
-  // CustomClass { id: 1 }
-  const r = await arrayTransformAndValidate(CustomClass, [1], { arrayMemberStorage: myStorage });
-  console.log(r);
-})();

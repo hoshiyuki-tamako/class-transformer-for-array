@@ -6,8 +6,8 @@ import { ArrayMember, classToPlainArray, plainArrayToClass } from '../src';
 
 class Product {
   @ArrayMember(0)
-  @Transform((v) => v?.toString(), { toClassOnly: true })
-  @Transform((v) => +v, { toPlainOnly: true })
+  @Transform(({ value }) => value?.toString(), { toClassOnly: true })
+  @Transform(({ value }) => +value, { toPlainOnly: true })
   public displayPrice = '0';
 }
 

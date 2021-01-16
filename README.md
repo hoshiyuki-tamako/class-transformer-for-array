@@ -18,7 +18,7 @@ npm i class-transformer-for-array
 
 see `./sample/*.ts` for the script
 
-see unit test for more example
+see `./test/**/**/*.test.ts` for more example
 
 ### Simple
 
@@ -152,6 +152,31 @@ const a = plainArrayToClass(Blog, [null]);
 console.log(blog, arr, a);
 ```
 
+### Nested Raw Array
+
+```ts
+import 'reflect-metadata';
+
+import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
+
+class Attachment {
+  @ArrayMember(0)
+  public serverIds: number[] = [];
+}
+
+// Attachment { serverIds: [1, 2, 3] }
+const attachment = plainArrayToClass(Attachment, [[1,2,3]]);
+// [[1,2,3]]
+const arr = classToPlainArray(attachment);
+
+// Attachment { serverIds: [] }
+const a = plainArrayToClass(Attachment, []);
+// Attachment { serverIds: null }
+const b = plainArrayToClass(Attachment, [null]);
+
+console.log(attachment, arr, a, b);
+```
+
 ### Class Transform
 
 ```ts
@@ -163,8 +188,8 @@ import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transfo
 
 class Product {
   @ArrayMember(0)
-  @Transform((v) => v?.toString(), { toClassOnly: true })
-  @Transform((v) => +v, { toPlainOnly: true })
+  @Transform(({ value }) => value?.toString(), { toClassOnly: true })
+  @Transform(({ value }) => +value, { toPlainOnly: true })
   public displayPrice = '0';
 }
 
@@ -347,15 +372,25 @@ try {
 ### Custom Storage
 
 ```ts
+import 'reflect-metadata';
+
 import { IsNumber } from 'class-validator';
 
-import { ArrayMember, ArrayMemberStorage, arrayTransformAndValidate, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
+import {
+  ArrayMember,
+  ArrayMemberClass,
+  ArrayMemberStorage,
+  arrayTransformAndValidate,
+  classToPlainArray,
+  plainArrayToClass,
+} from 'class-transformer-for-array';
 
 // create a storage
 const myStorage = new ArrayMemberStorage();
 
+@ArrayMemberClass(myStorage)
 class CustomClass {
-  @ArrayMember(0, { arrayMemberStorage: myStorage })
+  @ArrayMember(0)
   @IsNumber()
   public id = 0;
 }
@@ -377,15 +412,122 @@ console.log(result, arr);
 
 (async() => {
   // CustomClass { id: 1 }
-  const r = await arrayTransformAndValidate(CustomClass, [123], { arrayMemberStorage: myStorage });
+  const r = await arrayTransformAndValidate(CustomClass, [1], { arrayMemberStorage: myStorage });
   console.log(r);
 })();
+```
+
+### Custom Storage Multiple
+
+```ts
+import 'reflect-metadata';
+
+import {
+  ArrayMember,
+  ArrayMemberClass,
+  ArrayMemberStorage,
+  classToPlainArray,
+  defaultArrayMemberStorage,
+  plainArrayToClass,
+} from 'class-transformer-for-array';
+
+// create storages
+const myStorage1 = new ArrayMemberStorage();
+const myStorage2 = new ArrayMemberStorage();
+
+@ArrayMemberClass(myStorage1)
+@ArrayMemberClass(myStorage2)
+@ArrayMemberClass(defaultArrayMemberStorage)
+class CustomClass {
+  @ArrayMember(0)
+  public id = 0;
+}
+
+// CustomClass { id: 1 }
+const result1 = plainArrayToClass(CustomClass, [1], { arrayMemberStorage: myStorage1 });
+const result2 = plainArrayToClass(CustomClass, [1], { arrayMemberStorage: myStorage2 });
+const result3 = plainArrayToClass(CustomClass, [1]);
+
+// [1]
+const arr1 = classToPlainArray(result1, { arrayMemberStorage: myStorage1 });
+const arr2 = classToPlainArray(result2, { arrayMemberStorage: myStorage2 });
+const arr3 = classToPlainArray(result3);
+
+console.log(result1, result2, result3, arr1, arr2, arr3);
+```
+
+### Custom Storage Manual Assign
+
+```ts
+import 'reflect-metadata';
+
+import { ArrayMember, ArrayMemberStorage, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
+
+// create a storage
+const myStorage = new ArrayMemberStorage();
+
+class CustomClass {
+  @ArrayMember(0, { arrayMemberStorage: myStorage })
+  public id = 0;
+}
+
+// CustomClass { id: 1 }
+const result = plainArrayToClass(CustomClass, [1], { arrayMemberStorage: myStorage });
+
+// [1]
+const arr = classToPlainArray(result, { arrayMemberStorage: myStorage });
+
+// throw UnknownClassError
+try {
+  plainArrayToClass(CustomClass, [123]);
+} catch (e) {
+  console.error(e.message);
+}
+
+console.log(result, arr);
+```
+
+### Custom Storage Partial
+
+```ts
+import 'reflect-metadata';
+
+import { ArrayMember, ArrayMemberClass, ArrayMemberStorage, classToPlainArray, plainArrayToClass } from 'class-transformer-for-array';
+
+// create storages
+const myStorage1 = new ArrayMemberStorage();
+const myStorage2 = new ArrayMemberStorage();
+
+@ArrayMemberClass(myStorage1)
+class CustomClass {
+  @ArrayMember(0)
+  public id = 0;
+
+  @ArrayMember(1, { arrayMemberStorage: myStorage2 })
+  public name = '';
+}
+
+// CustomClass { id: 1, name: '' }
+const result1 = plainArrayToClass(CustomClass, [1, 'name'], { arrayMemberStorage: myStorage1 });
+
+// CustomClass { id: 0, name: 'name' }
+const result2 = plainArrayToClass(CustomClass, [1, 'name'], { arrayMemberStorage: myStorage2 });
+
+// [1]
+const arr1 = classToPlainArray(result1, { arrayMemberStorage: myStorage1 });
+
+// [undefined, 'name']
+const arr2 = classToPlainArray(result2, { arrayMemberStorage: myStorage2 });
+
+console.log(result1, result2, arr1, arr2);
 ```
 
 ### Default Storage
 
 ```ts
-import { ArrayMember, defaultArrayMemberStorage } from '../src';
+import 'reflect-metadata';
+
+import { ArrayMember, defaultArrayMemberStorage } from 'class-transformer-for-array';
 
 class Ship {
   @ArrayMember(0)

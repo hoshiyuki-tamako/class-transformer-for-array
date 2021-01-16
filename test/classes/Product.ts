@@ -34,7 +34,7 @@ export class Product {
 
   @ArrayMember(2)
   @IsString()
-  @Transform((v) => v?.toString())
+  @Transform(({ value }) => value?.toString())
   @Fixture(() => faker.random.number().toString())
   public displayPrice: string = '0';
 

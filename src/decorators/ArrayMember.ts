@@ -1,20 +1,25 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { ClassConstructor } from 'class-transformer';
 import { TypeError } from 'common-errors';
 
-import { defaultArrayMemberStorage, PropertyInfo } from '../storage';
+import { arrayMemberClassStorage, defaultArrayMemberStorage, PropertyInfo } from '../storage';
 import { ArrayMemberOptions } from '../types';
-
-export type Constructable = {
-  constructor: unknown;
-}
 
 export function ArrayMember(index: number, options?: ArrayMemberOptions): (target: unknown, propertyKey: string) => void {
   if (typeof(index) !== 'number') {
-    throw new TypeError('index must be number');
+    throw new TypeError(`index must be number: ${index}`);
   }
 
   return (target: unknown, propertyKey: string) => {
-    const storage = options?.arrayMemberStorage || defaultArrayMemberStorage
-    storage.add((target as { constructor: never }).constructor, index, new PropertyInfo(propertyKey, options));
+    const c = target as ClassConstructor<Object>;
+
+    if (!options?.arrayMemberStorage) {
+      for (const eachStorage of arrayMemberClassStorage.get(c.constructor) ?? []) {
+        eachStorage.add(c.constructor, index, new PropertyInfo(propertyKey, options));
+      }
+    }
+
+    const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
+    storage.add(c.constructor, index, new PropertyInfo(propertyKey, options));
   };
 }

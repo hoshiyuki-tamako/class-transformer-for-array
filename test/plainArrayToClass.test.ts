@@ -8,6 +8,16 @@ import { Override, overrideValidate } from './classes/Override';
 import { PassClassTransformOption } from './classes/PassClassTransformOption';
 import { PersonalBlog, personalBlogValidate } from './classes/PersonalBlog';
 import { Product, productValidate } from './classes/Product';
+import {
+  Ship,
+  shipStorage,
+  shipStoragePartial,
+  shipValidate,
+  ShipWithDefault,
+  shipWithDefaultValidate,
+  ShipWithPartialProperty,
+  shipWithPartialPropertyValidate,
+} from './classes/Ship';
 import { factory } from './factories';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -73,12 +83,44 @@ class PlainArrayToClassTest {
   @test()
   public customStorage() {
     const expected = factory.make(CustomStorageClass).one();
-    customStorageValidate(expected, plainArrayToClass(CustomStorageClass, [expected.id], { arrayMemberStorage }));
+    customStorageValidate(expected, plainArrayToClass(CustomStorageClass, [expected.id, [expected.child!.id]], { arrayMemberStorage }));
   }
 
   @test()
   public customStorageFail() {
     const expected = factory.make(CustomStorageClass).one();
-    expect(() => plainArrayToClass(CustomStorageClass, [expected.id])).throw(UnknownClassError);
+    expect(() => plainArrayToClass(CustomStorageClass, [expected.id, [expected.child!.id]])).throw(UnknownClassError);
+  }
+
+  @test()
+  public customStorageDecorator() {
+    const expected = factory.make(Ship).one();
+    shipValidate(expected, plainArrayToClass(Ship, [expected.id], { arrayMemberStorage: shipStorage }));
+  }
+
+  @test()
+  public customStorageDecoratorFail() {
+    const expected = factory.make(Ship).one();
+    expect(() => plainArrayToClass(Ship, [expected.id])).throw(UnknownClassError);
+  }
+
+  @test()
+  public customStorageDecoratorWithDefault() {
+    const expected = factory.make(ShipWithDefault).one();
+    shipWithDefaultValidate(expected, plainArrayToClass(ShipWithDefault, [expected.id, expected.name], { arrayMemberStorage: shipStorage }));
+    shipWithDefaultValidate(expected, plainArrayToClass(ShipWithDefault, [expected.id, expected.name]));
+  }
+
+  @test()
+  public customStorageDecoratorPartial() {
+    const expected = factory.make(ShipWithPartialProperty).one();
+    shipWithPartialPropertyValidate(Object.assign(new ShipWithPartialProperty(), { ... expected, name: '' }), plainArrayToClass(ShipWithPartialProperty, [expected.id, expected.name], { arrayMemberStorage: shipStorage }));
+    shipWithPartialPropertyValidate(Object.assign(new ShipWithPartialProperty(), { ... expected, id: 0 }), plainArrayToClass(ShipWithPartialProperty, [expected.id, expected.name], { arrayMemberStorage: shipStoragePartial }));
+  }
+
+  @test()
+  public customStorageDecoratorPartialFail() {
+    const expected = factory.make(ShipWithPartialProperty).one();
+    expect(() => plainArrayToClass(ShipWithPartialProperty, [expected.id, expected.name])).throw(UnknownClassError);
   }
 }
