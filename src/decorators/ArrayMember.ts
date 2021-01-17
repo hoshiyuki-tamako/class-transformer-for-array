@@ -1,6 +1,6 @@
 import { TypeError } from 'common-errors';
 
-import { arrayMemberClassStorage, defaultArrayMemberStorage, PropertyInfo } from '../storage';
+import { arrayMemberClassStorage, defaultArrayMemberStorage, PropertyInfo } from '../storages';
 import { ArrayMemberOptions } from '../types';
 
 export function ArrayMember(index: number, options?: ArrayMemberOptions): PropertyDecorator {

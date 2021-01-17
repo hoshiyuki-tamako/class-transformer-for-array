@@ -6,16 +6,13 @@ import { Product, productArrayValidate } from './classes/Product';
 import { factory } from './factories';
 
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ClassMapValueTest {
+export class ClassMapValueTest {
   @test()
-  public normal() {
+  public normal(): void {
     const expected = factory.make(Product).one();
     const result = classMapValue(Product, {...expected});
     expect(result).property('2', expected.displayPrice);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    result[2] = +result[2];
+    result[2] = +(result[2] as string);
     productArrayValidate(expected, result);
   }
 }

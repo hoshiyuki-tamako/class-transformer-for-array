@@ -1,7 +1,7 @@
 import { ClassTransformOptions } from 'class-transformer';
 import { TransformValidationOptions } from 'class-transformer-validator';
 
-import { ArrayMemberStorage } from '../storage';
+import { ArrayMemberStorage } from '../storages';
 
 export type ArrayStorageOptions = {
   arrayMemberStorage?: ArrayMemberStorage;

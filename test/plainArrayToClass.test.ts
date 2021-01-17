@@ -20,19 +20,16 @@ import {
 } from './classes/Ship';
 import { factory } from './factories';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class PlainArrayToClassTest {
+export class PlainArrayToClassTest {
   @test()
-  public normal() {
+  public normal(): void {
     const expected = factory.make(Product).one();
     productValidate(expected, plainArrayToClass(Product, expected.toPlainArray()));
   }
 
   @test()
-  public array() {
+  public array(): void {
     const testData = factory.make(Product).many(2);
     const results = plainArrayToClass(Product, testData.map((o) => o.toPlainArray()), { isArray: true });
     expect(results).property('constructor', Array);
@@ -44,20 +41,20 @@ class PlainArrayToClassTest {
   }
 
   @test()
-  public classTransformOption() {
+  public classTransformOption(): void {
     const expected = factory.make(PassClassTransformOption).one();
     const result = plainArrayToClass(PassClassTransformOption, expected.toPlainArray(), { strategy: 'excludeAll' });
     passClassTransformOptionValidate(expected, result);
   }
 
   @test()
-  public extendsClass() {
+  public extendsClass(): void {
     const expected = factory.make(PersonalBlog).one();
     personalBlogValidate(expected, plainArrayToClass(PersonalBlog, expected.toPlainArray()));
   }
 
   @test()
-  public overrideClass() {
+  public overrideClass(): void {
     const expected = factory.make(Override).one();
     overrideValidate(Object.assign(new Override(), {
       weight: expected.weight,
@@ -65,45 +62,45 @@ class PlainArrayToClassTest {
   }
 
   @test()
-  public customStorage() {
+  public customStorage(): void {
     const expected = factory.make(CustomStorageClass).one();
     customStorageValidate(expected, plainArrayToClass(CustomStorageClass, expected.toPlainArray(), { arrayMemberStorage }));
   }
 
   @test()
-  public customStorageFail() {
+  public customStorageFail(): void {
     const expected = factory.make(CustomStorageClass).one();
     expect(() => plainArrayToClass(CustomStorageClass, expected.toPlainArray())).throw(UnknownClassError);
   }
 
   @test()
-  public customStorageDecorator() {
+  public customStorageDecorator(): void {
     const expected = factory.make(Ship).one();
     shipValidate(expected, plainArrayToClass(Ship, expected.toPlainArray(), { arrayMemberStorage: shipStorage }));
   }
 
   @test()
-  public customStorageDecoratorFail() {
+  public customStorageDecoratorFail(): void {
     const expected = factory.make(Ship).one();
     expect(() => plainArrayToClass(Ship, expected.toPlainArray())).throw(UnknownClassError);
   }
 
   @test()
-  public customStorageDecoratorWithDefault() {
+  public customStorageDecoratorWithDefault(): void {
     const expected = factory.make(ShipWithDefault).one();
     shipWithDefaultValidate(expected, plainArrayToClass(ShipWithDefault, expected.toPlainArray(), { arrayMemberStorage: shipStorage }));
     shipWithDefaultValidate(expected, plainArrayToClass(ShipWithDefault, expected.toPlainArray()));
   }
 
   @test()
-  public customStorageDecoratorPartial() {
+  public customStorageDecoratorPartial(): void {
     const expected = factory.make(ShipWithPartialProperty).one();
     shipWithPartialPropertyValidate(Object.assign(new ShipWithPartialProperty(), { ... expected, name: '' }), plainArrayToClass(ShipWithPartialProperty, expected.toPlainArray(), { arrayMemberStorage: shipStorage }));
     shipWithPartialPropertyValidate(Object.assign(new ShipWithPartialProperty(), { ... expected, id: 0 }), plainArrayToClass(ShipWithPartialProperty, expected.toPlainArray(), { arrayMemberStorage: shipStoragePartial }));
   }
 
   @test()
-  public customStorageDecoratorPartialFail() {
+  public customStorageDecoratorPartialFail(): void {
     const expected = factory.make(ShipWithPartialProperty).one();
     expect(() => plainArrayToClass(ShipWithPartialProperty, expected.toPlainArray())).throw(UnknownClassError);
   }

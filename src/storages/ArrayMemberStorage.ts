@@ -1,17 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
-import { ArrayMemberOptions } from './types';
-
-export class PropertyInfo {
-  public key = '';
-  public options?: ArrayMemberOptions;
-
-  public constructor(key: PropertyKey, options?: ArrayMemberOptions) {
-    // TODO due to typescript not allow symbol as object key access, tmp fix
-    this.key = key as unknown as string;
-    this.options = options;
-  }
-}
+import { PropertyInfo } from './PropertyInfo';
 
 export type PropertyIndexMap = Map<number, PropertyInfo>;
 export type ConstructorMap = Map<Function, PropertyIndexMap>;
@@ -21,7 +10,7 @@ export class ArrayMemberStorage {
 
   public map = new Map() as ConstructorMap;
 
-  public add(constructor: Function, index: number, info: PropertyInfo): this {
+  public add<T extends Function>(constructor: T, index: number, info: PropertyInfo): this {
     if (!this.map.has(constructor)) {
       const newMap = new Map() as PropertyIndexMap;
       this.map.set(constructor, newMap);
@@ -41,11 +30,11 @@ export class ArrayMemberStorage {
     return this;
   }
 
-  public has(constructor: Function): boolean {
+  public has<T extends Function>(constructor: T): boolean {
     return this.map.has(constructor);
   }
 
-  public getPropertyIndexMap(constructor: Function): PropertyIndexMap | undefined {
+  public getPropertyIndexMap<T extends Function>(constructor: T): PropertyIndexMap | undefined {
     return this.map.get(constructor);
   }
 }

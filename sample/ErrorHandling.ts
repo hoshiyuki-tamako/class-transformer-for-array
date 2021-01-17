@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from '../src';
 import { TypeError } from '../src/common-errors';
 
@@ -17,8 +16,7 @@ try {
 
 try {
   // cannot pass null
-  // @ts-ignore
-  plainMapValue(Object, null);
+  plainMapValue(Object, null as never);
 } catch (e) {
   // type error
   if (e instanceof TypeError) {

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { Fixture } from 'class-fixtures-factory';
 import { Transform, Type } from 'class-transformer';
-import { IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsNumber } from 'class-validator';
 import faker from 'faker';
 
 import { ArrayMember } from '../../src';
@@ -21,7 +21,6 @@ export class Size {
 
 export class Product {
   @ArrayMember(0)
-  @IsNumber()
   @Fixture(() => faker.random.number())
   public id = 0;
 
@@ -31,26 +30,22 @@ export class Product {
   public price = 0;
 
   @ArrayMember(2)
-  @IsString()
   @Transform(({ value }) => value?.toString(), { toClassOnly: true })
   @Transform(({ value }) => +value, { toPlainOnly: true })
   @Fixture(() => faker.random.number().toString())
   public displayPrice = '0';
 
   @ArrayMember(3)
-  @ValidateNested()
   @Type(() => Color)
   @Fixture({ type: () => Color })
   public color?: Color;
 
   @ArrayMember(4, { isArray: true })
-  @ValidateNested({ each: true })
   @Type(() => Size)
   @Fixture({ type: () => [Size] })
   public sizes: Size[] = [];
 
   @ArrayMember(5)
-  @IsNumber(undefined, { each: true })
   @Fixture({ type: () => [Number] })
   public values: number[] = [];
 

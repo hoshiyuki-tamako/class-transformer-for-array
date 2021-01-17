@@ -1,10 +1,14 @@
 import { suite, test } from '@testdeck/mocha';
+import chai, { expect } from 'chai';
+import chaiAsPromised from 'chai-as-promised';
 
 import { TransformPlainArrayToClass } from '../../src';
 import { arrayMemberStorage, CustomStorageClass, customStorageValidate } from '../classes/CustomStorageClass';
 import { PassClassTransformOption, passClassTransformOptionValidate } from './../classes/PassClassTransformOption';
 import { Product, productValidate } from './../classes/Product';
 import { factory } from './../factories';
+
+chai.use(chaiAsPromised);
 
 class TestToClass {
   public expected = factory.make(Product).one();
@@ -29,7 +33,7 @@ class TestToClassWithArrayOption {
   }
 
   @TransformPlainArrayToClass(CustomStorageClass, { arrayMemberStorage, isArray: true })
-  public runAsync() {
+  public async runAsync() {
     return this.expects.map((o) => o.toPlainArray());
   }
 }
@@ -44,42 +48,45 @@ class TestToClassWithOption {
 }
 
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class TransformPlainArrayToClassTest {
+export class TransformPlainArrayToClassTest {
   @test()
-  public normal() {
+  public normal(): void {
     const test = new TestToClass();
     const result = test.run();
     productValidate(test.expected, result as never);
   }
 
   @test()
-  public async async() {
+  public async async(): Promise<void> {
     const test = new TestToClass();
     const result = await test.runAsync();
     productValidate(test.expected, result as never);
   }
 
   @test()
-  public arrayOption() {
+  public arrayOption(): void {
     const test = new TestToClassWithArrayOption();
-    const result = test.run();
+    const results = test.run();
+    expect(results).property('constructor', Array);
+    expect(results).length(test.expects.length);
     for (const [i, expected] of test.expects.entries()) {
-      customStorageValidate(expected, result[i] as never);
+      customStorageValidate(expected, results[i] as never);
     }
   }
 
   @test()
-  public async arrayOptionAsync() {
+  public async arrayOptionAsync(): Promise<void> {
     const test = new TestToClassWithArrayOption();
-    const result = await test.runAsync();
+    const results = await test.runAsync();
+    expect(results).property('constructor', Array);
+    expect(results).length(test.expects.length);
     for (const [i, expected] of test.expects.entries()) {
-      customStorageValidate(expected, result[i] as never);
+      customStorageValidate(expected, results[i] as never);
     }
   }
 
   @test()
-  public classTransformOption() {
+  public classTransformOption(): void {
     const test = new TestToClassWithOption();
     const result = test.run();
     passClassTransformOptionValidate(test.expected, result as never);

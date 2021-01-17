@@ -1,7 +1,7 @@
 import { ClassConstructor } from 'class-transformer';
 import isPromise from 'is-promise';
 
-import { plainArrayToClass } from '..';
+import { ClassTransformerForArray } from '../core/ClassTransformerForArray';
 import { ClassTransformForArrayOptions } from '../types';
 
 export function TransformPlainArrayToClass<T>(classType: ClassConstructor<T>, options?: ClassTransformForArrayOptions): MethodDecorator {
@@ -9,7 +9,7 @@ export function TransformPlainArrayToClass<T>(classType: ClassConstructor<T>, op
     const method = descriptor.value;
     descriptor.value = function(...args: unknown[]) {
       const result = method.apply(this, args);
-      return isPromise(result) ? result.then((v) => plainArrayToClass(classType, v as unknown[], options as never)) : plainArrayToClass(classType, result, options as never);
+      return isPromise(result) ? result.then((v) => ClassTransformerForArray.instance.plainArrayToClass(classType, v as unknown[], options as never)) : ClassTransformerForArray.instance.plainArrayToClass(classType, result, options as never);
     };
   };
 }

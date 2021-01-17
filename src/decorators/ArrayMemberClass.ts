@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { TypeError } from 'common-errors';
 
-import { arrayMemberClassStorage, ArrayMemberStorage, defaultArrayMemberStorage } from './../storage';
+import { arrayMemberClassStorage, ArrayMemberStorage, defaultArrayMemberStorage } from '../storages';
 
 export function ArrayMemberClass(arrayMemberStorage?: ArrayMemberStorage): ClassDecorator {
   const storage = arrayMemberStorage || defaultArrayMemberStorage;

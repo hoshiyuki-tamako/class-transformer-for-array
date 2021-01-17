@@ -34,17 +34,16 @@ class ParentType {
 }
 
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ClassToPlainArrayTest {
+export class ClassToPlainArrayTest {
   @test()
-  public normal() {
+  public normal(): void {
     const expected = factory.make(Product).one();
     const result = classToPlainArray(expected);
     productArrayValidate(expected, result);
   }
 
   @test()
-  public array() {
+  public array(): void {
     const testData = factory.make(Product).many(2);
     const results = classToPlainArray(testData) as unknown[][];
     expect(results).property('constructor', Array);
@@ -56,19 +55,19 @@ class ClassToPlainArrayTest {
   }
 
   @test()
-  public emptyArray() {
+  public emptyArray(): void {
     const result = classToPlainArray([]) as [];
     expect(result.constructor).equals(Array);
     expect(result).length(0);
   }
 
   @test()
-  public unknownClass() {
+  public unknownClass(): void {
     expect(() => classToPlainArray(new UnknownClass())).throw(UnknownClassError);
   }
 
   @test()
-  public keyNotInObject() {
+  public keyNotInObject(): void {
     const obj = new KeyNotInObject();
     delete obj.deleteThis;
     const result = classToPlainArray(obj) as [];
@@ -78,7 +77,7 @@ class ClassToPlainArrayTest {
   }
 
   @test()
-  public missingChildType() {
+  public missingChildType(): void {
     const result = classToPlainArray(new ParentType()) as [];
     expect(result.constructor).equals(Array);
     expect(result).length(1);
@@ -86,71 +85,71 @@ class ClassToPlainArrayTest {
   }
 
   @test()
-  public undefinedArray() {
+  public undefinedArray(): void {
     const expected = factory.make(Product).one();
     const result = classToPlainArray(Object.assign(expected, { sizes: null })) as unknown[];
     expect(result).property('4').is.null;
   }
 
   @test()
-  public arrayIsNotArray() {
+  public arrayIsNotArray(): void {
     const expected = factory.make(Product).one();
     expect(() => classToPlainArray(Object.assign(expected, { sizes: 1 }))).throw(TypeError)
   }
 
   @test()
-  public skipIndex() {
+  public skipIndex(): void {
     const expected = factory.make(SkipIndex).one();
     skipIndexArrayValidate(expected, classToPlainArray(expected));
   }
 
   @test()
-  public classTransformOption() {
+  public classTransformOption(): void {
     const expected = factory.make(PassClassTransformOption).one();
     const result = classToPlainArray(expected, { strategy: 'excludeAll' });
     passClassTransformOptionArrayValidate(expected, result);
   }
 
   @test()
-  public customStorage() {
+  public customStorage(): void {
     const expected = factory.make(CustomStorageClass).one();
     customStorageArrayValidate(expected, classToPlainArray(expected, { arrayMemberStorage }));
   }
 
   @test()
-  public customStorageFail() {
+  public customStorageFail(): void {
     const expected = factory.make(CustomStorageClass).one();
     expect(() => classToPlainArray(expected)).throw(UnknownClassError);
   }
 
   @test()
-  public customStorageDecorator() {
+  public customStorageDecorator(): void {
     const expected = factory.make(Ship).one();
     shipArrayValidate(expected, classToPlainArray(expected, { arrayMemberStorage: shipStorage }));
   }
 
   @test()
-  public customStorageDecoratorFail() {
+  public customStorageDecoratorFail(): void {
     const expected = factory.make(Ship).one();
     expect(() => classToPlainArray(expected)).throw(UnknownClassError);
   }
 
   @test()
-  public customStorageDecoratorWithDefault() {
+  public customStorageDecoratorWithDefault(): void {
     const expected = factory.make(ShipWithDefault).one();
     shipWithDefaultArrayValidate(expected, classToPlainArray(expected, { arrayMemberStorage: shipStorage }));
     shipWithDefaultArrayValidate(expected, classToPlainArray(expected));
   }
 
   @test()
-  public customStorageDecoratorPartial() {
+  public customStorageDecoratorPartial(): void {
     const expected = factory.make(ShipWithPartialProperty).one();
     shipWithPartialPropertyArrayValidate(Object.assign(new ShipWithPartialProperty(), { ... expected, name: null }), classToPlainArray(expected, { arrayMemberStorage: shipStorage }));
     shipWithPartialPropertyArrayValidate(Object.assign(new ShipWithPartialProperty(), { ... expected, id: null }), classToPlainArray(expected, { arrayMemberStorage: shipStoragePartial }));
   }
 
   @test()
-  public customStorageDecoratorPartialFail() {
+  public customStorageDecoratorPartialFail(): void {
     const expected = factory.make(ShipWithPartialProperty).one();
     expect(() => classToPlainArray(expected)).throw(UnknownClassError);
   }

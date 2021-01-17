@@ -1,6 +1,6 @@
 import isPromise from 'is-promise';
 
-import { classToPlainArray } from '..';
+import { ClassTransformerForArray } from '../core/ClassTransformerForArray';
 import { ClassToPlainArrayOptions } from '../types';
 
 export function TransformClassToPlainArray(options?: ClassToPlainArrayOptions): MethodDecorator {
@@ -8,7 +8,7 @@ export function TransformClassToPlainArray(options?: ClassToPlainArrayOptions): 
     const method = descriptor.value;
     descriptor.value = function(...args: unknown[]) {
       const result = method.apply(this, args);
-      return isPromise(result) ? result.then((v) => classToPlainArray(v, options)) : classToPlainArray(result, options);
+      return isPromise(result) ? result.then((v) => ClassTransformerForArray.instance.classToPlainArray(v, options)) : ClassTransformerForArray.instance.classToPlainArray(result, options);
     };
   };
 }

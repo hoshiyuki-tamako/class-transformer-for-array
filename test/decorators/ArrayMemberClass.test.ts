@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 import { TypeError } from 'common-errors';
 
-import { ArrayMember, ArrayMemberClass } from '../../src';
-import { arrayMemberClassStorage, ArrayMemberStorage, defaultArrayMemberStorage } from './../../src/storage';
+import {
+  ArrayMember,
+  ArrayMemberClass,
+  arrayMemberClassStorage,
+  ArrayMemberStorage,
+  defaultArrayMemberStorage,
+} from '../../src';
 
 const customStorage = new ArrayMemberStorage();
 
@@ -54,10 +58,9 @@ class Tmp {
 }
 
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ArrayMemberClassTest {
+export class ArrayMemberClassTest {
   @test()
-  public normal() {
+  public normal(): void {
     const storage = new ArrayMemberStorage();
     const a = ArrayMemberClass(storage);
 
@@ -67,7 +70,7 @@ class ArrayMemberClassTest {
   }
 
   @test()
-  public multipleStorage() {
+  public multipleStorage(): void {
     const storage1 = new ArrayMemberStorage();
     const storage2 = new ArrayMemberStorage();
     const a = ArrayMemberClass(storage1);
@@ -81,7 +84,7 @@ class ArrayMemberClassTest {
   }
 
   @test()
-  public decorators() {
+  public decorators(): void {
     expect(arrayMemberClassStorage.has(Test)).true;
     expect(customStorage.has(Test)).true;
 
@@ -103,7 +106,7 @@ class ArrayMemberClassTest {
   }
 
   @test()
-  public lateDecorator() {
+  public lateDecorator(): void {
     const storage = new ArrayMemberStorage();
     const a = ArrayMemberClass(storage);
 
@@ -116,17 +119,17 @@ class ArrayMemberClassTest {
 
     const propertyIndexMap = storage.getPropertyIndexMap(Tmp);
     expect(propertyIndexMap).not.null;
-    const propertyA = propertyIndexMap!.get(0);
+    const propertyA = propertyIndexMap?.get(0);
     expect(propertyA).not.null;
     expect(propertyA).property('key', 'id');
 
-    const propertyB = propertyIndexMap!.get(1);
+    const propertyB = propertyIndexMap?.get(1);
     expect(propertyB).not.null;
     expect(propertyB).property('key', 'name');
   }
 
   @test()
-  public typeError() {
+  public typeError(): void {
     expect(() => ArrayMemberClass(true as never)).throw(TypeError);
     expect(() => ArrayMemberClass({} as never)).throw(TypeError);
   }

@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 
-import { ArrayMemberStorage, defaultArrayMemberStorage, PropertyInfo } from '../src/storage';
+import { ArrayMemberStorage, defaultArrayMemberStorage, PropertyInfo } from '../src/storages';
 import { arrayMemberStorage, CustomStorageClass } from './classes/CustomStorageClass';
 
 class Tmp {
@@ -14,28 +13,28 @@ class TmpNotExists {
 }
 
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class StorageTest {
+export class StorageTest {
   @test()
-  public normal() {
+  public normal(): void {
     expect(arrayMemberStorage.has(CustomStorageClass)).true;
     expect(defaultArrayMemberStorage.has(CustomStorageClass)).false;
   }
 
   @test()
-  public add() {
+  public add(): void {
     const storage = new ArrayMemberStorage();
     const index = 0;
     const propertyInfo = new PropertyInfo('id');
     storage.add(Tmp, index, propertyInfo);
 
     expect(storage.map.has(Tmp)).true;
-    expect(storage.map.get(Tmp)).a(Map.name);
-    expect(storage.map.get(Tmp)!.get(index)).equal(propertyInfo);
+    const propertyIndexMap = storage.map.get(Tmp);
+    expect(propertyIndexMap).a(Map.name);
+    expect(propertyIndexMap?.get(index)).equal(propertyInfo);
   }
 
   @test()
-  public has() {
+  public has(): void {
     const storage = new ArrayMemberStorage();
     const index = 0;
     const propertyInfo = new PropertyInfo('id');
@@ -46,7 +45,7 @@ class StorageTest {
   }
 
   @test()
-  public getPropertyIndexMap() {
+  public getPropertyIndexMap(): void {
     const storage = new ArrayMemberStorage();
     const index = 0;
     const propertyInfo = new PropertyInfo('id');
@@ -54,11 +53,11 @@ class StorageTest {
 
     const propertyIndexMap = storage.getPropertyIndexMap(Tmp);
     expect(propertyIndexMap).a(Map.name);
-    expect(propertyIndexMap!.get(index)).equal(propertyInfo);
+    expect(propertyIndexMap?.get(index)).equal(propertyInfo);
   }
 
   @test()
-  public defaultArrayMemberStorageSame() {
+  public defaultArrayMemberStorageSame(): void {
     expect(ArrayMemberStorage).property('defaultArrayMemberStorage', defaultArrayMemberStorage);
   }
 }

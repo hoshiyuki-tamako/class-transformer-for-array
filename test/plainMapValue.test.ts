@@ -1,4 +1,3 @@
-/* eslint-disable no-sparse-arrays */
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 import { Type } from 'class-transformer';
@@ -8,7 +7,6 @@ import { Product, productValidate } from './classes/Product';
 import { SkipIndex, skipIndexValidate } from './classes/SkipIndex';
 import { factory } from './factories';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 class UnknownClass {}
 
 class ObjectMapChild {
@@ -22,12 +20,10 @@ class ObjectMap {
   public test?: ObjectMapChild;
 }
 
-
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class PlainMapValueTest {
+export class PlainMapValueTest {
   @test()
-  public normal() {
+  public normal(): void {
     const expected = factory.make(Product).one();
     const result = plainMapValue(Product, expected.toPlainArray());
     expected.displayPrice = +expected.displayPrice as never;
@@ -36,7 +32,7 @@ class PlainMapValueTest {
   }
 
   @test()
-  public object() {
+  public object(): void {
     const obj = { ok: 1 };
     const result = plainMapValue(ObjectMap, [obj]);
     expect(result).property('constructor', Object);
@@ -44,7 +40,7 @@ class PlainMapValueTest {
   }
 
   @test()
-  public skipIndex() {
+  public skipIndex(): void {
     const expected = factory.make(SkipIndex).one();
     const result = plainMapValue(SkipIndex, expected.toPlainArray());
     expect(result).property('constructor', Object);
@@ -52,12 +48,12 @@ class PlainMapValueTest {
   }
 
   @test()
-  public unknownClass() {
+  public unknownClass(): void {
     expect(() => plainMapValue(UnknownClass, [])).throw(UnknownClassError);
   }
 
   @test()
-  public inputIsNotArray() {
+  public inputIsNotArray(): void {
     expect(() => plainMapValue(Product, null as never)).throw(TypeError);
     expect(() => plainMapValue(Product, 1 as never)).throw(TypeError);
   }

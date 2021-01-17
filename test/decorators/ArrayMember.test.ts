@@ -10,16 +10,15 @@ class TestClass {
 }
 
 @suite()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ArrayMemberTest {
+export class ArrayMemberTest {
   @test()
-  public normal() {
+  public normal(): void {
     expect(() => ArrayMember(0)(Object.create(TestClass.prototype), 'test1')).not.throw();
     expect(() => ArrayMember(1)(Object.create(TestClass.prototype), 'test2')).not.throw();
   }
 
   @test()
-  public typeError() {
+  public typeError(): void {
     expect(() => ArrayMember('' as never)).throw(TypeError);
     expect(() => ArrayMember(true as never)).throw(TypeError);
     expect(() => ArrayMember({} as never)).throw(TypeError);

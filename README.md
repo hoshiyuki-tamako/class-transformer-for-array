@@ -340,9 +340,8 @@ console.log(blog, arr);
 ### Error Handling
 
 ```ts
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from 'class-transformer-for-array';
-import { TypeError } from 'class-transformer-for-array/common-errors';
+import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from '../src';
+import { TypeError } from '../src/common-errors';
 
 try {
   // class not registered
@@ -359,8 +358,7 @@ try {
 
 try {
   // cannot pass null
-  // @ts-ignore
-  plainMapValue(Object, null);
+  plainMapValue(Object, null as never);
 } catch (e) {
   // type error
   if (e instanceof TypeError) {
@@ -719,4 +717,29 @@ const api = new Api();
 const author = api.getAuthor();
 
 console.log(author);
+```
+
+### Modify Function Behavior
+
+```ts
+import 'reflect-metadata';
+
+import { ArrayMember, ClassTransformerForArray, plainArrayToClass } from 'class-transformer-for-array';
+
+class Blog {
+  @ArrayMember(0)
+  public id = 0;
+}
+
+// modify the function call
+const oldMethod = ClassTransformerForArray.instance.plainArrayToClass;
+ClassTransformerForArray.instance.plainArrayToClass = function(...args: unknown[]) {
+  console.log('Called this method');
+  return oldMethod.apply(this, args as never);
+}
+
+// Blog { id: 1 }
+const blog = plainArrayToClass(Blog, [1]);
+
+console.log(blog);
 ```

@@ -2,9 +2,8 @@ import { expect } from 'chai';
 import { Fixture } from 'class-fixtures-factory';
 import faker from 'faker';
 
-import { ArrayMember, ArrayMemberClass } from '../../src';
+import { ArrayMember, ArrayMemberClass, ArrayMemberStorage, defaultArrayMemberStorage } from '../../src';
 import { defaultValidateOptions } from '../factories/validate';
-import { ArrayMemberStorage, defaultArrayMemberStorage } from './../../src/storage';
 
 export const shipStorage = new ArrayMemberStorage();
 
