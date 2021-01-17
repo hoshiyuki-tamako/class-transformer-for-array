@@ -2,10 +2,14 @@
 
 transform rows of data by index to class object
 
+## Notes
+
+Make sure using `class-transformer@0.2.3`. newer version will be support after its api were stable
+
 ## Install
 
 ```bash
-npm i class-transformer-for-array class-transformer-validator class-transformer class-validator reflect-metadata
+npm i class-transformer-for-array class-transformer-validator class-transformer@0.2.3 class-validator reflect-metadata
 ```
 
 or
@@ -188,8 +192,8 @@ import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transfo
 
 class Product {
   @ArrayMember(0)
-  @Transform(({ value }) => value?.toString(), { toClassOnly: true })
-  @Transform(({ value }) => +value, { toPlainOnly: true })
+  @Transform((value) => value?.toString(), { toClassOnly: true })
+  @Transform((value) => +value, { toPlainOnly: true })
   public displayPrice = '0';
 }
 

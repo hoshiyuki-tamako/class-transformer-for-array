@@ -1,10 +1,9 @@
-import { ClassConstructor, classToPlain, plainToClass } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 import { transformAndValidate } from 'class-transformer-validator';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { defaultMetadataStorage } from 'class-transformer/cjs/storage';
+import { defaultMetadataStorage } from 'class-transformer/storage';
 import { TypeError } from 'common-errors';
 
+import { ClassConstructor } from '../class-transformer';
 import { UnknownClassError } from '../exceptions';
 import { arrayMemberClassStorage, defaultArrayMemberStorage } from '../storages';
 import {
@@ -131,7 +130,8 @@ export class ClassTransformerForArray {
       if (Array.isArray(object)) {
         return (record as Record<PropertyKey, unknown>[]).map((o) => this.classMapValue(c, o, options))
       } else {
-        return this.classMapValue(c, record, options);
+        // TODO remove as never due to newer class-transformer use record type
+        return this.classMapValue(c, record as never, options);
       }
     }
 

@@ -1,4 +1,4 @@
-import { ClassConstructor } from 'class-transformer';
+import { ClassConstructor } from './class-transformer';
 
 import { ClassTransformerForArray } from './core';
 import {

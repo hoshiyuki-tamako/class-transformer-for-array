@@ -1,6 +1,6 @@
 import isPromise from 'is-promise';
 
-import { ClassTransformerForArray } from '../core/ClassTransformerForArray';
+import { ClassTransformerForArray } from '../core';
 import { ClassToPlainArrayOptions } from '../types';
 
 export function TransformClassToPlainArray(options?: ClassToPlainArrayOptions): MethodDecorator {

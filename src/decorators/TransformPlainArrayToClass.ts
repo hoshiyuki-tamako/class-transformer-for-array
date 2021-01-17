@@ -1,7 +1,7 @@
-import { ClassConstructor } from 'class-transformer';
 import isPromise from 'is-promise';
 
-import { ClassTransformerForArray } from '../core/ClassTransformerForArray';
+import { ClassConstructor } from '../class-transformer';
+import { ClassTransformerForArray } from '../core';
 import { ClassTransformForArrayOptions } from '../types';
 
 export function TransformPlainArrayToClass<T>(classType: ClassConstructor<T>, options?: ClassTransformForArrayOptions): MethodDecorator {
