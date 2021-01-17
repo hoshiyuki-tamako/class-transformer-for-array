@@ -1,4 +1,4 @@
-import { ClassConstructor, TransformPlainToClass } from 'class-transformer';
+import { ClassConstructor } from 'class-transformer';
 import isPromise from 'is-promise';
 
 import { plainArrayToClass } from '..';
@@ -9,8 +9,7 @@ export function TransformPlainArrayToClass<T>(classType: ClassConstructor<T>, op
     const method = descriptor.value;
     descriptor.value = function(...args: unknown[]) {
       const result = method.apply(this, args);
-      return isPromise(result) ? result.then((v) => plainArrayToClass(classType, v, options as never)) : plainArrayToClass(classType, result, options as never);
+      return isPromise(result) ? result.then((v) => plainArrayToClass(classType, v as unknown[], options as never)) : plainArrayToClass(classType, result, options as never);
     };
-    return TransformPlainToClass(classType, options)(target, propertyKey, descriptor);
   };
 }

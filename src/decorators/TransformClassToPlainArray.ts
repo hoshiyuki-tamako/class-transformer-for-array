@@ -1,4 +1,3 @@
-import { TransformClassToPlain } from 'class-transformer';
 import isPromise from 'is-promise';
 
 import { classToPlainArray } from '..';
@@ -11,6 +10,5 @@ export function TransformClassToPlainArray(options?: ClassToPlainArrayOptions): 
       const result = method.apply(this, args);
       return isPromise(result) ? result.then((v) => classToPlainArray(v, options)) : classToPlainArray(result, options);
     };
-    return TransformClassToPlain(options)(target, propertyKey, descriptor);
   };
 }
