@@ -21,6 +21,10 @@ export class PersonalBlog extends Blog {
   @ArrayMember(2)
   @Fixture(() => faker.name.firstName())
   public author = '';
+
+  public toPlainArray(): unknown[] {
+    return [this.id, this.title, this.author];
+  }
 }
 
 export function personalBlogValidate(expected: PersonalBlog, result?: PersonalBlog | null, options = defaultValidateOptions): void {

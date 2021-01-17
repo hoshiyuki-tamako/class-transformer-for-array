@@ -6,8 +6,9 @@ export class PropertyInfo {
   public key = '';
   public options?: ArrayMemberOptions;
 
-  public constructor(key: string, options?: ArrayMemberOptions) {
-    this.key = key;
+  public constructor(key: PropertyKey, options?: ArrayMemberOptions) {
+    // TODO due to typescript not allow symbol as object key access, tmp fix
+    this.key = key as unknown as string;
     this.options = options;
   }
 }
@@ -16,6 +17,8 @@ export type PropertyIndexMap = Map<number, PropertyInfo>;
 export type ConstructorMap = Map<Function, PropertyIndexMap>;
 
 export class ArrayMemberStorage {
+  public static defaultArrayMemberStorage = new ArrayMemberStorage();
+
   public map = new Map() as ConstructorMap;
 
   public add(constructor: Function, index: number, info: PropertyInfo): this {
@@ -47,6 +50,6 @@ export class ArrayMemberStorage {
   }
 }
 
-export const defaultArrayMemberStorage = new ArrayMemberStorage();
+export const defaultArrayMemberStorage = ArrayMemberStorage.defaultArrayMemberStorage;
 
 export const arrayMemberClassStorage = new Map<Function, ArrayMemberStorage[]>();

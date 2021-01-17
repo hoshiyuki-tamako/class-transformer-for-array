@@ -10,6 +10,10 @@ export class Override extends IdBase {
   @ArrayMember(0)
   @Fixture(() => faker.random.number())
   public weight = 0;
+
+  public toPlainArray(): unknown[] {
+    return [this.weight];
+  }
 }
 
 export function overrideValidate(expected: Override, result?: Override | null, options = defaultValidateOptions): void {

@@ -1,5 +1,4 @@
-import 'reflect-metadata';
-
+/* eslint-disable no-sparse-arrays */
 import { expect } from 'chai';
 import { Fixture } from 'class-fixtures-factory';
 import { Type } from 'class-transformer';
@@ -36,6 +35,26 @@ export class SkipIndex {
   @Type(() => SkipIndexChild)
   @Fixture({ type: () => [SkipIndexChild] })
   public childArray: SkipIndexChild[] = [];
+
+  public toPlainArray(): unknown[] {
+    return [
+      this.id,
+      ,
+      this.name,
+      ,
+      this.child ? [
+        this.child.id,
+        ,
+        this.child.name,
+      ] : null,
+      ,
+      this.childArray.map((p) => [
+        p.id,
+        ,
+        p.name,
+      ]),
+    ];
+  }
 }
 
 export function skipIndexValidate(expected: SkipIndex, result?: SkipIndex | null, options = defaultValidateOptions): void  {

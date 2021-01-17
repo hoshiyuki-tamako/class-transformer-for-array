@@ -42,6 +42,12 @@ class DuplicateStorage {
 class EmptyProperty {
 }
 
+@ArrayMemberClass()
+class EmptyStorageParam {
+  @ArrayMember(0)
+  public id = 0;
+}
+
 class Tmp {
   public id = 0;
   public name = '';
@@ -58,7 +64,6 @@ class ArrayMemberClassTest {
     ArrayMember(0)(Object.create(Tmp.prototype), 'id');
     a(Tmp);
     expect(arrayMemberClassStorage.has(Tmp)).true;
-    // expect(defaultArrayMemberStorage.has(Tmp)).false;
   }
 
   @test()
@@ -93,6 +98,8 @@ class ArrayMemberClassTest {
     expect(customStorage.has(DuplicateStorage)).true;
 
     expect(arrayMemberClassStorage.has(EmptyProperty)).true;
+
+    expect(defaultArrayMemberStorage.has(EmptyStorageParam)).true;
   }
 
   @test()
@@ -120,7 +127,6 @@ class ArrayMemberClassTest {
 
   @test()
   public typeError() {
-    expect(() => ArrayMemberClass('' as never)).throw(TypeError);
     expect(() => ArrayMemberClass(true as never)).throw(TypeError);
     expect(() => ArrayMemberClass({} as never)).throw(TypeError);
   }

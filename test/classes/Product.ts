@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { expect } from 'chai';
 import { Fixture } from 'class-fixtures-factory';
 import { Transform, Type } from 'class-transformer';
@@ -12,31 +10,32 @@ import { defaultValidateOptions } from '../factories/validate';
 export class Color {
   @ArrayMember(0)
   @Fixture(() => faker.commerce.color())
-  public name: string = '';
+  public name = '';
 }
 
 export class Size {
   @ArrayMember(0)
   @Fixture(() => faker.random.number())
-  public size: number = 0;
+  public size = 0;
 }
 
 export class Product {
   @ArrayMember(0)
   @IsNumber()
   @Fixture(() => faker.random.number())
-  public id: number = 0;
+  public id = 0;
 
   @ArrayMember(1)
   @IsNumber()
   @Fixture(() => faker.random.number())
-  public price: number = 0;
+  public price = 0;
 
   @ArrayMember(2)
   @IsString()
-  @Transform(({ value }) => value?.toString())
+  @Transform(({ value }) => value?.toString(), { toClassOnly: true })
+  @Transform(({ value }) => +value, { toPlainOnly: true })
   @Fixture(() => faker.random.number().toString())
-  public displayPrice: string = '0';
+  public displayPrice = '0';
 
   @ArrayMember(3)
   @ValidateNested()
@@ -54,6 +53,17 @@ export class Product {
   @IsNumber(undefined, { each: true })
   @Fixture({ type: () => [Number] })
   public values: number[] = [];
+
+  public toPlainArray(): unknown[] {
+    return [
+      this.id,
+      this.price,
+      +this.displayPrice,
+      this.color ? [this.color.name] : null,
+      this.sizes.map((p) => [p.size]),
+      this.values,
+    ];
+  }
 }
 
 export function productValidate(expected: Product, result?: Product | null, options = defaultValidateOptions): void {
@@ -95,7 +105,7 @@ export function productArrayValidate(expected: Product, result?: unknown[] | nul
   expect(result).property('0', expected.id);
   expect(result).property('1', expected.price);
   // class transform
-  expect(result).property('2', expected.displayPrice);
+  expect(result).property('2', +expected.displayPrice);
   // nested
   if (expected.color) {
     expect(result).property('3').property('0', expected.color.name);

@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { arrayTransformAndValidate } from '../src';
 import { UnknownClassError } from './../src/exceptions/UnknownClassError';
 import { arrayMemberStorage, CustomStorageClass, customStorageValidate } from './classes/CustomStorageClass';
-import { PassClassTransformOption } from './classes/PassClassTransformOption';
+import { PassClassTransformOption, passClassTransformOptionValidate } from './classes/PassClassTransformOption';
 import { Product, productValidate } from './classes/Product';
 import { factory } from './factories';
 
@@ -15,13 +15,13 @@ class ArrayTransformAndValidateTest {
   @test()
   public async normal() {
     const expected = factory.make(Product).one();
-    productValidate(expected, await arrayTransformAndValidate(Product, this.mapClassToArray(expected)));
+    productValidate(expected, await arrayTransformAndValidate(Product, expected.toPlainArray()));
   }
 
   @test()
   public async array() {
     const testData = factory.make(Product).many(2);
-    const results = await arrayTransformAndValidate(Product, testData.map(this.mapClassToArray), { isArray: true });
+    const results = await arrayTransformAndValidate(Product, testData.map((o) => o.toPlainArray()), { isArray: true });
     expect(results).property('constructor', Array);
     expect(results).length(testData.length);
     for (const [i, expected] of testData.entries()) {
@@ -36,9 +36,7 @@ class ArrayTransformAndValidateTest {
     const result = await arrayTransformAndValidate(PassClassTransformOption, [expected.id, expected.title], {
       transformer: { strategy: 'excludeAll' },
     });
-    expect(result).property('constructor', PassClassTransformOption);
-    expect(result).property('id', 0);
-    expect(result).property('title', expected.title);
+    passClassTransformOptionValidate(expected, result);
   }
 
   @test()
@@ -65,16 +63,5 @@ class ArrayTransformAndValidateTest {
   public async customStorageFail() {
     const expected = factory.make(CustomStorageClass).one();
     await expect(arrayTransformAndValidate(CustomStorageClass, [expected.id, [expected.child!.id]])).rejectedWith(UnknownClassError);
-  }
-
-  private mapClassToArray(expected: Product) {
-    return [
-      expected.id,
-      expected.price,
-      expected.displayPrice,
-      [expected.color!.name],
-      expected.sizes.map((p) => [p.size]),
-      expected.values,
-    ];
   }
 }

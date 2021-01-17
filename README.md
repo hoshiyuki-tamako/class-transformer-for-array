@@ -16,7 +16,7 @@ npm i class-transformer-for-array
 
 ## Usage
 
-see `./sample/*.ts` for the script
+see `./sample/*.ts` for usage script
 
 see `./test/**/**/*.test.ts` for more example
 
@@ -537,6 +537,10 @@ class Ship {
   public name = '';
 }
 
+// same as getting from static property
+// true
+const same = ArrayMemberStorage.defaultArrayMemberStorage === defaultArrayMemberStorage;
+
 // true
 const has = defaultArrayMemberStorage.has(Ship);
 
@@ -547,6 +551,172 @@ if (propertyIndexMap) {
   const a = propertyIndexMap.get(0);
   // PropertyInfo { key: 'name', options: undefined }
   const b = propertyIndexMap.get(1);
-  console.log(has, a, b);
+  console.log(same, has, a, b);
 }
+```
+
+### Method Decorators
+
+#### TransformPlainArrayToClass
+
+```ts
+import 'reflect-metadata';
+
+import { ArrayMember, TransformPlainArrayToClass } from 'class-transformer-for-array';
+
+class Blog {
+  @ArrayMember(0)
+  public id = 0;
+
+  @ArrayMember(1)
+  public title = '';
+}
+
+class Api {
+  @TransformPlainArrayToClass(Blog)
+  public getBlog() {
+    return [1, 'the title'];
+  }
+
+  @TransformPlainArrayToClass(Blog, { isArray: true })
+  public getBlogs() {
+    return Array.from({ length: 3 }, (_, id) => [id, `title ${id}`]);
+  }
+
+  @TransformPlainArrayToClass(Blog)
+  public async asyncGetBlog() {
+    return [1, 'the title'];
+  }
+}
+
+(async () => {
+  const api = new Api();
+
+  // Blog { id: 1, title: 'the title' }
+  const blog = api.getBlog();
+
+  // [Blog { id: 0, title: 'title 0' }, Blog { id: 1, title: 'title 1' }, Blog { id: 2, title: 'title 2' }]
+  const blogs = api.getBlogs();
+
+  // Blog { id: 1, title: 'the title' }
+  const asyncBlog = await api.asyncGetBlog();
+
+  console.log(blog, blogs, asyncBlog);
+})();
+```
+
+#### TransformPlainArrayToClass With Options
+
+```ts
+import 'reflect-metadata';
+
+import { Expose } from 'class-transformer';
+
+import { ArrayMember, ArrayMemberClass, ArrayMemberStorage, TransformPlainArrayToClass } from 'class-transformer-for-array';
+
+const customStorage = new ArrayMemberStorage();
+
+@ArrayMemberClass(customStorage)
+class Author {
+  @ArrayMember(0)
+  public id = 0;
+
+  @ArrayMember(1)
+  @Expose()
+  public name = '';
+}
+
+class Api {
+  @TransformPlainArrayToClass(Author, { strategy: 'excludeAll', arrayMemberStorage: customStorage })
+  public getAuthor() {
+    return [999, 'the author name'];
+  }
+}
+
+const api = new Api();
+
+// Author { id: 0, name: 'the author name' }
+const author = api.getAuthor();
+
+console.log(author);
+```
+
+#### TransformClassToPlainArray
+
+```ts
+import 'reflect-metadata';
+
+import { ArrayMember, TransformClassToPlainArray } from 'class-transformer-for-array';
+
+class Blog {
+  @ArrayMember(0)
+  public id = 0;
+
+  @ArrayMember(1)
+  public title = '';
+}
+
+class Api {
+  @TransformClassToPlainArray()
+  public getBlog() {
+    return new Blog();
+  }
+
+  @TransformClassToPlainArray()
+  public getBlogs() {
+    return Array.from({ length: 3 }, (_, id) => Object.assign(new Blog(), { id }));
+  }
+
+  @TransformClassToPlainArray()
+  public async asyncGetBlog() {
+    return new Blog();
+  }
+}
+
+(async () => {
+  const api = new Api();
+
+  // [0,'']
+  const blog = api.getBlog();
+
+  // [[0,''],[1,''],[2,'']]
+  const blogs = api.getBlogs();
+
+  // [0,'']
+  const asyncBlog = await api.asyncGetBlog();
+
+  console.log(blog, blogs, asyncBlog);
+})();
+```
+
+#### TransformClassToPlainArray With Options
+
+```ts
+import 'reflect-metadata';
+
+import { Expose } from 'class-transformer';
+
+import { ArrayMember, TransformClassToPlainArray } from 'class-transformer-for-array';
+
+class Author {
+  public id = 0;
+
+  @ArrayMember(0)
+  @Expose()
+  public name = '';
+}
+
+class Api {
+  @TransformClassToPlainArray()
+  public getAuthor() {
+    return new Author();
+  }
+}
+
+const api = new Api();
+
+// ['']
+const author = api.getAuthor();
+
+console.log(author);
 ```

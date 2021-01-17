@@ -23,6 +23,10 @@ export class CustomStorageClass {
   @Type(() => CustomStorageClassChild)
   @Fixture({ type: () => CustomStorageClassChild })
   public child?: CustomStorageClassChild;
+
+  public toPlainArray(): unknown[] {
+    return [this.id, this.child ? [this.child.id] : null];
+  }
 }
 
 export function customStorageValidate(expected: CustomStorageClass, result?: CustomStorageClass | null, options = defaultValidateOptions): void {

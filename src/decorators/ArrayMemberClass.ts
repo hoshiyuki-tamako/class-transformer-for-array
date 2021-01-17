@@ -3,30 +3,29 @@ import { TypeError } from 'common-errors';
 
 import { arrayMemberClassStorage, ArrayMemberStorage, defaultArrayMemberStorage } from './../storage';
 
-/* eslint-disable @typescript-eslint/ban-types */
-export function ArrayMemberClass(storage?: ArrayMemberStorage): (constructor: Function) => void {
-  const _storage = storage || defaultArrayMemberStorage;
+export function ArrayMemberClass(arrayMemberStorage?: ArrayMemberStorage): ClassDecorator {
+  const storage = arrayMemberStorage || defaultArrayMemberStorage;
   if (!(storage instanceof ArrayMemberStorage)) {
     throw new TypeError(`storage must be instanceof ArrayMemberStorage: ${storage}`);
   }
 
-  return (constructor: Function) => {
+  return (constructor) => {
     if (!arrayMemberClassStorage.has(constructor)) {
       arrayMemberClassStorage.set(constructor, []);
     }
 
     const storages = arrayMemberClassStorage.get(constructor);
-    if (!storages!.includes(_storage)) {
-      storages!.push(_storage);
+    if (!storages!.includes(storage)) {
+      storages!.push(storage);
     }
 
     const result = defaultArrayMemberStorage.map.get(constructor);
     if (result) {
       const defaultPropertyIndexMap = new Map(result);
-      for (const [i, k] of _storage.map.get(constructor)?.entries() ?? []) {
+      for (const [i, k] of storage.map.get(constructor)?.entries() ?? []) {
         defaultPropertyIndexMap.set(i, k);
       }
-      _storage.map.set(constructor, defaultPropertyIndexMap);
+      storage.map.set(constructor, defaultPropertyIndexMap);
     }
   };
 }

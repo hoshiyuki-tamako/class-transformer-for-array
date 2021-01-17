@@ -14,6 +14,10 @@ export class Ship {
   @ArrayMember(0)
   @Fixture(() => faker.random.number())
   public id = 0;
+
+  public toPlainArray(): unknown[] {
+    return [this.id];
+  }
 }
 
 export function shipValidate(expected: Ship, result?: Ship | null, options = defaultValidateOptions): void {
@@ -37,6 +41,10 @@ export class ShipWithDefault extends Ship {
   @ArrayMember(1)
   @Fixture(() => faker.name.firstName())
   public name = '';
+
+  public toPlainArray(): unknown[] {
+    return [...super.toPlainArray(), this.name];
+  }
 }
 
 export function shipWithDefaultValidate(expected: ShipWithDefault, result?: ShipWithDefault | null, options = defaultValidateOptions): void {
@@ -67,6 +75,10 @@ export class ShipWithPartialProperty {
   @ArrayMember(1, { arrayMemberStorage: shipStoragePartial })
   @Fixture(() => faker.name.firstName())
   public name = '';
+
+  public toPlainArray(): unknown[] {
+    return [this.id, this.name];
+  }
 }
 
 export function shipWithPartialPropertyValidate(expected: ShipWithPartialProperty, result?: ShipWithPartialProperty | null, options = defaultValidateOptions): void {

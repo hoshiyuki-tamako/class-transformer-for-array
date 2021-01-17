@@ -4,7 +4,7 @@ import { TypeError } from 'common-errors';
 
 import { ArrayMember, classToPlainArray, UnknownClassError } from '../src';
 import { arrayMemberStorage, customStorageArrayValidate, CustomStorageClass } from './classes/CustomStorageClass';
-import { PassClassTransformOption } from './classes/PassClassTransformOption';
+import { PassClassTransformOption, passClassTransformOptionArrayValidate } from './classes/PassClassTransformOption';
 import { Product, productArrayValidate } from './classes/Product';
 import {
   Ship,
@@ -39,7 +39,7 @@ class ClassToPlainArrayTest {
   @test()
   public normal() {
     const expected = factory.make(Product).one();
-    const result = classToPlainArray(Object.assign(new Product(), expected, { displayPrice: +expected.displayPrice }));
+    const result = classToPlainArray(expected);
     productArrayValidate(expected, result);
   }
 
@@ -108,10 +108,7 @@ class ClassToPlainArrayTest {
   public classTransformOption() {
     const expected = factory.make(PassClassTransformOption).one();
     const result = classToPlainArray(expected, { strategy: 'excludeAll' });
-    expect(result).property('constructor', Array);
-    expect(result).length(2);
-    expect(result).property('0').is.undefined;
-    expect(result).property('1', expected.title);
+    passClassTransformOptionArrayValidate(expected, result);
   }
 
   @test()

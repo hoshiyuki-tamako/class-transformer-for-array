@@ -56,4 +56,9 @@ class StorageTest {
     expect(propertyIndexMap).a(Map.name);
     expect(propertyIndexMap!.get(index)).equal(propertyInfo);
   }
+
+  @test()
+  public defaultArrayMemberStorageSame() {
+    expect(ArrayMemberStorage).property('defaultArrayMemberStorage', defaultArrayMemberStorage);
+  }
 }

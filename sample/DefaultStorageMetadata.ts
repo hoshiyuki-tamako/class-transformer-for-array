@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { ArrayMember, defaultArrayMemberStorage } from '../src';
+import { ArrayMember, ArrayMemberStorage, defaultArrayMemberStorage } from '../src';
 
 class Ship {
   @ArrayMember(0)
@@ -9,6 +9,10 @@ class Ship {
   @ArrayMember(1)
   public name = '';
 }
+
+// same as getting from static property
+// true
+const same = ArrayMemberStorage.defaultArrayMemberStorage === defaultArrayMemberStorage;
 
 // true
 const has = defaultArrayMemberStorage.has(Ship);
@@ -20,5 +24,5 @@ if (propertyIndexMap) {
   const a = propertyIndexMap.get(0);
   // PropertyInfo { key: 'name', options: undefined }
   const b = propertyIndexMap.get(1);
-  console.log(has, a, b);
+  console.log(same, has, a, b);
 }

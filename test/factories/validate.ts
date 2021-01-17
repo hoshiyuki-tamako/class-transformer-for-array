@@ -1,5 +1,5 @@
 export type ValidateOptions = {
-  constructor: boolean,
+  constructor?: boolean,
 };
 
 export const defaultValidateOptions = {
