@@ -4,7 +4,7 @@ transform rows of data by index to class object
 
 ## Notes
 
-Make sure using `class-transformer@0.2.3`. newer version will be support it future
+Make sure using `class-transformer@0.2.3`. newer version will be supported in future
 
 ## Install
 
@@ -547,6 +547,7 @@ const same = ArrayMemberStorage.defaultArrayMemberStorage === defaultArrayMember
 const has = defaultArrayMemberStorage.has(Ship);
 
 // Map<number, PropertyInfo>
+// map is sorted by index
 const propertyIndexMap = defaultArrayMemberStorage.getPropertyIndexMap(Ship);
 if (propertyIndexMap) {
   // PropertyInfo { key: 'id', options: undefined }
