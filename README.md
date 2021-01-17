@@ -4,7 +4,7 @@ transform rows of data by index to class object
 
 ## Notes
 
-Make sure using `class-transformer@0.2.3`. newer version will be support after its api were stable
+Make sure using `class-transformer@0.2.3`. newer version will be support it future
 
 ## Install
 
