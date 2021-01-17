@@ -24,7 +24,7 @@ see `./sample/*.ts` for usage script
 
 see `./test/**/**/*.test.ts` for more example
 
-### Simple
+### Basic
 
 ```ts
 import 'reflect-metadata';
@@ -529,7 +529,7 @@ console.log(result1, result2, arr1, arr2);
 ```ts
 import 'reflect-metadata';
 
-import { ArrayMember, defaultArrayMemberStorage } from 'class-transformer-for-array';
+import { ArrayMember, ArrayMemberStorage, defaultArrayMemberStorage } from 'class-transformer-for-array';
 
 class Ship {
   @ArrayMember(0)
@@ -556,6 +556,43 @@ if (propertyIndexMap) {
   const b = propertyIndexMap.get(1);
   console.log(same, has, a, b);
 }
+```
+
+### Default Storage Class
+
+```ts
+import 'reflect-metadata';
+
+import {
+  ArrayMember,
+  ArrayMemberClass,
+  ArrayMemberClassStorage,
+  ArrayMemberStorage,
+  defaultArrayMemberClassStorage,
+} from 'class-transformer-for-array';
+
+const customStorage = new ArrayMemberStorage();
+
+@ArrayMemberClass(customStorage)
+class Ship {
+  @ArrayMember(0)
+  public id = '';
+
+  @ArrayMember(1)
+  public name = '';
+}
+
+// same as getting from static property
+// true
+const same = ArrayMemberClassStorage.defaultArrayMemberClassStorage === defaultArrayMemberClassStorage;
+
+// true
+const has = defaultArrayMemberClassStorage.has(Ship);
+
+// ArrayMemberStorage[]
+const storages = defaultArrayMemberClassStorage.get(Ship);
+
+console.log(same, has, storages);
 ```
 
 ### Method Decorators

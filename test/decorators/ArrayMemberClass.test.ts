@@ -5,8 +5,8 @@ import { TypeError } from 'common-errors';
 import {
   ArrayMember,
   ArrayMemberClass,
-  arrayMemberClassStorage,
   ArrayMemberStorage,
+  defaultArrayMemberClassStorage,
   defaultArrayMemberStorage,
 } from '../../src';
 
@@ -66,7 +66,7 @@ export class ArrayMemberClassTest {
 
     ArrayMember(0)(Object.create(Tmp.prototype), 'id');
     a(Tmp);
-    expect(arrayMemberClassStorage.has(Tmp)).true;
+    expect(defaultArrayMemberClassStorage.has(Tmp)).true;
   }
 
   @test()
@@ -78,29 +78,29 @@ export class ArrayMemberClassTest {
     ArrayMember(0)(Object.create(Tmp.prototype), 'id');
     a(Tmp);
     b(Tmp);
-    expect(arrayMemberClassStorage.has(Tmp)).true;
+    expect(defaultArrayMemberClassStorage.has(Tmp)).true;
     expect(storage1.has(Tmp)).true;
     expect(storage2.has(Tmp)).true;
   }
 
   @test()
   public decorators(): void {
-    expect(arrayMemberClassStorage.has(Test)).true;
+    expect(defaultArrayMemberClassStorage.has(Test)).true;
     expect(customStorage.has(Test)).true;
 
-    expect(arrayMemberClassStorage.has(MultiStorage)).true;
+    expect(defaultArrayMemberClassStorage.has(MultiStorage)).true;
     expect(customStorage.has(MultiStorage)).true;
     expect(customStorage2.has(MultiStorage)).true;
 
-    expect(arrayMemberClassStorage.has(AllStorage)).true;
+    expect(defaultArrayMemberClassStorage.has(AllStorage)).true;
     expect(customStorage.has(AllStorage)).true;
     expect(customStorage2.has(AllStorage)).true;
     expect(defaultArrayMemberStorage.has(AllStorage)).true;
 
-    expect(arrayMemberClassStorage.has(DuplicateStorage)).true;
+    expect(defaultArrayMemberClassStorage.has(DuplicateStorage)).true;
     expect(customStorage.has(DuplicateStorage)).true;
 
-    expect(arrayMemberClassStorage.has(EmptyProperty)).true;
+    expect(defaultArrayMemberClassStorage.has(EmptyProperty)).true;
 
     expect(defaultArrayMemberStorage.has(EmptyStorageParam)).true;
   }
@@ -113,7 +113,7 @@ export class ArrayMemberClassTest {
     ArrayMember(0)(Object.create(Tmp.prototype), 'id');
     a(Tmp);
     ArrayMember(1)(Object.create(Tmp.prototype), 'name');
-    expect(arrayMemberClassStorage.has(Tmp)).true;
+    expect(defaultArrayMemberClassStorage.has(Tmp)).true;
 
     expect(storage.has(Tmp)).true;
 

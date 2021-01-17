@@ -1,6 +1,6 @@
 {
   "name": "class-transformer-for-array",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "class transform for array",
   "repository": {
     "type": "git",
@@ -46,7 +46,7 @@
     "reflect-metadata": "^0.1.13",
     "ts-mocha": "^8.0.0",
     "ts-node": "^9.1.1",
-    "typescript": "^4.1.3"
+    "typescript": "^4.2.0-dev.20210115"
   },
   "peerDependencies": {
     "class-transformer": "0.2.3",

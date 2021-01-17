@@ -40,5 +40,3 @@ export class ArrayMemberStorage {
 }
 
 export const defaultArrayMemberStorage = ArrayMemberStorage.defaultArrayMemberStorage;
-
-export const arrayMemberClassStorage = new Map<Function, ArrayMemberStorage[]>();

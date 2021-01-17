@@ -18,6 +18,7 @@ const same = ArrayMemberStorage.defaultArrayMemberStorage === defaultArrayMember
 const has = defaultArrayMemberStorage.has(Ship);
 
 // Map<number, PropertyInfo>
+// map is sorted by index
 const propertyIndexMap = defaultArrayMemberStorage.getPropertyIndexMap(Ship);
 if (propertyIndexMap) {
   // PropertyInfo { key: 'id', options: undefined }

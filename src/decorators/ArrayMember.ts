@@ -1,6 +1,6 @@
 import { TypeError } from 'common-errors';
 
-import { arrayMemberClassStorage, defaultArrayMemberStorage, PropertyInfo } from '../storages';
+import { defaultArrayMemberClassStorage, defaultArrayMemberStorage, PropertyInfo } from '../storages';
 import { ArrayMemberOptions } from '../types';
 
 export function ArrayMember(index: number, options?: ArrayMemberOptions): PropertyDecorator {
@@ -10,7 +10,7 @@ export function ArrayMember(index: number, options?: ArrayMemberOptions): Proper
 
   return (target, propertyKey) => {
     if (!options?.arrayMemberStorage) {
-      for (const eachStorage of arrayMemberClassStorage.get(target.constructor) ?? []) {
+      for (const eachStorage of defaultArrayMemberClassStorage.get(target.constructor) ?? []) {
         eachStorage.add(target.constructor, index, new PropertyInfo(propertyKey, options));
       }
     }
