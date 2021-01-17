@@ -21,7 +21,7 @@ export * from './storage';
 export * from './exceptions';
 export * from './types';
 
-export function plainMapValue<T>(classType: ClassConstructor<T>, array: unknown | unknown[] | unknown[][], options?: ArrayStorageOptions): Record<PropertyKey, unknown> {
+export function plainMapValue<T>(classType: ClassConstructor<T>, array: unknown[] | unknown[][], options?: ArrayStorageOptions): Record<PropertyKey, unknown> {
   if (!Array.isArray(array)) {
     throw new TypeError(`input is not an array: ${array}`);
   }
@@ -64,9 +64,9 @@ export function plainMapValue<T>(classType: ClassConstructor<T>, array: unknown 
   return obj;
 }
 
-export function plainArrayToClass<T>(classType: ClassConstructor<T>, array: unknown | unknown[], options?: ClassTransformForArrayOptions & { isArray?: false }): T;
-export function plainArrayToClass<T>(classType: ClassConstructor<T>, array: unknown | unknown[][], options?: ClassTransformForArrayOptions & { isArray: true }): T[];
-export function plainArrayToClass<T>(classType: ClassConstructor<T>, array: unknown | unknown[] | unknown[][], options?: ClassTransformForArrayOptions): T[] | T {
+export function plainArrayToClass<T>(classType: ClassConstructor<T>, array: unknown[], options?: ClassTransformForArrayOptions & { isArray?: false }): T;
+export function plainArrayToClass<T>(classType: ClassConstructor<T>, array: unknown[][], options?: ClassTransformForArrayOptions & { isArray: true }): T[];
+export function plainArrayToClass<T>(classType: ClassConstructor<T>, array: unknown[] | unknown[][], options?: ClassTransformForArrayOptions): T[] | T {
   return plainToClass(
     classType,
     options?.isArray
@@ -141,9 +141,9 @@ export function classToPlainArray<T>(
     }
   }
 
-export async function arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown | unknown[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
-export async function arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown | unknown[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
-export async function arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown | unknown[] | unknown[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
+export async function arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
+export async function arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
+export async function arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown[] | unknown[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
   return transformAndValidate(
     classType,
     options?.isArray
