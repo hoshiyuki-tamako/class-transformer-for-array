@@ -17,7 +17,7 @@ import {
 export class ClassTransformerForArray {
   public static instance = new ClassTransformerForArray();
 
-  public plainMapValue<T extends object>(classType: ClassConstructor<T>, array: unknown[] | unknown[][], options?: ArrayStorageOptions): Record<PropertyKey, unknown> {
+  public plainMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[] | TData[][], options?: ArrayStorageOptions): Record<PropertyKey, unknown> {
     if (!Array.isArray(array)) {
       throw new TypeError(`input is not an array: ${array}`);
     }
@@ -45,7 +45,7 @@ export class ClassTransformerForArray {
         if (storage.has(subClassType)) {
           if (Array.isArray(o)) {
             if (typeMeta?.reflectedType === Array || property.options?.isArray) {
-              obj[property.key] = (o).map((p) => this.plainMapValue(subClassType, p, options));
+              obj[property.key] = (o).map((p) => this.plainMapValue(subClassType, p as never, options));
             } else {
               obj[property.key] = this.plainMapValue(subClassType, o, options);
             }
@@ -60,7 +60,7 @@ export class ClassTransformerForArray {
     return obj;
   }
 
-  public classMapValue<T extends object>(classType: ClassConstructor<T>, object: Record<PropertyKey, unknown>, options?: ArrayStorageOptions): unknown[] {
+  public classMapValue<T, TObject extends Record<PropertyKey, unknown>>(classType: ClassConstructor<T>, object: TObject, options?: ArrayStorageOptions): unknown[] {
     const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
 
     if (storage === defaultArrayMemberStorage) {
@@ -104,13 +104,13 @@ export class ClassTransformerForArray {
   }
 
   // class transform
-  public plainArrayToClass<T extends object>(classType: ClassConstructor<T>, array: unknown[], options?: ClassTransformForArrayOptions & { isArray?: false }): T;
-  public plainArrayToClass<T extends object>(classType: ClassConstructor<T>, array: unknown[][], options?: ClassTransformForArrayOptions & { isArray: true }): T[];
-  public plainArrayToClass<T extends object>(classType: ClassConstructor<T>, array: unknown[] | unknown[][], options?: ClassTransformForArrayOptions): T[] | T {
+  public plainArrayToClass<T, TData>(classType: ClassConstructor<T>, array: TData[], options?: ClassTransformForArrayOptions & { isArray?: false }): T;
+  public plainArrayToClass<T, TData>(classType: ClassConstructor<T>, array: TData[][], options?: ClassTransformForArrayOptions & { isArray: true }): T[];
+  public plainArrayToClass<T, TData>(classType: ClassConstructor<T>, array: TData[] | TData[][], options?: ClassTransformForArrayOptions): T[] | T {
     return plainToClass(
       classType,
       options?.isArray
-        ? (array as unknown[][]).map((arr) => this.plainMapValue(classType, arr, options))
+        ? (array as TData[][]).map((arr) => this.plainMapValue(classType, arr, options))
         : this.plainMapValue(classType, array, options),
       options,
     );
@@ -133,13 +133,13 @@ export class ClassTransformerForArray {
     }
 
   // class transform validate
-  public async arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
-  public async arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
-  public async arrayTransformAndValidate<T extends object>(classType: ClassConstructor<T>, array: unknown[] | unknown[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
+  public async arrayTransformAndValidate<T extends object, TData>(classType: ClassConstructor<T>, array: TData[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;
+  public async arrayTransformAndValidate<T extends object, TData>(classType: ClassConstructor<T>, array: TData[][], options?: TransformValidationForArrayOptions & { isArray: true }): Promise<T[]>;
+  public async arrayTransformAndValidate<T extends object, TData>(classType: ClassConstructor<T>, array: TData[] | TData[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
     return transformAndValidate(
       classType,
       options?.isArray
-        ? (array as unknown[][]).map((arr) => this.plainMapValue(classType, arr, options))
+        ? (array as TData[][]).map((arr) => this.plainMapValue(classType, arr, options))
         : this.plainMapValue(classType, array, options),
       options,
     );

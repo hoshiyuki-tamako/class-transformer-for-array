@@ -7,9 +7,11 @@ export type ArrayStorageOptions = {
   arrayMemberStorage?: ArrayMemberStorage;
 }
 
-export type ArrayMemberOptions = {
+export type ArrayDeterminationOptions = {
   isArray?: boolean;
-} & ArrayStorageOptions;
+}
+
+export type ArrayMemberOptions = ArrayDeterminationOptions & ArrayStorageOptions;
 
 export type ClassTransformForArrayOptions = ClassTransformOptions & ArrayMemberOptions;
 export type TransformValidationForArrayOptions = TransformValidationOptions & ArrayMemberOptions;

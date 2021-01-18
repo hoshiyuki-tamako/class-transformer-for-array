@@ -8,7 +8,7 @@ export function TransformClassToPlainArray(options?: ClassToPlainArrayOptions): 
     const method = descriptor.value;
     descriptor.value = function(...args: unknown[]) {
       const result = method.apply(this, args);
-      return isPromise(result) ? result.then((v) => ClassTransformerForArray.instance.classToPlainArray(v, options)) : ClassTransformerForArray.instance.classToPlainArray(result, options);
+      return isPromise(result) ? result.then((v) => ClassTransformerForArray.instance.classToPlainArray(v as never, options)) : ClassTransformerForArray.instance.classToPlainArray(result, options);
     };
   };
 }
