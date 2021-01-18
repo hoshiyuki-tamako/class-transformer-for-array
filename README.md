@@ -783,6 +783,7 @@ ClassTransformerForArray.instance.plainArrayToClass = function(...args: unknown[
   return oldMethod.apply(this, args as never);
 }
 
+// Called this method
 // Blog { id: 1 }
 const blog = plainArrayToClass(Blog, [1]);
 
