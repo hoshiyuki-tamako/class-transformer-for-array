@@ -38,3 +38,9 @@ export async function arrayTransformAndValidate<T extends object, TData>(classTy
 export async function arrayTransformAndValidate<T extends object, TData>(classType: ClassConstructor<T>, array: TData[] | TData[][], options?: TransformValidationForArrayOptions): Promise<T | T[]> {
   return ClassTransformerForArray.instance.arrayTransformAndValidate(classType, array as never, options as never);
 }
+
+export function arrayTransformAndValidateSync<T extends object, TData>(classType: ClassConstructor<T>, array: TData[], options?: TransformValidationForArrayOptions & { isArray?: false }): T;
+export function arrayTransformAndValidateSync<T extends object, TData>(classType: ClassConstructor<T>, array: TData[][], options?: TransformValidationForArrayOptions & { isArray: true }): T[];
+export function arrayTransformAndValidateSync<T extends object, TData>(classType: ClassConstructor<T>, array: TData[] | TData[][], options?: TransformValidationForArrayOptions): T | T[] {
+  return ClassTransformerForArray.instance.arrayTransformAndValidateSync(classType, array as never, options as never);
+}
