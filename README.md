@@ -2,6 +2,10 @@
 
 transform rows of data by index to class object
 
+## Documentation
+
+[https://hoshiyuki-tamako.github.io/class-transformer-for-array/guide/](https://hoshiyuki-tamako.github.io/class-transformer-for-array/guide/)
+
 ## Notes
 
 Make sure using `class-transformer@0.2.3`. newer version will be supported in future
