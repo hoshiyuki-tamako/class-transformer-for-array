@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Usages | Class Transfomer For Array</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="transform rows of data by index to class object">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/class-transformer-for-array/assets/css/0.styles.1be59272.css" as="style"><link rel="preload" href="/class-transformer-for-array/assets/js/app.52ab0cd3.js" as="script"><link rel="preload" href="/class-transformer-for-array/assets/js/2.ca04b7ab.js" as="script"><link rel="preload" href="/class-transformer-for-array/assets/js/11.3be7113a.js" as="script"><link rel="prefetch" href="/class-transformer-for-array/assets/js/10.b7468448.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/12.41ad0b4f.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/3.c8538545.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/4.af3ca4b3.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/5.17cd5d6d.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/6.0be49595.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/7.f353b91b.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/8.bf7ed0a6.js"><link rel="prefetch" href="/class-transformer-for-array/assets/js/9.1e395668.js">
+    <link rel="stylesheet" href="/class-transformer-for-array/assets/css/0.styles.1be59272.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/class-transformer-for-array/" class="home-link router-link-active"><!----> <span class="site-name">Class Transfomer For Array</span></a> <div class="links"><!----> <div class="user-settings"><a href="#" class="settings-button"><svg aria-hidden="true" data-prefix="fas" data-icon="cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-cog fa-w-16 settings-icon"><path fill="currentColor" d="M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"></path></svg></a> <div class="user-settings-menu" style="display:none;"><div class="theme-options"><!----> <!----> <div class="dark-theme-options toggle-option"><label for="dark-theme-toggle">Enable Dark Theme?</label> <input id="dark-theme-toggle" type="checkbox"></div> <!----> <!----></div></div></div> <!----> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/class-transformer-for-array/guide/" class="nav-link router-link-active">
+  Guide
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/class-transformer-for-array/guide/" class="nav-link router-link-active">
+  Guide
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Guide</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/class-transformer-for-array/guide/" aria-current="page" class="sidebar-link">Getting Started</a></li><li><a href="/class-transformer-for-array/guide/usages.html" aria-current="page" class="active sidebar-link">Usages</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#basic" class="sidebar-link">Basic</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#array" class="sidebar-link">Array</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#nested" class="sidebar-link">Nested</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#nested-array" class="sidebar-link">Nested Array</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#nested-raw-array" class="sidebar-link">Nested Raw Array</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#class-transform" class="sidebar-link">Class Transform</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#class-validate" class="sidebar-link">Class Validate</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#class-validate-array" class="sidebar-link">Class Validate array</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#extends" class="sidebar-link">Extends</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#override" class="sidebar-link">Override</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#map-data-without-transform" class="sidebar-link">Map Data Without Transform</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#error-handling" class="sidebar-link">Error Handling</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#custom-storage" class="sidebar-link">Custom Storage</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#custom-storage-multiple" class="sidebar-link">Custom Storage Multiple</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#custom-storage-manual-assign" class="sidebar-link">Custom Storage Manual Assign</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#custom-storage-partial" class="sidebar-link">Custom Storage Partial</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#default-storage" class="sidebar-link">Default Storage</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#default-storage-class" class="sidebar-link">Default Storage Class</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#method-decorators" class="sidebar-link">Method Decorators</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#transformplainarraytoclass" class="sidebar-link">TransformPlainArrayToClass</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#transformplainarraytoclass-with-options" class="sidebar-link">TransformPlainArrayToClass With Options</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#transformclasstoplainarray" class="sidebar-link">TransformClassToPlainArray</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#transformclasstoplainarray-with-options" class="sidebar-link">TransformClassToPlainArray With Options</a></li><li class="sidebar-sub-header"><a href="/class-transformer-for-array/guide/usages.html#modify-function-behavior" class="sidebar-link">Modify Function Behavior</a></li></ul></li><li><a href="/class-transformer-for-array/guide/apis.html" class="sidebar-link">APIs</a></li><li><a href="/class-transformer-for-array/guide/decorators.html" class="sidebar-link">Decorators</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="usages"><a href="#usages" class="header-anchor">#</a> Usages</h1> <h2 id="basic"><a href="#basic" class="header-anchor">#</a> Basic</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> title <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Blog { id: 12, title: &quot;the title&quot; }</span>
+<span class="token keyword">const</span> blog <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [12, 'the title']</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>blog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="array"><a href="#array" class="header-anchor">#</a> Array</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> title <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// [Blog { id: 1, title: 'the title' }, Blog { id: 2, title: 'the title' }, Blog { id: 3, title: 'the title' }]</span>
+<span class="token keyword">const</span> blog <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> isArray<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [[1,'the title'],[2,'the title'],[3,'the title']]</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>blog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="nested"><a href="#nested" class="header-anchor">#</a> Nested</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Type <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Attachment</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> name <span class="token operator">=</span> <span class="token string">'default'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  @<span class="token function">Type</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> Attachment<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> attachment<span class="token operator">?</span><span class="token operator">:</span> Attachment<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Blog { attachment: Attachment { id: 1, name: &quot;test.png&quot; } }</span>
+<span class="token keyword">const</span> blog <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'test.png'</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [[1, 'test.png']]</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>blog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Blog { attachment: Attachment { id: null, name: 'default' } }</span>
+<span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token keyword">null</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Blog { attachment: Attachment { id: 1, name: null } }</span>
+<span class="token keyword">const</span> b <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Blog { attachment: null }</span>
+<span class="token keyword">const</span> c <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token keyword">null</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Blog {}</span>
+<span class="token keyword">const</span> d <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">,</span> arr<span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="nested-array"><a href="#nested-array" class="header-anchor">#</a> Nested Array</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Type <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Attachment</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> name <span class="token operator">=</span> <span class="token string">'default'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> isArray<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  @<span class="token function">Type</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> Attachment<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> attachment<span class="token operator">:</span> Attachment<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Blog { attachment: [Attachment { id: 1, name: &quot;test1.png&quot; }, Attachment { id: 2, name: &quot;test2.png&quot; }] }</span>
+<span class="token keyword">const</span> blog <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'test1.png'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'test2.png'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [[[1,'test1.png'],[2,'test2.png']]]</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>blog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Blog { attachment: null }</span>
+<span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token keyword">null</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">,</span> arr<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="nested-raw-array"><a href="#nested-raw-array" class="header-anchor">#</a> Nested Raw Array</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Attachment</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> serverIds<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Attachment { serverIds: [1, 2, 3] }</span>
+<span class="token keyword">const</span> attachment <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Attachment<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [[1,2,3]]</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>attachment<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Attachment { serverIds: [] }</span>
+<span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Attachment<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Attachment { serverIds: null }</span>
+<span class="token keyword">const</span> b <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Attachment<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token keyword">null</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>attachment<span class="token punctuation">,</span> arr<span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="class-transform"><a href="#class-transform" class="header-anchor">#</a> Class Transform</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Transform <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Product</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  @<span class="token function">Transform</span><span class="token punctuation">(</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> value<span class="token operator">?.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> toClassOnly<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  @<span class="token function">Transform</span><span class="token punctuation">(</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token operator">+</span>value<span class="token punctuation">,</span> <span class="token punctuation">{</span> toPlainOnly<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> displayPrice <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Product { displayPrice: '99.99' }</span>
+<span class="token keyword">const</span> obj <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Product<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">99.99</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [99.99]</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="class-validate"><a href="#class-validate" class="header-anchor">#</a> Class Validate</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> IsString <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-validator'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> arrayTransformAndValidate<span class="token punctuation">,</span> arrayTransformAndValidateSync<span class="token punctuation">,</span> classToPlainArray <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Product</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  @<span class="token function">IsString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> displayPrice <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Product { displayPrice: '99.99' }</span>
+<span class="token keyword">const</span> obj1 <span class="token operator">=</span> <span class="token function">arrayTransformAndValidateSync</span><span class="token punctuation">(</span>Product<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'99.99'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Product { displayPrice: '99.99' }</span>
+  <span class="token keyword">const</span> obj2 <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">arrayTransformAndValidate</span><span class="token punctuation">(</span>Product<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'99.99'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// ['99.99']</span>
+  <span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>obj1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj1<span class="token punctuation">,</span> obj2<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// throw</span>
+  <span class="token keyword">await</span> <span class="token function">arrayTransformAndValidate</span><span class="token punctuation">(</span>Product<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">99.99</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token builtin">console</span><span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="class-validate-array"><a href="#class-validate-array" class="header-anchor">#</a> Class Validate array</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> IsString <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-validator'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> arrayTransformAndValidate<span class="token punctuation">,</span> classToPlainArray <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Product</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  @<span class="token function">IsString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> displayPrice <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// [Product { displayPrice: '99.99' }, Product { displayPrice: '88.88' }, Product { displayPrice: '77.77' }]</span>
+  <span class="token keyword">const</span> obj <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">arrayTransformAndValidate</span><span class="token punctuation">(</span>Product<span class="token punctuation">,</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span><span class="token string">'99.99'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token string">'88.88'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token string">'77.77'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> isArray<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// [['99.99'],['88.88'],['77.77']]</span>
+  <span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="extends"><a href="#extends" class="header-anchor">#</a> Extends</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">IdBase</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token keyword">extends</span> <span class="token class-name">IdBase</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> title <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">PersonalBlog</span> <span class="token keyword">extends</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> author <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// PersonalBlog { id: 1, title: 'book', author: 'admin' }</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>PersonalBlog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'book'</span><span class="token punctuation">,</span> <span class="token string">'admin'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [1,'book','admin']</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="override"><a href="#override" class="header-anchor">#</a> Override</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> title <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">PersonalBlog</span> <span class="token keyword">extends</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> author <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// PersonalBlog { title: '', author: 'admin' }</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>PersonalBlog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'admin'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// ['admin']</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="map-data-without-transform"><a href="#map-data-without-transform" class="header-anchor">#</a> Map Data Without Transform</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> classMapValue<span class="token punctuation">,</span> plainMapValue <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> title <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// { id: 12, title: 'the title' }</span>
+<span class="token keyword">const</span> blog <span class="token operator">=</span> <span class="token function">plainMapValue</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// [12, 'the title']</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classMapValue</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> blog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="error-handling"><a href="#error-handling" class="header-anchor">#</a> Error Handling</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> ClassTransformerForArrayError<span class="token punctuation">,</span> plainMapValue<span class="token punctuation">,</span> UnknownClassError <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../src'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> TypeError <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../src/common-errors'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token comment">// class not registered</span>
+  <span class="token function">plainMapValue</span><span class="token punctuation">(</span>Object<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>e <span class="token keyword">instanceof</span> <span class="token class-name">UnknownClassError</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// catch all error from this library ( does not include common-errors )</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>e <span class="token keyword">instanceof</span> <span class="token class-name">ClassTransformerForArrayError</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token comment">// cannot pass null</span>
+  <span class="token function">plainMapValue</span><span class="token punctuation">(</span>Object<span class="token punctuation">,</span> <span class="token keyword">null</span> <span class="token keyword">as</span> <span class="token builtin">never</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// type error</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>e <span class="token keyword">instanceof</span> <span class="token class-name">TypeError</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="custom-storage"><a href="#custom-storage" class="header-anchor">#</a> Custom Storage</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> IsNumber <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-validator'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+  ArrayMember<span class="token punctuation">,</span>
+  ArrayMemberClass<span class="token punctuation">,</span>
+  ArrayMemberStorage<span class="token punctuation">,</span>
+  arrayTransformAndValidate<span class="token punctuation">,</span>
+  classToPlainArray<span class="token punctuation">,</span>
+  plainArrayToClass<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// create a storage</span>
+<span class="token keyword">const</span> myStorage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+@<span class="token function">ArrayMemberClass</span><span class="token punctuation">(</span>myStorage<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">CustomClass</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  @<span class="token function">IsNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// CustomClass { id: 1 }</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// [1]</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// throw UnknownClassError</span>
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">123</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">(</span><span class="token keyword">async</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// CustomClass { id: 1 }</span>
+  <span class="token keyword">const</span> r <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">arrayTransformAndValidate</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="custom-storage-multiple"><a href="#custom-storage-multiple" class="header-anchor">#</a> Custom Storage Multiple</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+  ArrayMember<span class="token punctuation">,</span>
+  ArrayMemberClass<span class="token punctuation">,</span>
+  ArrayMemberStorage<span class="token punctuation">,</span>
+  classToPlainArray<span class="token punctuation">,</span>
+  defaultArrayMemberStorage<span class="token punctuation">,</span>
+  plainArrayToClass<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// create storages</span>
+<span class="token keyword">const</span> myStorage1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> myStorage2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+@<span class="token function">ArrayMemberClass</span><span class="token punctuation">(</span>myStorage1<span class="token punctuation">)</span>
+@<span class="token function">ArrayMemberClass</span><span class="token punctuation">(</span>myStorage2<span class="token punctuation">)</span>
+@<span class="token function">ArrayMemberClass</span><span class="token punctuation">(</span>defaultArrayMemberStorage<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">CustomClass</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// CustomClass { id: 1 }</span>
+<span class="token keyword">const</span> result1 <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage1 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> result2 <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage2 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> result3 <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// [1]</span>
+<span class="token keyword">const</span> arr1 <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result1<span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage1 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> arr2 <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result2<span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage2 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> arr3 <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result1<span class="token punctuation">,</span> result2<span class="token punctuation">,</span> result3<span class="token punctuation">,</span> arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">,</span> arr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="custom-storage-manual-assign"><a href="#custom-storage-manual-assign" class="header-anchor">#</a> Custom Storage Manual Assign</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> ArrayMemberStorage<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// create a storage</span>
+<span class="token keyword">const</span> myStorage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">CustomClass</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// CustomClass { id: 1 }</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// [1]</span>
+<span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// throw UnknownClassError</span>
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">123</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="custom-storage-partial"><a href="#custom-storage-partial" class="header-anchor">#</a> Custom Storage Partial</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> ArrayMemberClass<span class="token punctuation">,</span> ArrayMemberStorage<span class="token punctuation">,</span> classToPlainArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// create storages</span>
+<span class="token keyword">const</span> myStorage1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> myStorage2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+@<span class="token function">ArrayMemberClass</span><span class="token punctuation">(</span>myStorage1<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">CustomClass</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage2 <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> name <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// CustomClass { id: 1, name: '' }</span>
+<span class="token keyword">const</span> result1 <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage1 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// CustomClass { id: 0, name: 'name' }</span>
+<span class="token keyword">const</span> result2 <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>CustomClass<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage2 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// [1]</span>
+<span class="token keyword">const</span> arr1 <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result1<span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage1 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// [undefined, 'name']</span>
+<span class="token keyword">const</span> arr2 <span class="token operator">=</span> <span class="token function">classToPlainArray</span><span class="token punctuation">(</span>result2<span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayMemberStorage<span class="token operator">:</span> myStorage2 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result1<span class="token punctuation">,</span> result2<span class="token punctuation">,</span> arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="default-storage"><a href="#default-storage" class="header-anchor">#</a> Default Storage</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> ArrayMemberStorage<span class="token punctuation">,</span> defaultArrayMemberStorage <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Ship</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> name <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// same as getting from static property</span>
+<span class="token comment">// true</span>
+<span class="token keyword">const</span> same <span class="token operator">=</span> ArrayMemberStorage<span class="token punctuation">.</span>defaultArrayMemberStorage <span class="token operator">===</span> defaultArrayMemberStorage<span class="token punctuation">;</span>
+
+<span class="token comment">// true</span>
+<span class="token keyword">const</span> has <span class="token operator">=</span> defaultArrayMemberStorage<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>Ship<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Map&lt;number, PropertyInfo&gt;</span>
+<span class="token comment">// map is sorted by index</span>
+<span class="token keyword">const</span> propertyIndexMap <span class="token operator">=</span> defaultArrayMemberStorage<span class="token punctuation">.</span><span class="token function">getPropertyIndexMap</span><span class="token punctuation">(</span>Ship<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>propertyIndexMap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// PropertyInfo { key: 'id', options: undefined }</span>
+  <span class="token keyword">const</span> a <span class="token operator">=</span> propertyIndexMap<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// PropertyInfo { key: 'name', options: undefined }</span>
+  <span class="token keyword">const</span> b <span class="token operator">=</span> propertyIndexMap<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>same<span class="token punctuation">,</span> has<span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="default-storage-class"><a href="#default-storage-class" class="header-anchor">#</a> Default Storage Class</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+  ArrayMember<span class="token punctuation">,</span>
+  ArrayMemberClass<span class="token punctuation">,</span>
+  ArrayMemberClassStorage<span class="token punctuation">,</span>
+  ArrayMemberStorage<span class="token punctuation">,</span>
+  defaultArrayMemberClassStorage<span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> customStorage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+@<span class="token function">ArrayMemberClass</span><span class="token punctuation">(</span>customStorage<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">Ship</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> name <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// same as getting from static property</span>
+<span class="token comment">// true</span>
+<span class="token keyword">const</span> same <span class="token operator">=</span> ArrayMemberClassStorage<span class="token punctuation">.</span>defaultArrayMemberClassStorage <span class="token operator">===</span> defaultArrayMemberClassStorage<span class="token punctuation">;</span>
+
+<span class="token comment">// true</span>
+<span class="token keyword">const</span> has <span class="token operator">=</span> defaultArrayMemberClassStorage<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>Ship<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ArrayMemberStorage[]</span>
+<span class="token keyword">const</span> storages <span class="token operator">=</span> defaultArrayMemberClassStorage<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>Ship<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>same<span class="token punctuation">,</span> has<span class="token punctuation">,</span> storages<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="method-decorators"><a href="#method-decorators" class="header-anchor">#</a> Method Decorators</h2> <h2 id="transformplainarraytoclass"><a href="#transformplainarraytoclass" class="header-anchor">#</a> TransformPlainArrayToClass</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> TransformPlainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> title <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Api</span> <span class="token punctuation">{</span>
+  @<span class="token function">TransformPlainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token function">getBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  @<span class="token function">TransformPlainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">{</span> isArray<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token function">getBlogs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token builtin">Array</span><span class="token punctuation">.</span><span class="token keyword">from</span><span class="token punctuation">(</span><span class="token punctuation">{</span> length<span class="token operator">:</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>_<span class="token punctuation">,</span> id<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span>id<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">title </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  @<span class="token function">TransformPlainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token function">asyncGetBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'the title'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> api <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Api</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Blog { id: 1, title: 'the title' }</span>
+  <span class="token keyword">const</span> blog <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">getBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// [Blog { id: 0, title: 'title 0' }, Blog { id: 1, title: 'title 1' }, Blog { id: 2, title: 'title 2' }]</span>
+  <span class="token keyword">const</span> blogs <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">getBlogs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Blog { id: 1, title: 'the title' }</span>
+  <span class="token keyword">const</span> asyncBlog <span class="token operator">=</span> <span class="token keyword">await</span> api<span class="token punctuation">.</span><span class="token function">asyncGetBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">,</span> blogs<span class="token punctuation">,</span> asyncBlog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="transformplainarraytoclass-with-options"><a href="#transformplainarraytoclass-with-options" class="header-anchor">#</a> TransformPlainArrayToClass With Options</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Expose <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> ArrayMemberClass<span class="token punctuation">,</span> ArrayMemberStorage<span class="token punctuation">,</span> TransformPlainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> customStorage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayMemberStorage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+@<span class="token function">ArrayMemberClass</span><span class="token punctuation">(</span>customStorage<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">Author</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  @<span class="token function">Expose</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> name <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Api</span> <span class="token punctuation">{</span>
+  @<span class="token function">TransformPlainArrayToClass</span><span class="token punctuation">(</span>Author<span class="token punctuation">,</span> <span class="token punctuation">{</span> strategy<span class="token operator">:</span> <span class="token string">'excludeAll'</span><span class="token punctuation">,</span> arrayMemberStorage<span class="token operator">:</span> customStorage <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token function">getAuthor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token number">999</span><span class="token punctuation">,</span> <span class="token string">'the author name'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> api <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Api</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Author { id: 0, name: 'the author name' }</span>
+<span class="token keyword">const</span> author <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">getAuthor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>author<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="transformclasstoplainarray"><a href="#transformclasstoplainarray" class="header-anchor">#</a> TransformClassToPlainArray</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> TransformClassToPlainArray <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> title <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Api</span> <span class="token punctuation">{</span>
+  @<span class="token function">TransformClassToPlainArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token function">getBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Blog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  @<span class="token function">TransformClassToPlainArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token function">getBlogs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token builtin">Array</span><span class="token punctuation">.</span><span class="token keyword">from</span><span class="token punctuation">(</span><span class="token punctuation">{</span> length<span class="token operator">:</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>_<span class="token punctuation">,</span> id<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Blog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> id <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  @<span class="token function">TransformClassToPlainArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token function">asyncGetBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Blog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> api <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Api</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// [0,'']</span>
+  <span class="token keyword">const</span> blog <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">getBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// [[0,''],[1,''],[2,'']]</span>
+  <span class="token keyword">const</span> blogs <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">getBlogs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// [0,'']</span>
+  <span class="token keyword">const</span> asyncBlog <span class="token operator">=</span> <span class="token keyword">await</span> api<span class="token punctuation">.</span><span class="token function">asyncGetBlog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">,</span> blogs<span class="token punctuation">,</span> asyncBlog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="transformclasstoplainarray-with-options"><a href="#transformclasstoplainarray-with-options" class="header-anchor">#</a> TransformClassToPlainArray With Options</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Expose <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> TransformClassToPlainArray <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Author</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  @<span class="token function">Expose</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> name <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Api</span> <span class="token punctuation">{</span>
+  @<span class="token function">TransformClassToPlainArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token function">getAuthor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Author</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> api <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Api</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ['']</span>
+<span class="token keyword">const</span> author <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">getAuthor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>author<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="modify-function-behavior"><a href="#modify-function-behavior" class="header-anchor">#</a> Modify Function Behavior</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">import</span> <span class="token string">'reflect-metadata'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ArrayMember<span class="token punctuation">,</span> ClassTransformerForArray<span class="token punctuation">,</span> plainArrayToClass <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'class-transformer-for-array'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">{</span>
+  @<span class="token function">ArrayMember</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// modify the function call</span>
+<span class="token keyword">const</span> oldMethod <span class="token operator">=</span> ClassTransformerForArray<span class="token punctuation">.</span>instance<span class="token punctuation">.</span>plainArrayToClass<span class="token punctuation">;</span>
+ClassTransformerForArray<span class="token punctuation">.</span>instance<span class="token punctuation">.</span><span class="token function-variable function">plainArrayToClass</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Called this method'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">oldMethod</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> args <span class="token keyword">as</span> <span class="token builtin">never</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Called this method</span>
+<span class="token comment">// Blog { id: 1 }</span>
+<span class="token keyword">const</span> blog <span class="token operator">=</span> <span class="token function">plainArrayToClass</span><span class="token punctuation">(</span>Blog<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>blog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/class-transformer-for-array/guide/" class="prev router-link-active">
+        Getting Started
+      </a></span> <span class="next"><a href="/class-transformer-for-array/guide/apis.html">
+        APIs
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/class-transformer-for-array/assets/js/app.52ab0cd3.js" defer></script><script src="/class-transformer-for-array/assets/js/2.ca04b7ab.js" defer></script><script src="/class-transformer-for-array/assets/js/11.3be7113a.js" defer></script>
+  </body>
+</html>
