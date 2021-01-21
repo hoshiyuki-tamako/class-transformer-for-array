@@ -1,0 +1,22 @@
+{
+  "name": "class-transformer-for-array",
+  "version": "0.0.1",
+  "description": "transform rows of data by index to class object",
+  "main": "index.js",
+  "authors": {
+    "name": "hoshiyuki-tamako",
+    "email": ""
+  },
+  "repository": "https://github.com/hoshiyuki-tamako/class-transformer-for-array.git",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  },
+  "dependencies": {
+    "vuepress-theme-yuu": "^2.3.0"
+  }
+}

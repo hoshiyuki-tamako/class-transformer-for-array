@@ -1,26 +1,6 @@
-# class-transformer-for-array
+# Usages
 
-transform rows of data by index to class object
-
-## Notes
-
-Make sure using `class-transformer@0.2.3`. newer version will be supported in future
-
-## Install
-
-```bash
-npm i class-transformer-for-array class-transformer-validator class-transformer@0.2.3 class-validator reflect-metadata
-```
-
-or
-
-```bash
-npm i class-transformer-for-array
-```
-
-## Usage
-
-### Basic
+## Basic
 
 ```ts
 import 'reflect-metadata';
@@ -43,7 +23,7 @@ const arr = classToPlainArray(blog);
 console.log(blog, arr);
 ```
 
-### Array
+## Array
 
 ```ts
 import 'reflect-metadata';
@@ -70,7 +50,7 @@ const arr = classToPlainArray(blog);
 console.log(blog, arr);
 ```
 
-### Nested
+## Nested
 
 ```ts
 import 'reflect-metadata';
@@ -113,7 +93,7 @@ const d = plainArrayToClass(Blog, []);
 console.log(blog, arr, a, b, c, d);
 ```
 
-### Nested Array
+## Nested Array
 
 ```ts
 import 'reflect-metadata';
@@ -152,7 +132,7 @@ const a = plainArrayToClass(Blog, [null]);
 console.log(blog, arr, a);
 ```
 
-### Nested Raw Array
+## Nested Raw Array
 
 ```ts
 import 'reflect-metadata';
@@ -177,7 +157,7 @@ const b = plainArrayToClass(Attachment, [null]);
 console.log(attachment, arr, a, b);
 ```
 
-### Class Transform
+## Class Transform
 
 ```ts
 import 'reflect-metadata';
@@ -201,7 +181,7 @@ const arr = classToPlainArray(obj);
 console.log(obj, arr);
 ```
 
-### Class Validate
+## Class Validate
 
 ```ts
 import 'reflect-metadata';
@@ -233,7 +213,7 @@ const obj1 = arrayTransformAndValidateSync(Product, ['99.99']);
 })();
 ```
 
-### Class Validate array
+## Class Validate array
 
 ```ts
 import 'reflect-metadata';
@@ -262,7 +242,7 @@ class Product {
 })();
 ```
 
-### Extends
+## Extends
 
 ```ts
 import 'reflect-metadata';
@@ -292,7 +272,7 @@ const arr = classToPlainArray(result);
 console.log(result, arr);
 ```
 
-### Override
+## Override
 
 ```ts
 import 'reflect-metadata';
@@ -317,7 +297,7 @@ const arr = classToPlainArray(result);
 console.log(result, arr);
 ```
 
-### Map Data Without Transform
+## Map Data Without Transform
 
 ```ts
 import 'reflect-metadata';
@@ -340,7 +320,7 @@ const arr = classMapValue(Blog, blog);
 console.log(blog, arr);
 ```
 
-### Error Handling
+## Error Handling
 
 ```ts
 import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from '../src';
@@ -370,7 +350,7 @@ try {
 }
 ```
 
-### Custom Storage
+## Custom Storage
 
 ```ts
 import 'reflect-metadata';
@@ -418,7 +398,7 @@ console.log(result, arr);
 })();
 ```
 
-### Custom Storage Multiple
+## Custom Storage Multiple
 
 ```ts
 import 'reflect-metadata';
@@ -457,7 +437,7 @@ const arr3 = classToPlainArray(result3);
 console.log(result1, result2, result3, arr1, arr2, arr3);
 ```
 
-### Custom Storage Manual Assign
+## Custom Storage Manual Assign
 
 ```ts
 import 'reflect-metadata';
@@ -488,7 +468,7 @@ try {
 console.log(result, arr);
 ```
 
-### Custom Storage Partial
+## Custom Storage Partial
 
 ```ts
 import 'reflect-metadata';
@@ -523,7 +503,7 @@ const arr2 = classToPlainArray(result2, { arrayMemberStorage: myStorage2 });
 console.log(result1, result2, arr1, arr2);
 ```
 
-### Default Storage
+## Default Storage
 
 ```ts
 import 'reflect-metadata';
@@ -557,7 +537,7 @@ if (propertyIndexMap) {
 }
 ```
 
-### Default Storage Class
+## Default Storage Class
 
 ```ts
 import 'reflect-metadata';
@@ -594,9 +574,9 @@ const storages = defaultArrayMemberClassStorage.get(Ship);
 console.log(same, has, storages);
 ```
 
-### Method Decorators
+## Method Decorators
 
-#### TransformPlainArrayToClass
+## TransformPlainArrayToClass
 
 ```ts
 import 'reflect-metadata';
@@ -644,7 +624,7 @@ class Api {
 })();
 ```
 
-#### TransformPlainArrayToClass With Options
+## TransformPlainArrayToClass With Options
 
 ```ts
 import 'reflect-metadata';
@@ -680,7 +660,7 @@ const author = api.getAuthor();
 console.log(author);
 ```
 
-#### TransformClassToPlainArray
+## TransformClassToPlainArray
 
 ```ts
 import 'reflect-metadata';
@@ -728,7 +708,7 @@ class Api {
 })();
 ```
 
-#### TransformClassToPlainArray With Options
+## TransformClassToPlainArray With Options
 
 ```ts
 import 'reflect-metadata';
@@ -760,7 +740,7 @@ const author = api.getAuthor();
 console.log(author);
 ```
 
-### Modify Function Behavior
+## Modify Function Behavior
 
 ```ts
 import 'reflect-metadata';

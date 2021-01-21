@@ -17,7 +17,8 @@
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/ts-mocha --check-leaks --parallel test/**/**/*test.ts",
     "build": "./node_modules/.bin/tsc",
     "lint": "./node_modules/.bin/eslint .",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test-samples": "./node_modules/.bin/ts-node ./samples"
   },
   "author": "hoshiyuki-tamako",
   "license": "MIT",
