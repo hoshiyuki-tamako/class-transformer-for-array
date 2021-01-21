@@ -347,8 +347,8 @@ console.log(blog, arr);
 ### Error Handling
 
 ```ts
-import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from '../src';
-import { TypeError } from '../src/common-errors';
+import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from 'class-transformer-for-array';
+import { TypeError } from 'class-transformer-for-array/common-errors';
 
 try {
   // class not registered
