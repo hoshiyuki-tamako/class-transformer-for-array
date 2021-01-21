@@ -718,15 +718,16 @@ import { Expose } from 'class-transformer';
 import { ArrayMember, TransformClassToPlainArray } from 'class-transformer-for-array';
 
 class Author {
+  @ArrayMember(0)
   public id = 0;
 
-  @ArrayMember(0)
+  @ArrayMember(1)
   @Expose()
   public name = '';
 }
 
 class Api {
-  @TransformClassToPlainArray()
+  @TransformClassToPlainArray({ strategy: 'excludeAll' })
   public getAuthor() {
     return new Author();
   }
@@ -734,7 +735,7 @@ class Api {
 
 const api = new Api();
 
-// ['']
+// [undefined, '']
 const author = api.getAuthor();
 
 console.log(author);
