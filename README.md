@@ -348,7 +348,6 @@ console.log(blog, arr);
 
 ```ts
 import { ClassTransformerForArrayError, plainMapValue, UnknownClassError } from 'class-transformer-for-array';
-import { TypeError } from 'class-transformer-for-array/common-errors';
 
 try {
   // class not registered
@@ -357,7 +356,7 @@ try {
   if (e instanceof UnknownClassError) {
     console.error(e.message);
   }
-  // catch all error from this library ( does not include common-errors )
+  // catch all error from this library ( does not include TypeError )
   if (e instanceof ClassTransformerForArrayError) {
     console.error(e.message);
   }
