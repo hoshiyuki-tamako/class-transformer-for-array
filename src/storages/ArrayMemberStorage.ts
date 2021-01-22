@@ -24,8 +24,8 @@ export class ArrayMemberStorage {
       }
     }
 
-    const indexMap = this.map!.get(constructor)!.set(index, info);
-    this.map!.set(constructor, new Map([...indexMap!.entries()].sort((a, b) => a[0] - b[0])));
+    const indexMap = this.map.get(constructor)!.set(index, info);
+    this.map.set(constructor, new Map([...indexMap.entries()].sort((a, b) => a[0] - b[0])));
 
     return this;
   }
