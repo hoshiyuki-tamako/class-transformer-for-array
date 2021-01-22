@@ -1,6 +1,5 @@
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
-import { TypeError } from 'common-errors';
 
 import { ArrayMember } from '../../src';
 

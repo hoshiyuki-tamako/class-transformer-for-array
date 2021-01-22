@@ -1,5 +1,3 @@
-import { TypeError } from 'common-errors';
-
 import { defaultArrayMemberClassStorage, ArrayMemberStorage, defaultArrayMemberStorage } from '../storages';
 
 export function ArrayMemberClass(arrayMemberStorage?: ArrayMemberStorage): ClassDecorator {

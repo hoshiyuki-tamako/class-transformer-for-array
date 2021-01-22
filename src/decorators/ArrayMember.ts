@@ -1,5 +1,3 @@
-import { TypeError } from 'common-errors';
-
 import { defaultArrayMemberClassStorage, defaultArrayMemberStorage, PropertyInfo } from '../storages';
 import { ArrayMemberOptions } from '../types';
 

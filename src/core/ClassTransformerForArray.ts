@@ -2,7 +2,6 @@
 import { classToPlain, plainToClass } from 'class-transformer';
 import { transformAndValidate, transformAndValidateSync } from 'class-transformer-validator';
 import { defaultMetadataStorage } from 'class-transformer/storage';
-import { TypeError } from 'common-errors';
 
 import { ClassConstructor } from '../class-transformer';
 import { UnknownClassError } from '../exceptions';
