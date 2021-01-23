@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { ArrayMember, TransformClassToPlainArray } from '../src';
+import { ArrayMember, TransformClassToPlainArray, ClassMapValueReturn } from '../src';
 
 class Blog {
   @ArrayMember(0)
@@ -13,17 +13,17 @@ class Blog {
 class Api {
   @TransformClassToPlainArray()
   public getBlog() {
-    return new Blog();
+    return new Blog() as unknown as ClassMapValueReturn<Blog>;
   }
 
   @TransformClassToPlainArray()
   public getBlogs() {
-    return Array.from({ length: 3 }, (_, id) => Object.assign(new Blog(), { id }));
+    return Array.from({ length: 3 }, (_, id) => Object.assign(new Blog(), { id })) as unknown as ClassMapValueReturn<Blog>[];
   }
 
   @TransformClassToPlainArray()
   public async asyncGetBlog() {
-    return new Blog();
+    return new Blog() as unknown as ClassMapValueReturn<Blog>;
   }
 }
 

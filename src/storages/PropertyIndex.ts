@@ -1,16 +1,16 @@
 import { PropertyInfo } from './PropertyInfo';
 
-export type propertyIndex = Map<number, PropertyInfo>;
+export type PropertyIndexMap = Map<number, PropertyInfo>;
 
 export class PropertyIndex {
-  public map = new Map() as propertyIndex;
+  public map = new Map() as PropertyIndexMap;
 
   public add(index: number, info: PropertyInfo): this {
     this.map = new Map([...this.entries(), [index, info] as [number, PropertyInfo]].sort((a, b) => a[0] - b[0]));
     return this;
   }
 
-  public set(index: number, info: PropertyInfo): propertyIndex {
+  public set(index: number, info: PropertyInfo): PropertyIndexMap {
     return this.map.set(index, info);
   }
 

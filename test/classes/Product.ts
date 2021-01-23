@@ -61,7 +61,7 @@ export class Product {
   }
 }
 
-export function productValidate(expected: Product, result?: Product | null, options = defaultValidateOptions): void {
+export function productValidate(expected: Product, result?: Product | Partial<Product> | null, options = defaultValidateOptions): void {
   expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', Product);

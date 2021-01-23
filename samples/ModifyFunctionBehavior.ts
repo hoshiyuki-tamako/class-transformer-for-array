@@ -18,3 +18,6 @@ ClassTransformerForArray.instance.plainArrayToClass = function(...args: unknown[
 const blog = plainArrayToClass(Blog, [1]);
 
 console.log(blog);
+
+// restore
+ClassTransformerForArray.instance.plainArrayToClass = oldMethod;

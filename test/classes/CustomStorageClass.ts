@@ -29,7 +29,7 @@ export class CustomStorageClass {
   }
 }
 
-export function customStorageValidate(expected: CustomStorageClass, result?: CustomStorageClass | null, options = defaultValidateOptions): void {
+export function customStorageValidate(expected: CustomStorageClass, result?: CustomStorageClass | Partial<CustomStorageClass> |  null, options = defaultValidateOptions): void {
   expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', CustomStorageClass);

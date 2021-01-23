@@ -21,7 +21,7 @@ export class PassClassTransformOption {
   }
 }
 
-export function passClassTransformOptionValidate(expected: PassClassTransformOption, result?: PassClassTransformOption | null, options = defaultValidateOptions): void {
+export function passClassTransformOptionValidate(expected: PassClassTransformOption, result?: PassClassTransformOption | Partial<PassClassTransformOption> | null, options = defaultValidateOptions): void {
   expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', PassClassTransformOption);

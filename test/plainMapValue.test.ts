@@ -26,9 +26,8 @@ export class PlainMapValueTest {
   public normal(): void {
     const expected = factory.make(Product).one();
     const result = plainMapValue(Product, expected.toPlainArray());
-    expected.displayPrice = +expected.displayPrice as never;
     expect(result).property('constructor', Object);
-    productValidate(expected, result as never, { constructor: false });
+    productValidate(Object.assign(expected, { displayPrice: +expected.displayPrice }), result, { constructor: false });
   }
 
   @test()
@@ -44,7 +43,7 @@ export class PlainMapValueTest {
     const expected = factory.make(SkipIndex).one();
     const result = plainMapValue(SkipIndex, expected.toPlainArray());
     expect(result).property('constructor', Object);
-    skipIndexValidate(expected, result as never, { constructor: false });
+    skipIndexValidate(expected, result, { constructor: false });
   }
 
   @test()

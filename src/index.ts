@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { ClassConstructor } from 'class-transformer';
-import { ClassTransformerForArray } from './core';
+
+import { ClassMapValueReturn, ClassTransformerForArray } from './core';
 import {
   ArrayStorageOptions,
   ClassToPlainArrayOptions,
@@ -8,16 +8,17 @@ import {
   TransformValidationForArrayOptions,
 } from './types';
 
+/* eslint-disable @typescript-eslint/ban-types */
 export * from './decorators';
 export * from './storages';
 export * from './exceptions';
 export * from './types';
 export * from './core';
 
-export function plainMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[], options?: ArrayStorageOptions): Record<PropertyKey, unknown> {
+export function plainMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[], options?: ArrayStorageOptions): Partial<T> {
   return ClassTransformerForArray.instance.plainMapValue(classType, array, options);
 }
-export function classMapValue<T, TObject extends Record<PropertyKey, unknown>>(classType: ClassConstructor<T>, object: TObject, options?: ArrayStorageOptions): unknown[] {
+export function classMapValue<T>(classType: ClassConstructor<T>, object: Partial<T>, options?: ArrayStorageOptions): ClassMapValueReturn<Partial<T>> {
   return ClassTransformerForArray.instance.classMapValue(classType, object, options);
 }
 
@@ -27,10 +28,10 @@ export function plainArrayToClass<T, TData>(classType: ClassConstructor<T>, arra
   return ClassTransformerForArray.instance.plainArrayToClass(classType, array as never, options as never);
 }
 
-export function classToPlainArray<T extends object>(object: T, options?: ClassToPlainArrayOptions): unknown[];
-export function classToPlainArray<T extends object>(object: T[], options?: ClassToPlainArrayOptions): unknown[][];
-export function classToPlainArray<T extends object>(object: T | T[], options?: ClassToPlainArrayOptions): unknown[] | unknown[][] {
-  return ClassTransformerForArray.instance.classToPlainArray(object, options);
+export function classToPlainArray<T extends object>(object: Exclude<T, unknown[]>, options?: ClassToPlainArrayOptions): ClassMapValueReturn<T>;
+export function classToPlainArray<T extends object>(object: T[], options?: ClassToPlainArrayOptions): ClassMapValueReturn<T>[];
+export function classToPlainArray<T extends object>(object: T | T[], options?: ClassToPlainArrayOptions): ClassMapValueReturn<T> | ClassMapValueReturn<T>[] {
+  return ClassTransformerForArray.instance.classToPlainArray(object as never, options);
 }
 
 export async function arrayTransformAndValidate<T extends object, TData>(classType: ClassConstructor<T>, array: TData[], options?: TransformValidationForArrayOptions & { isArray?: false }): Promise<T>;

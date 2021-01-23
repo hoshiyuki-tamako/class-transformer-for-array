@@ -2,7 +2,7 @@ import { suite, test } from '@testdeck/mocha';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
-import { TransformClassToPlainArray } from '../../src';
+import { ClassMapValueReturn, TransformClassToPlainArray } from '../../src';
 import { arrayMemberStorage, customStorageArrayValidate, CustomStorageClass } from '../classes/CustomStorageClass';
 import { PassClassTransformOption, passClassTransformOptionArrayValidate } from './../classes/PassClassTransformOption';
 import { Product, productArrayValidate } from './../classes/Product';
@@ -15,12 +15,12 @@ class TestToPlainArray {
 
   @TransformClassToPlainArray()
   public run() {
-    return this.expected;
+    return this.expected as unknown as ClassMapValueReturn<Product>;
   }
 
   @TransformClassToPlainArray()
   public async runAsync() {
-    return this.expected;
+    return this.expected as unknown as ClassMapValueReturn<Product>;
   }
 }
 
@@ -29,12 +29,12 @@ class TestToPlainArrayWithArrayOption {
 
   @TransformClassToPlainArray({ arrayMemberStorage })
   public run() {
-    return this.expects;
+    return this.expects as unknown as ClassMapValueReturn<Product>[];
   }
 
   @TransformClassToPlainArray({ arrayMemberStorage })
   public async runAsync() {
-    return this.expects;
+    return this.expects as unknown as ClassMapValueReturn<Product>[];
   }
 }
 
@@ -43,7 +43,7 @@ class TestToPlainArrayWithOption {
 
   @TransformClassToPlainArray({ strategy: 'excludeAll' })
   public run() {
-    return this.expected;
+    return this.expected as unknown as ClassMapValueReturn<Product>;
   }
 }
 
@@ -54,14 +54,14 @@ export class TransformClassToPlainArrayTest {
   public normal(): void {
     const test = new TestToPlainArray();
     const result = test.run();
-    productArrayValidate(test.expected, result as never);
+    productArrayValidate(test.expected, result);
   }
 
   @test()
   public async async(): Promise<void> {
     const test = new TestToPlainArray();
     const result = await test.runAsync();
-    productArrayValidate(test.expected, result as never);
+    productArrayValidate(test.expected, result);
   }
 
   @test()
@@ -71,7 +71,7 @@ export class TransformClassToPlainArrayTest {
     expect(results).property('constructor', Array);
     expect(results).length(test.expects.length);
     for (const [i, expected] of test.expects.entries()) {
-      customStorageArrayValidate(expected, results[i] as never);
+      customStorageArrayValidate(expected, results[i]);
     }
   }
 
@@ -82,7 +82,7 @@ export class TransformClassToPlainArrayTest {
     expect(results).property('constructor', Array);
     expect(results).length(test.expects.length);
     for (const [i, expected] of test.expects.entries()) {
-      customStorageArrayValidate(expected, results[i] as never);
+      customStorageArrayValidate(expected, results[i]);
     }
   }
 
@@ -90,6 +90,6 @@ export class TransformClassToPlainArrayTest {
   public classTransformOption(): void {
     const test = new TestToPlainArrayWithOption();
     const result = test.run();
-    passClassTransformOptionArrayValidate(test.expected, result as never);
+    passClassTransformOptionArrayValidate(test.expected, result);
   }
 }

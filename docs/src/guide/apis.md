@@ -3,13 +3,13 @@
 ## plainMapValue
 
 ```ts
-export function plainMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[], options?: ArrayStorageOptions): Record<PropertyKey, unknown>;
+export function plainMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[], options?: ArrayStorageOptions): Partial<T>;
 ```
 
 ## classMapValue
 
 ```ts
-export function classMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[], options?: ArrayStorageOptions): Record<PropertyKey, unknown>;
+export function classMapValue<T>(classType: ClassConstructor<T>, object: Partial<T>, options?: ArrayStorageOptions): ClassMapValueReturn<Partial<T>>;
 ```
 
 ## plainArrayToClass
@@ -23,9 +23,9 @@ export function plainArrayToClass<T, TData>(classType: ClassConstructor<T>, arra
 ## classToPlainArray
 
 ```ts
-export function classToPlainArray<T extends object>(object: T, options?: ClassToPlainArrayOptions): unknown[];
-export function classToPlainArray<T extends object>(object: T[], options?: ClassToPlainArrayOptions): unknown[][];
-export function classToPlainArray<T extends object>(object: T | T[], options?: ClassToPlainArrayOptions): unknown[] | unknown[][];
+export function classToPlainArray<T extends object>(object: Exclude<T, unknown[]>, options?: ClassToPlainArrayOptions): ClassMapValueReturn<T>;
+export function classToPlainArray<T extends object>(object: T[], options?: ClassToPlainArrayOptions): ClassMapValueReturn<T>[];
+export function classToPlainArray<T extends object>(object: T | T[], options?: ClassToPlainArrayOptions): ClassMapValueReturn<T> | ClassMapValueReturn<T>[];
 ```
 
 ## arrayTransformAndValidate

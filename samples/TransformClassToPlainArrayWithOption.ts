@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Expose } from 'class-transformer';
 
-import { ArrayMember, TransformClassToPlainArray } from '../src';
+import { ArrayMember, ClassMapValueReturn, TransformClassToPlainArray } from '../src';
 
 class Author {
   @ArrayMember(0)
@@ -16,7 +16,7 @@ class Author {
 class Api {
   @TransformClassToPlainArray({ strategy: 'excludeAll' })
   public getAuthor() {
-    return new Author();
+    return new Author() as unknown as ClassMapValueReturn<Author>;
   }
 }
 

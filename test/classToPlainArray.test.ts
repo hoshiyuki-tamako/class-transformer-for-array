@@ -44,7 +44,7 @@ export class ClassToPlainArrayTest {
   @test()
   public array(): void {
     const testData = factory.make(Product).many(2);
-    const results = classToPlainArray(testData) as unknown[][];
+    const results = classToPlainArray(testData);
     expect(results).property('constructor', Array);
     expect(results).length(testData.length);
     for (const [i, expected] of testData.entries()) {
@@ -55,8 +55,8 @@ export class ClassToPlainArrayTest {
 
   @test()
   public emptyArray(): void {
-    const result = classToPlainArray([]) as [];
-    expect(result.constructor).equals(Array);
+    const result = classToPlainArray([]);
+    expect(result).property('constructor', Array);
     expect(result).length(0);
   }
 
@@ -69,16 +69,16 @@ export class ClassToPlainArrayTest {
   public keyNotInObject(): void {
     const obj = new KeyNotInObject();
     delete obj.deleteThis;
-    const result = classToPlainArray(obj) as [];
-    expect(result.constructor).equals(Array);
+    const result = classToPlainArray(obj);
+    expect(result).property('constructor', Array);
     expect(result).length(1);
     expect(result).property('0').is.undefined;
   }
 
   @test()
   public missingChildType(): void {
-    const result = classToPlainArray(new ParentType()) as [];
-    expect(result.constructor).equals(Array);
+    const result = classToPlainArray(new ParentType());
+    expect(result).property('constructor', Array);
     expect(result).length(1);
     expect(result).property('0').is.null;
   }
@@ -86,7 +86,7 @@ export class ClassToPlainArrayTest {
   @test()
   public undefinedArray(): void {
     const expected = factory.make(Product).one();
-    const result = classToPlainArray(Object.assign(expected, { sizes: null })) as unknown[];
+    const result = classToPlainArray(Object.assign(expected, { sizes: null }));
     expect(result).property('4').is.null;
   }
 

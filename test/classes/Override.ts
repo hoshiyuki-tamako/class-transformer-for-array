@@ -16,7 +16,7 @@ export class Override extends IdBase {
   }
 }
 
-export function overrideValidate(expected: Override, result?: Override | null, options = defaultValidateOptions): void {
+export function overrideValidate(expected: Override, result?: Override | Partial<Override> | null, options = defaultValidateOptions): void {
   expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', Override);

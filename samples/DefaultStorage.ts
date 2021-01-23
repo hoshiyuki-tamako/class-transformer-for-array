@@ -17,13 +17,17 @@ const same = ArrayMemberStorage.defaultArrayMemberStorage === defaultArrayMember
 // true
 const has = defaultArrayMemberStorage.has(Ship);
 
-// Map<number, PropertyInfo>
-// map is sorted by index
+// class PropertyIndex
 const propertyIndex = defaultArrayMemberStorage.getPropertyIndex(Ship);
 if (propertyIndex) {
+  // map is sorted by index
+  // Map<number, PropertyInfo>
+  const map = propertyIndex.map;
+
   // PropertyInfo { key: 'id', options: undefined }
   const a = propertyIndex.get(0);
   // PropertyInfo { key: 'name', options: undefined }
   const b = propertyIndex.get(1);
-  console.log(same, has, a, b);
+
+  console.log(same, has, map, a, b);
 }

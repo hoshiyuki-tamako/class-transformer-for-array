@@ -23,6 +23,12 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
   ],
 
+  markdown: {
+    extractHeaders: [ 'h2', 'h3', 'h4' ],
+  },
+
+  sidebar: 'auto',
+
   theme: 'yuu',
 
   /**
@@ -42,6 +48,7 @@ module.exports = {
         link: '/guide/',
       },
     ],
+    sidebarDepth: 3,
     sidebar: {
       '/guide/': [
         {

@@ -1,13 +1,10 @@
 // TODO due to typescript not support symbol key, disable type checking for compile
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-
-/* eslint-disable @typescript-eslint/ban-types */
-import { classToPlain, plainToClass } from 'class-transformer';
+import { ClassConstructor, classToPlain, plainToClass } from 'class-transformer';
 import { transformAndValidate, transformAndValidateSync } from 'class-transformer-validator';
-import { ClassConstructor } from 'class-transformer';
-
 import { defaultMetadataStorage } from 'class-transformer/cjs/storage';
+
 import { UnknownClassError } from '../exceptions';
 import { defaultArrayMemberClassStorage, defaultArrayMemberStorage } from '../storages';
 import {
@@ -17,10 +14,14 @@ import {
   TransformValidationForArrayOptions,
 } from '../types';
 
+
+/* eslint-disable @typescript-eslint/ban-types */
+export type ClassMapValueReturn<T> = (T[keyof T] | unknown | unknown[])[];
+
 export class ClassTransformerForArray {
   public static instance = new ClassTransformerForArray();
 
-  public plainMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[] | TData[][], options?: ArrayStorageOptions): Record<PropertyKey, unknown> {
+  public plainMapValue<T, TData>(classType: ClassConstructor<T>, array: TData[], options?: ArrayStorageOptions): Partial<T> {
     if (!Array.isArray(array)) {
       throw new TypeError(`input is not an array: ${array}`);
     }
@@ -39,15 +40,15 @@ export class ClassTransformerForArray {
       throw new UnknownClassError(`Cannot found class of ${classType.name}`);
     }
 
-    const obj = {} as Record<PropertyKey, unknown>;
+    const obj = {} as Partial<T>;
     for (const [i, o] of array.entries()) {
       const property = map.get(i);
       if (property) {
-        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key);
+        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key as string);
         const subClassType = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
         if (storage.has(subClassType) && Array.isArray(o)) {
           if (typeMeta?.reflectedType === Array || property.options?.isArray) {
-            obj[property.key] = (o).map((p) => this.plainMapValue(subClassType, p as never, options));
+            obj[property.key] = o.map((p) => this.plainMapValue(subClassType, p, options));
           } else {
             obj[property.key] = this.plainMapValue(subClassType, o, options);
           }
@@ -59,7 +60,7 @@ export class ClassTransformerForArray {
     return obj;
   }
 
-  public classMapValue<T, TObject extends Record<PropertyKey, unknown>>(classType: ClassConstructor<T>, object: TObject, options?: ArrayStorageOptions): unknown[] {
+  public classMapValue<T>(classType: ClassConstructor<T>, object: Partial<T>, options?: ArrayStorageOptions): ClassMapValueReturn<Partial<T>> {
     const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
 
     if (storage === defaultArrayMemberStorage) {
@@ -73,11 +74,10 @@ export class ClassTransformerForArray {
     if (!map) {
       throw new UnknownClassError(`Cannot found class of ${classType.name}`);
     }
-
-    const arr = [] as unknown[];
+    const arr = [] as ClassMapValueReturn<Partial<T>>;
     for (const [i, property] of map.entries()) {
       if (property.key in object) {
-        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key);
+        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key as string);
         const subClassType = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
         if (storage.has(subClassType)) {
           if (typeMeta?.reflectedType === Array || property.options?.isArray) {
@@ -114,9 +114,9 @@ export class ClassTransformerForArray {
     );
   }
 
-  public classToPlainArray<T extends object>(object: T, options?: ClassToPlainArrayOptions): unknown[];
-  public classToPlainArray<T extends object>(object: T[], options?: ClassToPlainArrayOptions): unknown[][];
-  public classToPlainArray<T extends object>(object: T | T[], options?: ClassToPlainArrayOptions): unknown[] | unknown[][] {
+  public classToPlainArray<T extends object>(object: Exclude<T, unknown[]>, options?: ClassToPlainArrayOptions): ClassMapValueReturn<T>;
+  public classToPlainArray<T extends object>(object: T[], options?: ClassToPlainArrayOptions): ClassMapValueReturn<T>[];
+  public classToPlainArray<T extends object>(object: T | T[], options?: ClassToPlainArrayOptions): ClassMapValueReturn<T> | ClassMapValueReturn<T>[] {
       const record = classToPlain(object, options);
       return Array.isArray(object)
         ? (record as Record<PropertyKey, unknown>[]).map((r, i) => this.classMapValue(object[i].constructor as never, r, options))

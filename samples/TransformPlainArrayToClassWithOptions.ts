@@ -19,7 +19,7 @@ class Author {
 class Api {
   @TransformPlainArrayToClass(Author, { strategy: 'excludeAll', arrayMemberStorage: customStorage })
   public getAuthor() {
-    return [999, 'the author name'];
+    return [999, 'the author name'] as unknown as Author;
   }
 }
 

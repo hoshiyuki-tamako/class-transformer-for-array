@@ -9,7 +9,9 @@ export function TransformPlainArrayToClass<T>(classType: ClassConstructor<T>, op
     const method = descriptor.value;
     descriptor.value = function(...args: unknown[]) {
       const result = method.apply(this, args);
-      return isPromise(result) ? result.then((v) => ClassTransformerForArray.instance.plainArrayToClass(classType, v as unknown[], options as never)) : ClassTransformerForArray.instance.plainArrayToClass(classType, result, options as never);
+      return isPromise(result)
+        ? result.then((v) => ClassTransformerForArray.instance.plainArrayToClass(classType, v as unknown[], options as never))
+        : ClassTransformerForArray.instance.plainArrayToClass(classType, result, options as never);
     };
   };
 }

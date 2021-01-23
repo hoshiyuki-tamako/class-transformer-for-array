@@ -19,7 +19,7 @@ export class Ship {
   }
 }
 
-export function shipValidate(expected: Ship, result?: Ship | null, options = defaultValidateOptions): void {
+export function shipValidate(expected: Ship, result?: Ship | Partial<Ship> | null, options = defaultValidateOptions): void {
   expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', Ship);
@@ -46,7 +46,7 @@ export class ShipWithDefault extends Ship {
   }
 }
 
-export function shipWithDefaultValidate(expected: ShipWithDefault, result?: ShipWithDefault | null, options = defaultValidateOptions): void {
+export function shipWithDefaultValidate(expected: ShipWithDefault, result?: ShipWithDefault | Partial<ShipWithDefault> | null, options = defaultValidateOptions): void {
   expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', ShipWithDefault);
@@ -80,7 +80,7 @@ export class ShipWithPartialProperty {
   }
 }
 
-export function shipWithPartialPropertyValidate(expected: ShipWithPartialProperty, result?: ShipWithPartialProperty | null, options = defaultValidateOptions): void {
+export function shipWithPartialPropertyValidate(expected: ShipWithPartialProperty, result?: ShipWithPartialProperty | Partial<ShipWithPartialProperty> | null, options = defaultValidateOptions): void {
   expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', ShipWithPartialProperty);

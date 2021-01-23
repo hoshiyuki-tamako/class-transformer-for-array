@@ -524,15 +524,19 @@ const same = ArrayMemberStorage.defaultArrayMemberStorage === defaultArrayMember
 // true
 const has = defaultArrayMemberStorage.has(Ship);
 
-// Map<number, PropertyInfo>
-// map is sorted by index
+// class PropertyIndex
 const propertyIndex = defaultArrayMemberStorage.getPropertyIndex(Ship);
 if (propertyIndex) {
+  // map is sorted by index
+  // Map<number, PropertyInfo>
+  const map = propertyIndex.map;
+
   // PropertyInfo { key: 'id', options: undefined }
   const a = propertyIndex.get(0);
   // PropertyInfo { key: 'name', options: undefined }
   const b = propertyIndex.get(1);
-  console.log(same, has, a, b);
+
+  console.log(same, has, map, a, b);
 }
 ```
 
@@ -575,7 +579,7 @@ console.log(same, has, storages);
 
 ## Method Decorators
 
-## TransformPlainArrayToClass
+### TransformPlainArrayToClass
 
 ```ts
 import 'reflect-metadata';
@@ -593,17 +597,17 @@ class Blog {
 class Api {
   @TransformPlainArrayToClass(Blog)
   public getBlog() {
-    return [1, 'the title'];
+    return [1, 'the title'] as unknown as Blog;
   }
 
   @TransformPlainArrayToClass(Blog, { isArray: true })
   public getBlogs() {
-    return Array.from({ length: 3 }, (_, id) => [id, `title ${id}`]);
+    return Array.from({ length: 3 }, (_, id) => [id, `title ${id}`])  as unknown as Blog[];
   }
 
   @TransformPlainArrayToClass(Blog)
   public async asyncGetBlog() {
-    return [1, 'the title'];
+    return [1, 'the title'] as unknown as Blog;
   }
 }
 
@@ -623,7 +627,7 @@ class Api {
 })();
 ```
 
-## TransformPlainArrayToClass With Options
+### TransformPlainArrayToClass With Options
 
 ```ts
 import 'reflect-metadata';
@@ -647,7 +651,7 @@ class Author {
 class Api {
   @TransformPlainArrayToClass(Author, { strategy: 'excludeAll', arrayMemberStorage: customStorage })
   public getAuthor() {
-    return [999, 'the author name'];
+    return [999, 'the author name'] as unknown as Author;
   }
 }
 
@@ -659,12 +663,12 @@ const author = api.getAuthor();
 console.log(author);
 ```
 
-## TransformClassToPlainArray
+### TransformClassToPlainArray
 
 ```ts
 import 'reflect-metadata';
 
-import { ArrayMember, TransformClassToPlainArray } from 'class-transformer-for-array';
+import { ArrayMember, TransformClassToPlainArray, ClassMapValueReturn } from 'class-transformer-for-array';
 
 class Blog {
   @ArrayMember(0)
@@ -677,17 +681,17 @@ class Blog {
 class Api {
   @TransformClassToPlainArray()
   public getBlog() {
-    return new Blog();
+    return new Blog() as unknown as ClassMapValueReturn<Blog>;
   }
 
   @TransformClassToPlainArray()
   public getBlogs() {
-    return Array.from({ length: 3 }, (_, id) => Object.assign(new Blog(), { id }));
+    return Array.from({ length: 3 }, (_, id) => Object.assign(new Blog(), { id })) as unknown as ClassMapValueReturn<Blog>[];
   }
 
   @TransformClassToPlainArray()
   public async asyncGetBlog() {
-    return new Blog();
+    return new Blog() as unknown as ClassMapValueReturn<Blog>;
   }
 }
 
@@ -707,14 +711,14 @@ class Api {
 })();
 ```
 
-## TransformClassToPlainArray With Options
+### TransformClassToPlainArray With Options
 
 ```ts
 import 'reflect-metadata';
 
 import { Expose } from 'class-transformer';
 
-import { ArrayMember, TransformClassToPlainArray } from 'class-transformer-for-array';
+import { ArrayMember, ClassMapValueReturn, TransformClassToPlainArray } from 'class-transformer-for-array';
 
 class Author {
   @ArrayMember(0)
@@ -728,7 +732,7 @@ class Author {
 class Api {
   @TransformClassToPlainArray({ strategy: 'excludeAll' })
   public getAuthor() {
-    return new Author();
+    return new Author() as unknown as ClassMapValueReturn<Author>;
   }
 }
 
@@ -764,4 +768,7 @@ ClassTransformerForArray.instance.plainArrayToClass = function(...args: unknown[
 const blog = plainArrayToClass(Blog, [1]);
 
 console.log(blog);
+
+// restore
+ClassTransformerForArray.instance.plainArrayToClass = oldMethod;
 ```

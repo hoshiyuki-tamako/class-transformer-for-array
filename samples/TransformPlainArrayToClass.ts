@@ -13,17 +13,17 @@ class Blog {
 class Api {
   @TransformPlainArrayToClass(Blog)
   public getBlog() {
-    return [1, 'the title'];
+    return [1, 'the title'] as unknown as Blog;
   }
 
   @TransformPlainArrayToClass(Blog, { isArray: true })
   public getBlogs() {
-    return Array.from({ length: 3 }, (_, id) => [id, `title ${id}`]);
+    return Array.from({ length: 3 }, (_, id) => [id, `title ${id}`])  as unknown as Blog[];
   }
 
   @TransformPlainArrayToClass(Blog)
   public async asyncGetBlog() {
-    return [1, 'the title'];
+    return [1, 'the title'] as unknown as Blog;
   }
 }
 
