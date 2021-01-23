@@ -1,7 +1,7 @@
 # class-transformer-for-array
 
-![test](https://github.com/hoshiyuki-tamako/class-transformer-for-array/workflows/.github/workflows/test.yml/badge.svg)
-![npm publish](https://github.com/hoshiyuki-tamako/class-transformer-for-array/workflows/.github/workflows/deploy.yml/badge.svg)
+![test](https://github.com/hoshiyuki-tamako/class-transformer-for-array/workflows/test/badge.svg)
+![npm publish](https://github.com/hoshiyuki-tamako/class-transformer-for-array/workflows/npm publish/badge.svg)
 ![nycrc config on GitHub](https://img.shields.io/nycrc/hoshiyuki-tamako/class-transformer-for-array?config=.nycrc&preferredThreshold=branches)
 
 Transform array of data by index to class object
