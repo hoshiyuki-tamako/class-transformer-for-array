@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { ClassConstructor } from './class-transformer';
+import { ClassConstructor } from 'class-transformer';
 import { ClassTransformerForArray } from './core';
 import {
   ArrayStorageOptions,

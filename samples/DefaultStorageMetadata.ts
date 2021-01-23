@@ -19,11 +19,11 @@ const has = defaultArrayMemberStorage.has(Ship);
 
 // Map<number, PropertyInfo>
 // map is sorted by index
-const propertyIndexMap = defaultArrayMemberStorage.getPropertyIndexMap(Ship);
-if (propertyIndexMap) {
+const propertyIndex = defaultArrayMemberStorage.getPropertyIndex(Ship);
+if (propertyIndex) {
   // PropertyInfo { key: 'id', options: undefined }
-  const a = propertyIndexMap.get(0);
+  const a = propertyIndex.get(0);
   // PropertyInfo { key: 'name', options: undefined }
-  const b = propertyIndexMap.get(1);
+  const b = propertyIndex.get(1);
   console.log(same, has, a, b);
 }

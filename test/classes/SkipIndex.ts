@@ -58,7 +58,7 @@ export class SkipIndex {
 }
 
 export function skipIndexValidate(expected: SkipIndex, result?: SkipIndex | null, options = defaultValidateOptions): void  {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', SkipIndex);
   }
@@ -86,7 +86,7 @@ export function skipIndexValidate(expected: SkipIndex, result?: SkipIndex | null
 }
 
 export function skipIndexArrayValidate(expected: SkipIndex, result?: unknown[] | null): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   expect(result).property('constructor', Array);
   expect(result).property('0', expected.id);
   expect(result).property('2', expected.name);

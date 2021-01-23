@@ -1,8 +1,8 @@
 import { suite, test } from '@testdeck/mocha';
 import { expect } from 'chai';
 
-import { ArrayMemberStorage, defaultArrayMemberStorage, PropertyInfo } from '../src/storages';
-import { arrayMemberStorage, CustomStorageClass } from './classes/CustomStorageClass';
+import { ArrayMemberStorage, defaultArrayMemberStorage, PropertyIndex, PropertyInfo } from '../../src/storages';
+import { arrayMemberStorage, CustomStorageClass } from '../classes/CustomStorageClass';
 
 class Tmp {
   public id = 0;
@@ -13,7 +13,7 @@ class TmpNotExists {
 }
 
 @suite()
-export class StorageTest {
+export class ArrayMemberStorageTest {
   @test()
   public normal(): void {
     expect(arrayMemberStorage.has(CustomStorageClass)).true;
@@ -28,9 +28,9 @@ export class StorageTest {
     storage.add(Tmp, index, propertyInfo);
 
     expect(storage.map.has(Tmp)).true;
-    const propertyIndexMap = storage.map.get(Tmp);
-    expect(propertyIndexMap).a(Map.name);
-    expect(propertyIndexMap?.get(index)).equal(propertyInfo);
+    const propertyIndex = storage.map.get(Tmp);
+    expect(propertyIndex).property('constructor', PropertyIndex);
+    expect(propertyIndex?.get(index)).equal(propertyInfo);
   }
 
   @test()
@@ -45,15 +45,15 @@ export class StorageTest {
   }
 
   @test()
-  public getPropertyIndexMap(): void {
+  public getPropertyIndex(): void {
     const storage = new ArrayMemberStorage();
     const index = 0;
     const propertyInfo = new PropertyInfo('id');
     storage.add(Tmp, index, propertyInfo);
 
-    const propertyIndexMap = storage.getPropertyIndexMap(Tmp);
-    expect(propertyIndexMap).a(Map.name);
-    expect(propertyIndexMap?.get(index)).equal(propertyInfo);
+    const propertyIndex = storage.getPropertyIndex(Tmp);
+    expect(propertyIndex).property('constructor', PropertyIndex);
+    expect(propertyIndex?.get(index)).equal(propertyInfo);
   }
 
   @test()

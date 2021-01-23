@@ -1,3 +1,4 @@
+import { PropertyIndex } from './PropertyIndex';
 import { ArrayMemberStorage, defaultArrayMemberStorage } from './ArrayMemberStorage';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -19,11 +20,12 @@ export class ArrayMemberClassStorage {
 
     const result = defaultArrayMemberStorage.map.get(constructor);
     if (result) {
-      const defaultPropertyIndexMap = new Map(result);
+      const defaultPropertyIndex = new PropertyIndex();
+      defaultPropertyIndex.map = new Map(result.map);
       for (const [i, k] of storage.map.get(constructor)?.entries() ?? []) {
-        defaultPropertyIndexMap.set(i, k);
+        defaultPropertyIndex.set(i, k);
       }
-      storage.map.set(constructor, defaultPropertyIndexMap);
+      storage.map.set(constructor, defaultPropertyIndex);
     }
     return this;
   }

@@ -20,7 +20,7 @@ export class Ship {
 }
 
 export function shipValidate(expected: Ship, result?: Ship | null, options = defaultValidateOptions): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', Ship);
   }
@@ -28,7 +28,7 @@ export function shipValidate(expected: Ship, result?: Ship | null, options = def
 }
 
 export function shipArrayValidate(expected: Ship, result?: unknown[] | null): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   expect(result).property('constructor', Array);
   expect(result).property('0', expected.id);
 }
@@ -47,7 +47,7 @@ export class ShipWithDefault extends Ship {
 }
 
 export function shipWithDefaultValidate(expected: ShipWithDefault, result?: ShipWithDefault | null, options = defaultValidateOptions): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', ShipWithDefault);
   }
@@ -56,7 +56,7 @@ export function shipWithDefaultValidate(expected: ShipWithDefault, result?: Ship
 }
 
 export function shipWithDefaultArrayValidate(expected: ShipWithDefault, result?: unknown[] | null): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   expect(result).property('constructor', Array);
   expect(result).property('0', expected.id);
   expect(result).property('1', expected.name);
@@ -81,7 +81,7 @@ export class ShipWithPartialProperty {
 }
 
 export function shipWithPartialPropertyValidate(expected: ShipWithPartialProperty, result?: ShipWithPartialProperty | null, options = defaultValidateOptions): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', ShipWithPartialProperty);
   }
@@ -90,7 +90,7 @@ export function shipWithPartialPropertyValidate(expected: ShipWithPartialPropert
 }
 
 export function shipWithPartialPropertyArrayValidate(expected: ShipWithPartialProperty, result?: unknown[] | null): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   expect(result).property('constructor', Array);
   if (expected.id != null) {
     expect(result).property('0', expected.id);

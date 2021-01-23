@@ -28,7 +28,7 @@ export class PersonalBlog extends Blog {
 }
 
 export function personalBlogValidate(expected: PersonalBlog, result?: PersonalBlog | null, options = defaultValidateOptions): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', PersonalBlog);
   }

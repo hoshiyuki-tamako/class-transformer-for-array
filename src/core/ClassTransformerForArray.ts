@@ -1,9 +1,13 @@
+// TODO due to typescript not support symbol key, disable type checking for compile
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 /* eslint-disable @typescript-eslint/ban-types */
 import { classToPlain, plainToClass } from 'class-transformer';
 import { transformAndValidate, transformAndValidateSync } from 'class-transformer-validator';
-import { defaultMetadataStorage } from 'class-transformer/storage';
+import { ClassConstructor } from 'class-transformer';
 
-import { ClassConstructor } from '../class-transformer';
+import { defaultMetadataStorage } from 'class-transformer/cjs/storage';
 import { UnknownClassError } from '../exceptions';
 import { defaultArrayMemberClassStorage, defaultArrayMemberStorage } from '../storages';
 import {
@@ -30,7 +34,7 @@ export class ClassTransformerForArray {
       }
     }
 
-    const map = storage.getPropertyIndexMap(classType);
+    const map = storage.getPropertyIndex(classType);
     if (!map) {
       throw new UnknownClassError(`Cannot found class of ${classType.name}`);
     }
@@ -39,7 +43,7 @@ export class ClassTransformerForArray {
     for (const [i, o] of array.entries()) {
       const property = map.get(i);
       if (property) {
-        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key as string);
+        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key);
         const subClassType = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
         if (storage.has(subClassType) && Array.isArray(o)) {
           if (typeMeta?.reflectedType === Array || property.options?.isArray) {
@@ -65,7 +69,7 @@ export class ClassTransformerForArray {
       }
     }
 
-    const map = storage.getPropertyIndexMap(classType);
+    const map = storage.getPropertyIndex(classType);
     if (!map) {
       throw new UnknownClassError(`Cannot found class of ${classType.name}`);
     }
@@ -116,7 +120,7 @@ export class ClassTransformerForArray {
       const record = classToPlain(object, options);
       return Array.isArray(object)
         ? (record as Record<PropertyKey, unknown>[]).map((r, i) => this.classMapValue(object[i].constructor as never, r, options))
-        : this.classMapValue(object.constructor as never, record as never, options); // TODO class-transformer use record type on newer version
+        : this.classMapValue(object.constructor as never, record, options);
     }
 
   // class transform validate

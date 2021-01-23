@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
+import { PropertyIndex } from './PropertyIndex';
 import { PropertyInfo } from './PropertyInfo';
 
-export type PropertyIndexMap = Map<number, PropertyInfo>;
-export type ConstructorMap = Map<Function, PropertyIndexMap>;
-
+export type ConstructorMap = Map<Function, PropertyIndex>;
 export class ArrayMemberStorage {
   public static defaultArrayMemberStorage = new ArrayMemberStorage();
 
@@ -12,21 +11,19 @@ export class ArrayMemberStorage {
 
   public add<T extends Function>(constructor: T, index: number, info: PropertyInfo): this {
     if (!this.map.has(constructor)) {
-      const newMap = new Map() as PropertyIndexMap;
+      const newMap = new PropertyIndex();
       this.map.set(constructor, newMap);
       // inherit
-      for (const [c, propertyIndexMap] of this.map.entries()) {
+      for (const [c, propertyIndex] of this.map.entries()) {
         if (constructor.prototype instanceof c) {
-          for (const [i, p] of propertyIndexMap.entries()) {
+          for (const [i, p] of propertyIndex.entries()) {
             newMap.set(i, p);
           }
         }
       }
     }
 
-    const indexMap = this.map.get(constructor)!.set(index, info);
-    this.map.set(constructor, new Map([...indexMap.entries()].sort((a, b) => a[0] - b[0])));
-
+    this.map.get(constructor)!.add(index, info);
     return this;
   }
 
@@ -34,7 +31,7 @@ export class ArrayMemberStorage {
     return this.map.has(constructor);
   }
 
-  public getPropertyIndexMap<T extends Function>(constructor: T): PropertyIndexMap | undefined {
+  public getPropertyIndex<T extends Function>(constructor: T): PropertyIndex | undefined {
     return this.map.get(constructor);
   }
 }

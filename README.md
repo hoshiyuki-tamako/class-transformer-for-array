@@ -1,19 +1,19 @@
 # class-transformer-for-array
 
+![test](https://github.com/hoshiyuki-tamako/class-transformer-for-array/workflows/.github/workflows/test.yml/badge.svg)
+![npm publish](https://github.com/hoshiyuki-tamako/class-transformer-for-array/workflows/.github/workflows/deploy.yml/badge.svg)
+![nycrc config on GitHub](https://img.shields.io/nycrc/hoshiyuki-tamako/class-transformer-for-array?config=.nycrc&preferredThreshold=branches)
+
 transform rows of data by index to class object
 
 ## Documentation
 
 [https://hoshiyuki-tamako.github.io/class-transformer-for-array/guide/](https://hoshiyuki-tamako.github.io/class-transformer-for-array/guide/)
 
-## Notes
-
-Make sure using `class-transformer@0.2.3`. newer version will be supported in future
-
 ## Install
 
 ```bash
-npm i class-transformer-for-array class-transformer-validator class-transformer@0.2.3 class-validator reflect-metadata
+npm i class-transformer-for-array class-transformer-validator class-transformer class-validator reflect-metadata
 ```
 
 or
@@ -192,8 +192,8 @@ import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transfo
 
 class Product {
   @ArrayMember(0)
-  @Transform((value) => value?.toString(), { toClassOnly: true })
-  @Transform((value) => +value, { toPlainOnly: true })
+  @Transform(({ value }) => value?.toString(), { toClassOnly: true })
+  @Transform(({ value }) => +value, { toPlainOnly: true })
   public displayPrice = '0';
 }
 
@@ -550,12 +550,12 @@ const has = defaultArrayMemberStorage.has(Ship);
 
 // Map<number, PropertyInfo>
 // map is sorted by index
-const propertyIndexMap = defaultArrayMemberStorage.getPropertyIndexMap(Ship);
-if (propertyIndexMap) {
+const propertyIndex = defaultArrayMemberStorage.getPropertyIndex(Ship);
+if (propertyIndex) {
   // PropertyInfo { key: 'id', options: undefined }
-  const a = propertyIndexMap.get(0);
+  const a = propertyIndex.get(0);
   // PropertyInfo { key: 'name', options: undefined }
-  const b = propertyIndexMap.get(1);
+  const b = propertyIndex.get(1);
   console.log(same, has, a, b);
 }
 ```

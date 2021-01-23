@@ -22,7 +22,7 @@ export class PassClassTransformOption {
 }
 
 export function passClassTransformOptionValidate(expected: PassClassTransformOption, result?: PassClassTransformOption | null, options = defaultValidateOptions): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   if (options.constructor) {
     expect(result).property('constructor', PassClassTransformOption);
   }
@@ -31,7 +31,7 @@ export function passClassTransformOptionValidate(expected: PassClassTransformOpt
 }
 
 export function passClassTransformOptionArrayValidate(expected: PassClassTransformOption, result?: unknown[] | null): void {
-  expect(result).not.null;
+  expect(result).not.null.not.undefined;
   expect(result).property('constructor', Array);
   expect(result).length(2);
   expect(result).property('0').is.undefined;

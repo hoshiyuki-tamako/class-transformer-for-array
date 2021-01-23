@@ -116,14 +116,14 @@ export class ArrayMemberClassTest {
 
     expect(storage.has(Tmp)).true;
 
-    const propertyIndexMap = storage.getPropertyIndexMap(Tmp);
-    expect(propertyIndexMap).not.null;
-    const propertyA = propertyIndexMap?.get(0);
-    expect(propertyA).not.null;
+    const propertyIndex = storage.getPropertyIndex(Tmp);
+    expect(propertyIndex).not.null.not.undefined;
+    const propertyA = propertyIndex?.get(0);
+    expect(propertyA).not.null.not.undefined;
     expect(propertyA).property('key', 'id');
 
-    const propertyB = propertyIndexMap?.get(1);
-    expect(propertyB).not.null;
+    const propertyB = propertyIndex?.get(1);
+    expect(propertyB).not.null.not.undefined;
     expect(propertyB).property('key', 'name');
   }
 
