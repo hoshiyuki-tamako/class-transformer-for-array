@@ -47,6 +47,15 @@ export class PlainMapValueTest {
   }
 
   @test()
+  public unknownIndex(): void {
+    const expected = factory.make(SkipIndex).one();
+    const result = plainMapValue(SkipIndex, [expected.id]);
+    expect(result).property('constructor', Object);
+    expect(result).property('id', expected.id);
+    expect(Object.keys(result)).length(1);
+  }
+
+  @test()
   public unknownClass(): void {
     expect(() => plainMapValue(UnknownClass, [])).throw(UnknownClassError);
   }

@@ -34,17 +34,19 @@ export class ClassTransformerForArray {
 
     const obj = {} as Partial<T>;
     for (const [i, property] of map.entries()) {
-      const o = array[i];
-      const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key as string);
-      const subClassType = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
-      if (storage.has(subClassType) && Array.isArray(o)) {
-        if (typeMeta?.reflectedType === Array || property.options?.isArray) {
-          obj[property.key] = o.map((p) => this.plainMapValue(subClassType, p, options));
+      if (i in array) {
+        const o = array[i];
+        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key as string);
+        const subClassType = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
+        if (storage.has(subClassType) && Array.isArray(o)) {
+          if (typeMeta?.reflectedType === Array || property.options?.isArray) {
+            obj[property.key] = o.map((p) => this.plainMapValue(subClassType, p, options));
+          } else {
+            obj[property.key] = this.plainMapValue(subClassType, o, options);
+          }
         } else {
-          obj[property.key] = this.plainMapValue(subClassType, o, options);
+          obj[property.key] = o;
         }
-      } else {
-        obj[property.key] = o;
       }
     }
     return obj;
