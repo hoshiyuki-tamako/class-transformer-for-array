@@ -33,20 +33,18 @@ export class ClassTransformerForArray {
     }
 
     const obj = {} as Partial<T>;
-    for (const [i, o] of array.entries()) {
-      const property = map.get(i);
-      if (property) {
-        const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key as string);
-        const subClassType = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
-        if (storage.has(subClassType) && Array.isArray(o)) {
-          if (typeMeta?.reflectedType === Array || property.options?.isArray) {
-            obj[property.key] = o.map((p) => this.plainMapValue(subClassType, p, options));
-          } else {
-            obj[property.key] = this.plainMapValue(subClassType, o, options);
-          }
+    for (const [i, property] of map.entries()) {
+      const o = array[i];
+      const typeMeta = defaultMetadataStorage.findTypeMetadata(classType, property.key as string);
+      const subClassType = typeMeta?.typeFunction() as never ?? typeMeta?.reflectedType;
+      if (storage.has(subClassType) && Array.isArray(o)) {
+        if (typeMeta?.reflectedType === Array || property.options?.isArray) {
+          obj[property.key] = o.map((p) => this.plainMapValue(subClassType, p, options));
         } else {
-          obj[property.key] = o;
+          obj[property.key] = this.plainMapValue(subClassType, o, options);
         }
+      } else {
+        obj[property.key] = o;
       }
     }
     return obj;
@@ -69,7 +67,7 @@ export class ClassTransformerForArray {
             if (object[property.key] == null) {
               arr[i] = object[property.key];
             } else if (!Array.isArray(object[property.key])) {
-              throw new TypeError(`property ${classType.name}.${property.key} is not an array: ${object[property.key]}`);
+              throw new TypeError(`property ${classType.name}.${property.key.toString()} is not an array: ${object[property.key]}`);
             } else {
               arr[i] = (object[property.key] as Record<PropertyKey, unknown>[]).map((p) => this.classMapValue(subClassType, p, options));
             }
