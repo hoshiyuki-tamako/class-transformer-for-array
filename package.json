@@ -16,9 +16,9 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/ts-mocha --check-leaks --parallel test/**/**/*test.ts",
-    "samples": "./node_modules/.bin/ts-node ./samples",
-    "test-build": "./node_modules/.bin/tsc --noEmit",
-    "clean": "./node_modules/.bin/tsc --build --clean",
+    "test:samples": "./node_modules/.bin/ts-node ./samples",
+    "build:test": "./node_modules/.bin/tsc --noEmit",
+    "build:clean": "./node_modules/.bin/tsc --build --clean",
     "build": "./node_modules/.bin/tsc"
   },
   "author": "hoshiyuki-tamako",
@@ -48,7 +48,7 @@
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
     "reflect-metadata": "^0.1.13",
-    "sinon": "^9.2.3",
+    "sinon": "^9.2.4",
     "ts-mocha": "^8.0.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
