@@ -7,13 +7,13 @@ export function ArrayMember(index: number, options?: ArrayMemberOptions): Proper
   }
 
   return (target, propertyKey) => {
+    const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
+    storage.add(target.constructor, index, new PropertyInfo(propertyKey, options));
+
     if (!options?.arrayMemberStorage) {
       for (const eachStorage of defaultArrayMemberClassStorage.get(target.constructor) ?? []) {
         eachStorage.add(target.constructor, index, new PropertyInfo(propertyKey, options));
       }
     }
-
-    const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
-    storage.add(target.constructor, index, new PropertyInfo(propertyKey, options));
   };
 }

@@ -6,7 +6,7 @@ import { transformAndValidate, transformAndValidateSync } from 'class-transforme
 import { defaultMetadataStorage } from 'class-transformer/cjs/storage';
 
 import { UnknownClassError } from '../exceptions';
-import { defaultArrayMemberClassStorage, defaultArrayMemberStorage } from '../storages';
+import { defaultArrayMemberStorage } from '../storages';
 import {
   ArrayStorageOptions,
   ClassToPlainArrayOptions,
@@ -27,14 +27,6 @@ export class ClassTransformerForArray {
     }
 
     const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
-
-    if (storage === defaultArrayMemberStorage) {
-      const storages = defaultArrayMemberClassStorage.get(classType);
-      if (storages?.length && !storages.includes(defaultArrayMemberStorage)) {
-        throw new UnknownClassError(`Cannot found class of ${classType.name}. please make sure @ArrayMemberClass is correct`);
-      }
-    }
-
     const map = storage.getPropertyIndex(classType);
     if (!map) {
       throw new UnknownClassError(`Cannot found class of ${classType.name}`);
@@ -62,18 +54,11 @@ export class ClassTransformerForArray {
 
   public classMapValue<T>(classType: ClassConstructor<T>, object: Partial<T>, options?: ArrayStorageOptions): ClassMapValueReturn<Partial<T>> {
     const storage = options?.arrayMemberStorage || defaultArrayMemberStorage;
-
-    if (storage === defaultArrayMemberStorage) {
-      const storages = defaultArrayMemberClassStorage.get(classType);
-      if (storages?.length && !storages.includes(defaultArrayMemberStorage)) {
-        throw new UnknownClassError(`Cannot found class of ${classType.name}. please make sure @ArrayMemberClass is correct`);
-      }
-    }
-
     const map = storage.getPropertyIndex(classType);
     if (!map) {
       throw new UnknownClassError(`Cannot found class of ${classType.name}`);
     }
+
     const arr = [] as ClassMapValueReturn<Partial<T>>;
     for (const [i, property] of map.entries()) {
       if (property.key in object) {
@@ -109,7 +94,7 @@ export class ClassTransformerForArray {
       classType,
       options?.isArray
         ? (array as TData[][]).map((arr) => this.plainMapValue(classType, arr, options))
-        : this.plainMapValue(classType, array, options),
+        : this.plainMapValue(classType, array as TData[], options),
       options,
     );
   }
@@ -131,7 +116,7 @@ export class ClassTransformerForArray {
       classType,
       options?.isArray
         ? (array as TData[][]).map((arr) => this.plainMapValue(classType, arr, options))
-        : this.plainMapValue(classType, array, options),
+        : this.plainMapValue(classType, array as TData[], options),
       options,
     );
   }
@@ -143,7 +128,7 @@ export class ClassTransformerForArray {
       classType,
       options?.isArray
         ? (array as TData[][]).map((arr) => this.plainMapValue(classType, arr, options))
-        : this.plainMapValue(classType, array, options),
+        : this.plainMapValue(classType, array as TData[], options),
       options,
     );
   }

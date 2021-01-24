@@ -1,29 +1,34 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 import { PropertyIndex } from './PropertyIndex';
 import { PropertyInfo } from './PropertyInfo';
 
 export type ConstructorMap = Map<Function, PropertyIndex>;
+
 export class ArrayMemberStorage {
   public static defaultArrayMemberStorage = new ArrayMemberStorage();
 
   public map = new Map() as ConstructorMap;
 
+  public mapMoved = new Map() as ConstructorMap;
+
   public add<T extends Function>(constructor: T, index: number, info: PropertyInfo): this {
-    if (!this.map.has(constructor)) {
+    const propertyIndex = this.map.get(constructor);
+    if (propertyIndex) {
+      propertyIndex.add(index, info);
+    } else {
       const newMap = new PropertyIndex();
-      this.map.set(constructor, newMap);
       // inherit
-      for (const [c, propertyIndex] of this.map.entries()) {
-        if (constructor.prototype instanceof c) {
-          for (const [i, p] of propertyIndex.entries()) {
-            newMap.set(i, p);
+      for (const iterator of [this.mapMoved.entries(), this.map.entries()]) {
+        for (const [c, propertyIndex] of iterator) {
+          if (constructor.prototype instanceof c) {
+            for (const [i, p] of propertyIndex.entries()) {
+              newMap.set(i, p);
+            }
           }
         }
       }
+      this.map.set(constructor, newMap.add(index, info));
     }
-
-    this.map.get(constructor)!.add(index, info);
     return this;
   }
 

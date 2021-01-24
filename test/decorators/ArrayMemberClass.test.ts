@@ -51,6 +51,12 @@ class EmptyStorageParam {
   public id = 0;
 }
 
+@ArrayMemberClass(customStorage)
+class LateArrayMemberClass {
+  @ArrayMember(0)
+  public id = 0;
+}
+
 class Tmp {
   public id = 0;
   public name = '';
@@ -86,18 +92,25 @@ export class ArrayMemberClassTest {
   public decorators(): void {
     expect(defaultArrayMemberClassStorage.has(Test)).true;
     expect(customStorage.has(Test)).true;
+    expect(defaultArrayMemberStorage.has(Test)).false;
+    expect(defaultArrayMemberStorage.mapMoved.has(Test)).true;
 
     expect(defaultArrayMemberClassStorage.has(MultiStorage)).true;
     expect(customStorage.has(MultiStorage)).true;
     expect(customStorage2.has(MultiStorage)).true;
+    expect(defaultArrayMemberStorage.has(MultiStorage)).false;
+    expect(defaultArrayMemberStorage.mapMoved.has(MultiStorage)).true;
 
     expect(defaultArrayMemberClassStorage.has(AllStorage)).true;
     expect(customStorage.has(AllStorage)).true;
     expect(customStorage2.has(AllStorage)).true;
     expect(defaultArrayMemberStorage.has(AllStorage)).true;
+    expect(defaultArrayMemberStorage.mapMoved.has(AllStorage)).false;
 
     expect(defaultArrayMemberClassStorage.has(DuplicateStorage)).true;
     expect(customStorage.has(DuplicateStorage)).true;
+    expect(defaultArrayMemberStorage.has(DuplicateStorage)).false;
+    expect(defaultArrayMemberStorage.mapMoved.has(DuplicateStorage)).true;
 
     expect(defaultArrayMemberClassStorage.has(EmptyProperty)).true;
 
@@ -105,7 +118,7 @@ export class ArrayMemberClassTest {
   }
 
   @test()
-  public lateDecorator(): void {
+  public lateArrayMemberDecorator(): void {
     const storage = new ArrayMemberStorage();
     const a = ArrayMemberClass(storage);
 
@@ -125,6 +138,14 @@ export class ArrayMemberClassTest {
     const propertyB = propertyIndex?.get(1);
     expect(propertyB).not.null.not.undefined;
     expect(propertyB).property('key', 'name');
+  }
+
+  @test()
+  public lateArrayMemberClassDecorator(): void {
+    ArrayMemberClass()(LateArrayMemberClass);
+    expect(customStorage.has(LateArrayMemberClass)).true;
+    expect(defaultArrayMemberStorage.has(LateArrayMemberClass)).true;
+    expect(defaultArrayMemberStorage.mapMoved.has(LateArrayMemberClass)).false;
   }
 
   @test()
