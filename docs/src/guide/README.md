@@ -2,10 +2,10 @@
 
 ## Install
 
-make sure using `class-transformer@0.2.3`
+make sure using `class-transformer@0.3.1`
 
 ```bash
-npm i class-transformer-for-array class-transformer-validator class-transformer@0.2.3 class-validator reflect-metadata
+npm i class-transformer-for-array class-transformer-validator class-transformer@0.3.1 class-validator reflect-metadata
 ```
 
 or

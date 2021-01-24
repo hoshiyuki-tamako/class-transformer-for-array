@@ -8,6 +8,7 @@ import {
   defaultArrayMemberClassStorage,
   defaultArrayMemberStorage,
 } from '../../src';
+import { PropertyInfo } from './../../src/storages/PropertyInfo';
 
 const customStorage = new ArrayMemberStorage();
 
@@ -55,6 +56,17 @@ class EmptyStorageParam {
 class LateArrayMemberClass {
   @ArrayMember(0)
   public id = 0;
+}
+
+
+const customStorageMixed = new ArrayMemberStorage();
+@ArrayMemberClass(customStorage)
+class Mixed {
+  @ArrayMember(0)
+  public id = 0;
+
+  @ArrayMember(1, { arrayMemberStorage: customStorageMixed })
+  public title = '';
 }
 
 class Tmp {
@@ -146,6 +158,37 @@ export class ArrayMemberClassTest {
     expect(customStorage.has(LateArrayMemberClass)).true;
     expect(defaultArrayMemberStorage.has(LateArrayMemberClass)).true;
     expect(defaultArrayMemberStorage.mapMoved.has(LateArrayMemberClass)).false;
+  }
+
+  @test()
+  public mixed(): void {
+    expect(customStorage.has(Mixed)).true;
+    expect(customStorageMixed.has(Mixed)).true;
+    expect(defaultArrayMemberStorage.has(Mixed)).false;
+
+    //
+    const propertyIndex = customStorage.getPropertyIndex(Mixed);
+    expect(propertyIndex).not.null.not.undefined;
+    if (propertyIndex) {
+      expect(propertyIndex.get(1)).undefined;
+
+      const propertyInfo = propertyIndex.get(0);
+      expect(propertyInfo).property('constructor', PropertyInfo);
+      expect(propertyInfo).property('key', 'id');
+      expect(propertyInfo).property('options').undefined;
+    }
+
+    //
+    const mixedPropertyIndex = customStorageMixed.getPropertyIndex(Mixed);
+    expect(mixedPropertyIndex).not.null.not.undefined;
+    if (mixedPropertyIndex) {
+      expect(mixedPropertyIndex.get(0)).undefined;
+
+      const propertyInfo = mixedPropertyIndex.get(1);
+      expect(propertyInfo).property('constructor', PropertyInfo);
+      expect(propertyInfo).property('key', 'title');
+      expect(propertyInfo).property('options').not.null.not.undefined;
+    }
   }
 
   @test()

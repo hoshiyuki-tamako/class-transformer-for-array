@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { ArrayMember, TransformClassToPlainArray, ClassMapValueReturn } from '../src';
+import { ArrayMember, ClassMapValueReturn, TransformClassToPlainArray } from '../src';
 
 class Blog {
   @ArrayMember(0)

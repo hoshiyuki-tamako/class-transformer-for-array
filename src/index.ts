@@ -1,5 +1,4 @@
-import { ClassConstructor } from 'class-transformer';
-
+import { ClassConstructor } from './class-transformer';
 import { ClassMapValueReturn, ClassTransformerForArray } from './core';
 import {
   ArrayStorageOptions,

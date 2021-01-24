@@ -30,8 +30,8 @@ export class Product {
   public price = 0;
 
   @ArrayMember(2)
-  @Transform(({ value }) => value?.toString(), { toClassOnly: true })
-  @Transform(({ value }) => +value, { toPlainOnly: true })
+  @Transform((value) => value?.toString(), { toClassOnly: true })
+  @Transform((value) => +value, { toPlainOnly: true })
   @Fixture(() => faker.random.number().toString())
   public displayPrice = '0';
 

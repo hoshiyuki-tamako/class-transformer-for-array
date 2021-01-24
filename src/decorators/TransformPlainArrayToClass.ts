@@ -1,6 +1,6 @@
-import { ClassConstructor } from 'class-transformer';
 import isPromise from 'is-promise';
 
+import { ClassConstructor } from '../class-transformer';
 import { ClassTransformerForArray } from '../core';
 import { ClassTransformForArrayOptions } from '../types';
 

@@ -168,8 +168,8 @@ import { ArrayMember, classToPlainArray, plainArrayToClass } from 'class-transfo
 
 class Product {
   @ArrayMember(0)
-  @Transform(({ value }) => value?.toString(), { toClassOnly: true })
-  @Transform(({ value }) => +value, { toPlainOnly: true })
+  @Transform((value) => value?.toString(), { toClassOnly: true })
+  @Transform((value) => +value, { toPlainOnly: true })
   public displayPrice = '0';
 }
 
@@ -483,6 +483,7 @@ class CustomClass {
   @ArrayMember(0)
   public id = 0;
 
+  // Make sure arrayMemberStorage is not defaultArrayMemberStorage as default storage will be override by @ArrayMemberClass(myStorage1)
   @ArrayMember(1, { arrayMemberStorage: myStorage2 })
   public name = '';
 }
@@ -668,7 +669,7 @@ console.log(author);
 ```ts
 import 'reflect-metadata';
 
-import { ArrayMember, TransformClassToPlainArray, ClassMapValueReturn } from 'class-transformer-for-array';
+import { ArrayMember, ClassMapValueReturn, TransformClassToPlainArray } from 'class-transformer-for-array';
 
 class Blog {
   @ArrayMember(0)

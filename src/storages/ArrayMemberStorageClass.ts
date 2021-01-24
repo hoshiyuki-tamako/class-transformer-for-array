@@ -7,9 +7,16 @@ export class ArrayMemberClassStorage {
 
   public map = new Map<Function, ArrayMemberStorage[]>();
 
-  public add(constructor: Function, storage: ArrayMemberStorage): this {
+  private defaultStorage = defaultArrayMemberStorage;
+
+  public constructor(defaultStorage?: ArrayMemberStorage) {
+    this.defaultStorage = defaultStorage || defaultArrayMemberStorage;
+  }
+
+  public add(constructor: Function, storage?: ArrayMemberStorage): this {
+    storage ||= this.defaultStorage;
     const storages = this.initializeStorage(constructor, storage);
-    return storage === defaultArrayMemberStorage
+    return storage === this.defaultStorage
       ? this.addDefaultArrayMemberStorage(constructor)
       : this.addCustomArrayMemberStorage(constructor, storage, storages);
 
@@ -39,10 +46,10 @@ export class ArrayMemberClassStorage {
   }
 
   private addDefaultArrayMemberStorage(constructor: Function): this {
-    const result = defaultArrayMemberStorage.mapMoved.get(constructor);
+    const result = this.defaultStorage.mapMoved.get(constructor);
     if (result) {
-      defaultArrayMemberStorage.map.set(constructor, result);
-      defaultArrayMemberStorage.mapMoved.delete(constructor);
+      this.defaultStorage.map.set(constructor, result);
+      this.defaultStorage.mapMoved.delete(constructor);
     }
     return this;
   }
@@ -51,27 +58,27 @@ export class ArrayMemberClassStorage {
     const defaultPropertyIndex = new PropertyIndex();
 
     // existing properties
-    const oldPropertyIndex = defaultArrayMemberStorage.mapMoved.get(constructor);
+    const oldPropertyIndex = this.defaultStorage.mapMoved.get(constructor);
     if (oldPropertyIndex) {
       defaultPropertyIndex.map = new Map(oldPropertyIndex.map);
     }
 
     // new added
-    const newPropertyIndex = defaultArrayMemberStorage.map.get(constructor);
+    const newPropertyIndex = this.defaultStorage.map.get(constructor);
     if (newPropertyIndex) {
       defaultPropertyIndex.map = new Map([...defaultPropertyIndex.map.entries(), ...newPropertyIndex.map.entries()]);
 
       // cleanup
-      if (!storages.includes(defaultArrayMemberStorage)) {
+      if (!storages.includes(this.defaultStorage)) {
         if (oldPropertyIndex) {
           // merge new item to old
           for (const [i, k] of newPropertyIndex.map.entries()) {
             oldPropertyIndex.set(i, k);
           }
         } else {
-          defaultArrayMemberStorage.mapMoved.set(constructor, defaultPropertyIndex);
+          this.defaultStorage.mapMoved.set(constructor, defaultPropertyIndex);
         }
-        defaultArrayMemberStorage.map.delete(constructor);
+        this.defaultStorage.map.delete(constructor);
       }
     }
 

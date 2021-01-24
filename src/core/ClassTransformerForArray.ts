@@ -1,10 +1,10 @@
-// TODO due to typescript not support symbol key, disable type checking for compile
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { ClassConstructor, classToPlain, plainToClass } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 import { transformAndValidate, transformAndValidateSync } from 'class-transformer-validator';
-import { defaultMetadataStorage } from 'class-transformer/cjs/storage';
+import { defaultMetadataStorage } from 'class-transformer/storage';
 
+import { ClassConstructor } from '../class-transformer';
 import { UnknownClassError } from '../exceptions';
 import { defaultArrayMemberStorage } from '../storages';
 import {
@@ -14,8 +14,8 @@ import {
   TransformValidationForArrayOptions,
 } from '../types';
 
-
 /* eslint-disable @typescript-eslint/ban-types */
+
 export type ClassMapValueReturn<T> = (T[keyof T] | unknown | unknown[])[];
 
 export class ClassTransformerForArray {

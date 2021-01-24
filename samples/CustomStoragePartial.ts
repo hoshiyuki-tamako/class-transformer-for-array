@@ -11,6 +11,7 @@ class CustomClass {
   @ArrayMember(0)
   public id = 0;
 
+  // Make sure arrayMemberStorage is not defaultArrayMemberStorage as default storage will be override by @ArrayMemberClass(myStorage1)
   @ArrayMember(1, { arrayMemberStorage: myStorage2 })
   public name = '';
 }
