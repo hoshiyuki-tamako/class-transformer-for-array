@@ -2,5 +2,10 @@
   "all": true,
   "check-coverage": true,
   "include": ["src"],
-  "branches": 97
+  "lines": 100,
+
+  "branches": 97,
+  "lines": 100,
+  "functions": 100,
+  "statements": 100
 }
