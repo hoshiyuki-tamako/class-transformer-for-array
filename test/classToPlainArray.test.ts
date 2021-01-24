@@ -20,7 +20,7 @@ import { factory } from './factories';
 
 class KeyNotInObject {
   @ArrayMember(0)
-  public deleteThis?: boolean = true;
+  public deleteThis? = true;
 }
 
 class UnknownClass {}
