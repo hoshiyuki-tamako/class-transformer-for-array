@@ -27,8 +27,6 @@ module.exports = {
     extractHeaders: [ 'h2', 'h3', 'h4' ],
   },
 
-  sidebar: 'auto',
-
   theme: 'yuu',
 
   /**
